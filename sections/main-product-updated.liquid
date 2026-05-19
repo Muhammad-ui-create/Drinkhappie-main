@@ -1613,6 +1613,11 @@
                 </div>
               {% endif %}
             </div>
+          {% when '@app' %}
+            <div {{ block.shopify_attributes }}>
+              {% render block %}
+            </div>
+
         {% endcase %}
       {% endfor %}
     </div>
@@ -2578,6 +2583,9 @@
           "label": "Tab 3 Content"
         }
       ]
+    },
+    {
+      "type": "@app"
     }
   ]
 }

@@ -90,6 +90,20 @@
           "type": "size_selector",
           "settings": {}
         },
+        "subscriptions_app_block": {
+          "type": "shopify://apps/subscriptions/blocks/app-block/a3bfe9ec-96f8-4508-a003-df608a36d2ad",
+          "settings": {
+            "widget_style": "card",
+            "widget_style_card_selector": "radio_button",
+            "subscription_policy_url": "",
+            "color_text_body": "#50b2bd",
+            "dividers_color": "#8F8D8D",
+            "background_color": "#FFFFFF",
+            "border_thickness": 1,
+            "border_radius": 0,
+            "product": "{{product}}"
+          }
+        },
         "subscription": {
           "type": "subscription",
           "disabled": true,
@@ -149,6 +163,7 @@
         "product_details",
         "flavor_selector",
         "size_selector",
+        "subscriptions_app_block",
         "subscription",
         "onetime",
         "appstle_widget",
