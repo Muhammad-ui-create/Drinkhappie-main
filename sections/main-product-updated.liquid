@@ -2006,8 +2006,16 @@
         var subSaveBtn = document.getElementById('subscribe-save-btn');
         var subSavePrice = document.getElementById('subscribe-save-price');
         if (subSaveBtn && subSavePrice) {
+          var planId = parseInt(subSaveBtn.dataset.planId);
           var discountPct = parseInt(subSaveBtn.dataset.discount) || 20;
-          var subPrice = Math.round(variant.price * (100 - discountPct) / 100);
+          var subPrice = null;
+          if (variant.selling_plan_allocations && variant.selling_plan_allocations.length > 0) {
+            var alloc = variant.selling_plan_allocations.find(function(a) { return a.selling_plan_id === planId; });
+            if (alloc) subPrice = alloc.price;
+          }
+          if (!subPrice) {
+            subPrice = Math.round(variant.price * (100 - discountPct) / 100);
+          }
           var subFormatted = '$' + (subPrice / 100).toFixed(2);
           subSavePrice.textContent = subFormatted;
         }
@@ -2033,6 +2041,47 @@
             opt.classList.remove('active');
           });
           this.classList.add('active');
+
+          // Direct variant ID from fallback path
+          var directVariantId = this.getAttribute('data-variant-id');
+          if (directVariantId) {
+            var variant = productVariants.find(function(v) { return v.id == directVariantId; });
+            if (variant && cartInput) {
+              cartInput.value = variant.id;
+              var priceFormatted = '$' + (variant.price / 100).toFixed(2);
+              var cartPrice = document.getElementById('cart-price');
+              var onetimePrice = document.getElementById('onetime-display-price');
+              var dynamicPrice = document.getElementById('dynamic-price');
+              if (cartPrice) cartPrice.textContent = priceFormatted;
+              if (onetimePrice) onetimePrice.textContent = priceFormatted;
+              if (dynamicPrice) dynamicPrice.textContent = priceFormatted;
+
+              // Update Subscribe & Save price
+              var subSaveBtn = document.getElementById('subscribe-save-btn');
+              var subSavePrice = document.getElementById('subscribe-save-price');
+              if (subSaveBtn && subSavePrice) {
+                var planId = parseInt(subSaveBtn.dataset.planId);
+                var discountPct = parseInt(subSaveBtn.dataset.discount) || 20;
+                var subPrice = null;
+                if (variant.selling_plan_allocations && variant.selling_plan_allocations.length > 0) {
+                  var alloc = variant.selling_plan_allocations.find(function(a) { return a.selling_plan_id === planId; });
+                  if (alloc) subPrice = alloc.price;
+                }
+                if (!subPrice) {
+                  subPrice = Math.round(variant.price * (100 - discountPct) / 100);
+                }
+                subSavePrice.textContent = '$' + (subPrice / 100).toFixed(2);
+              }
+
+              setTimeout(function () {
+                attachSubscriptionListeners();
+                var checkedOption = document.querySelector('input[name="selling_plan"]:checked');
+                if (checkedOption) checkedOption.dispatchEvent(new Event('change'));
+                setTimeout(wrapPriceElements, 200);
+              }, 500);
+              return;
+            }
+          }
           updateSelectedVariant();
         });
       });
