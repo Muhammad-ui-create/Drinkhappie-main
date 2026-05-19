@@ -702,6 +702,107 @@
     cursor: not-allowed;
   }
 
+  /* SHOPIFY SUBSCRIPTIONS WIDGET OVERRIDE */
+  .product-info-card [id^="shopify-block"] {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .product-info-card .shopify-subscription-widget,
+  .product-info-card [data-shopify-subscription-widget] {
+    width: 100%;
+  }
+
+  .product-info-card .shopify-subscription-widget__card,
+  .product-info-card [class*="subscription"] table,
+  .product-info-card [class*="subscription"] .card {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .product-info-card [class*="subscription"] label,
+  .product-info-card [class*="subscription"] .subscription-widget__option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--happie-cream);
+    border: 2px solid rgba(0, 0, 0, 0.12) !important;
+    border-radius: 14px !important;
+    padding: 14px 18px !important;
+    margin-bottom: 10px !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit !important;
+  }
+
+  .product-info-card [class*="subscription"] label:hover,
+  .product-info-card [class*="subscription"] .subscription-widget__option:hover {
+    border-color: var(--happie-teal) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(80, 178, 189, 0.15);
+  }
+
+  .product-info-card [class*="subscription"] label:has(input:checked),
+  .product-info-card [class*="subscription"] .subscription-widget__option--selected {
+    background: rgba(80, 178, 189, 0.08) !important;
+    border: 3px solid var(--happie-teal) !important;
+  }
+
+  .product-info-card [class*="subscription"] input[type="radio"] {
+    accent-color: var(--happie-teal) !important;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .product-info-card [class*="subscription"] span,
+  .product-info-card [class*="subscription"] p,
+  .product-info-card [class*="subscription"] div {
+    font-family: inherit !important;
+    line-height: 1.4 !important;
+  }
+
+  .product-info-card [class*="subscription"] [class*="title"],
+  .product-info-card [class*="subscription"] [class*="label"] {
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    color: var(--happie-dark) !important;
+  }
+
+  .product-info-card [class*="subscription"] [class*="price"],
+  .product-info-card [class*="subscription"] [class*="amount"] {
+    font-weight: 700 !important;
+    color: var(--happie-teal) !important;
+  }
+
+  .product-info-card [class*="subscription"] [class*="save"],
+  .product-info-card [class*="subscription"] [class*="discount"],
+  .product-info-card [class*="subscription"] [class*="badge"] {
+    background: var(--happie-teal) !important;
+    color: white !important;
+    border-radius: 50px !important;
+    padding: 2px 10px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em;
+  }
+
+  .product-info-card [class*="subscription"] [class*="policy"],
+  .product-info-card [class*="subscription"] [class*="cancel"],
+  .product-info-card [class*="subscription"] [class*="renew"] {
+    font-size: 13px !important;
+    color: var(--happie-dark) !important;
+    opacity: 0.7;
+    font-weight: 500 !important;
+    margin-top: 6px !important;
+  }
+
+  .product-info-card [class*="subscription"] hr,
+  .product-info-card [class*="subscription"] [class*="divider"] {
+    display: none !important;
+  }
+
   /* SUBSCRIBE & SAVE BUTTON */
   .subscribe-save-button {
     background: transparent;
