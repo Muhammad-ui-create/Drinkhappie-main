@@ -2109,6 +2109,27 @@
       }
     })();
 
+    // Keep Subscribe & Save price synced with Add to Cart price
+    (function syncSubscribePrice() {
+      var cartPriceEl = document.getElementById('cart-price');
+      var subSaveBtn = document.getElementById('subscribe-save-btn');
+      var subSavePrice = document.getElementById('subscribe-save-price');
+      if (!cartPriceEl || !subSaveBtn || !subSavePrice) return;
+      var discountPct = parseInt(subSaveBtn.dataset.discount) || 20;
+
+      function updateSubPrice() {
+        var priceText = cartPriceEl.textContent.trim().replace(/[^0-9.]/g, '');
+        var priceCents = Math.round(parseFloat(priceText) * 100);
+        if (isNaN(priceCents) || priceCents <= 0) return;
+        var subCents = Math.round(priceCents * (100 - discountPct) / 100);
+        subSavePrice.textContent = '$' + (subCents / 100).toFixed(2);
+      }
+
+      updateSubPrice();
+      var observer = new MutationObserver(updateSubPrice);
+      observer.observe(cartPriceEl, { childList: true, characterData: true, subtree: true });
+    })();
+
     // Accordion functionality
     const accordionTabs = document.querySelectorAll('.accordion-tab');
     if (accordionTabs.length) {
