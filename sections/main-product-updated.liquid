@@ -1537,7 +1537,7 @@
                 data-plan-id="{{ first_plan.id }}"
                 data-discount="{{ plan_discount }}">
                 <span class="subscribe-save-label" id="subscribe-save-text">SUBSCRIBE & SAVE {{ plan_discount }}%</span>
-                <span class="subscribe-save-sub">{{ sub_price | money }} / delivery · Cancel anytime</span>
+                <span class="subscribe-save-sub"><span id="subscribe-save-price">{{ sub_price | money }}</span> / delivery · Cancel anytime</span>
               </button>
             {% endif %}
 
@@ -2001,7 +2001,17 @@
         if (cartPrice) cartPrice.textContent = priceFormatted;
         if (onetimePrice) onetimePrice.textContent = priceFormatted;
         if (dynamicPrice) dynamicPrice.textContent = priceFormatted;
-        
+
+        // Update Subscribe & Save button price
+        var subSaveBtn = document.getElementById('subscribe-save-btn');
+        var subSavePrice = document.getElementById('subscribe-save-price');
+        if (subSaveBtn && subSavePrice) {
+          var discountPct = parseInt(subSaveBtn.dataset.discount) || 20;
+          var subPrice = Math.round(variant.price * (100 - discountPct) / 100);
+          var subFormatted = '$' + (subPrice / 100).toFixed(2);
+          subSavePrice.textContent = subFormatted;
+        }
+
         // Trigger Appstle subscription update
         setTimeout(function () {
           attachSubscriptionListeners();
