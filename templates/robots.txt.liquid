@@ -1,0 +1,75 @@
+{% for group in robots.default_groups -%}
+{{- group.user_agent }}
+{%- for rule in group.rules -%}
+{%- unless rule.value contains "/policies" -%}
+{{ rule }}
+{% endunless -%}
+{%- endfor -%}
+{%- for sitemap in group.sitemaps -%}
+{{ sitemap }}
+{% endfor -%}
+{% endfor -%}
+Sitemap: https://drinkhappie.com/sitemap.xml
+
+# OpenAI (ChatGPT, ChatGPT Search)
+User-agent: GPTBot
+Allow: /
+Disallow: /admin
+Disallow: /cart
+Disallow: /orders
+Disallow: /checkouts/
+Disallow: /account
+
+# OpenAI (ChatGPT browsing mode)
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic (Claude)
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin
+Disallow: /cart
+Disallow: /account
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /admin
+Disallow: /cart
+Disallow: /account
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin
+Disallow: /cart
+Disallow: /account
+
+# Google AI (Gemini, AI Overviews)
+User-agent: Google-Extended
+Allow: /
+
+# Common Crawl (feeds many AI training datasets)
+User-agent: CCBot
+Allow: /
+Disallow: /admin
+Disallow: /cart
+Disallow: /account
+
+# ByteDance (TikTok Search)
+User-agent: Bytespider
+Allow: /
+Disallow: /admin
+Disallow: /cart
+Disallow: /account
+
+# Apple Intelligence / Siri
+User-agent: Applebot-Extended
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+
+# Microsoft / Bing Copilot
+User-agent: bingbot
+Allow: /

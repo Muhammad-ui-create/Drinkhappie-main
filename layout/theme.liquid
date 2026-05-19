@@ -1,0 +1,629 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>
+    <script src="https://cdn.userway.org/widget.js" data-account="Qd6zudTeks"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="">
+    {%- comment -%} GEO 2026-05-08: canonical strips ?variant= on product pages and overrides duplicate collection paths to /collections/thc-drinks. Replaces single line `<link rel="canonical" href="{{ canonical_url }}">`. {%- endcomment -%}
+    {%- if template.name == 'product' -%}
+      <link rel="canonical" href="{{ shop.url }}{{ product.url }}">
+    {%- elsif template contains 'collection' and collection.handle != blank -%}
+      {%- assign happie_duplicate_collections = 'frontpage,shop-all,thc' | split: ',' -%}
+      {%- if happie_duplicate_collections contains collection.handle -%}
+        <link rel="canonical" href="{{ shop.url }}/collections/thc-drinks">
+      {%- else -%}
+        <link rel="canonical" href="{{ canonical_url }}">
+      {%- endif -%}
+    {%- else -%}
+      <link rel="canonical" href="{{ canonical_url }}">
+    {%- endif -%}
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+    {%- liquid
+      assign main_font = settings.type_main_font
+      assign main_font_bold = main_font | font_modify: 'weight', 'bold'
+      assign heading_font = settings.type_heading_font
+    -%}
+
+    {%- if settings.favicon != blank -%}
+      <link
+        rel="icon"
+        type="image/png"
+        href="{{ settings.favicon | image_url: width: '32x32' }}"
+      >
+    {%- endif -%}
+
+    {%- unless settings.type_header_font.system? and settings.type_body_font.system? -%}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+    {%- endunless -%}
+
+    <title>
+  {%- if template.name == 'index' %}
+    Happie® | Premium THC Seltzers & Functional Mushroom Drinks
+  {%- elsif template.name == 'product' %}
+    {{ page_title }}
+  {%- elsif template.name == 'collection' %}
+    {%- if collection.handle == 'thc' or collection.handle == 'frontpage' %}
+      Delta-9 THC Seltzers | Hemp-Derived THC Drinks | Happie®
+    {%- elsif collection.handle == 'fungi' or collection.handle == 'fungi-fusion' %}
+      Fungi Fusion Mushroom Drinks | Lion's Mane & Cordyceps | Happie®
+    {%- elsif collection.handle == 'social' %}
+      THC Social Seltzers | 5mg & 10mg | Happie®
+    {%- elsif collection.handle == 'merch' %}
+      Happie® Merch | Official Gear
+    {%- else %}
+      {{ collection.title }} | Happie®
+    {%- endif %}
+  {%- elsif template.name == 'article' %}
+    {{ article.title }} | Happie® Blog
+  {%- elsif template.name == 'blog' %}
+    {%- if current_page > 1 %}
+      {{ blog.title }} — Page {{ current_page }} | Happie® Blog
+    {%- else %}
+      THC Seltzer & Mushroom Drink Insights | Happie® Blog
+    {%- endif %}
+  {%- elsif template.name == 'page' %}
+    {%- if page.handle == 'faq' %}
+      FAQ — THC Drinks & Mushroom Beverages | Happie®
+    {%- elsif page.handle == 'wholesale' %}
+      Wholesale THC Seltzers & Mushroom Drinks | Happie®
+    {%- elsif page.handle == 'about-us' %}
+      About Happie® | California-Crafted Functional Beverages
+    {%- elsif page.handle == 'contact' %}
+      Contact Us | Happie®
+    {%- elsif page.handle == 'subscribe-and-save' %}
+      Subscribe & Save on THC Seltzers | Happie®
+    {%- elsif page.handle == 'coas' %}
+      Lab Test Results (COAs) | Happie®
+    {%- elsif page.handle == 'shop' %}
+      Shop All THC Drinks & Mushroom Beverages | Happie®
+    {%- else %}
+      {{ page.title }} | Happie®
+    {%- endif %}
+  {%- elsif template.name == 'search' %}
+    Search{%- if search.terms %}: {{ search.terms }}{%- endif %} | Happie®
+  {%- elsif template.name == 'cart' %}
+    Your Cart | Happie®
+  {%- elsif template.name == '404' %}
+    Page Not Found | Happie®
+  {%- else %}
+    {{ page_title }} | Happie®
+  {%- endif %}
+</title>
+
+    {%- comment -%} GEO 2026-05-08: noindex duplicate collection paths (frontpage was already in place; extended to shop-all + thc per SEO audit) {%- endcomment -%}
+    {%- if template contains 'collection' and collection.handle != blank -%}
+      {%- assign happie_duplicate_collections = 'frontpage,shop-all,thc' | split: ',' -%}
+      {%- if happie_duplicate_collections contains collection.handle -%}
+        <meta name="robots" content="noindex, follow">
+      {%- endif -%}
+    {%- endif -%}
+
+    {% if page_description %}
+      {%- if template.name == 'index' %}
+  <meta name="description" content="Shop premium hemp-derived Delta-9 THC seltzers (5mg/10mg) and Fungi Fusion mushroom drinks (Lion's Mane, Cordyceps, Reishi). Nano-emulsified, fast-acting. Feel Good. Feel Happie.®">
+{%- elsif template.name == 'collection' %}
+  {%- if collection.handle == 'thc' or collection.handle == 'frontpage' %}
+    <meta name="description" content="Hemp-derived Delta-9 THC seltzers in 5mg and 10mg. 7 fruit flavors, fast-acting nano-emulsified formula, zero alcohol, zero hangover. Ships to 40+ states.">
+  {%- elsif collection.handle == 'fungi' or collection.handle == 'fungi-fusion' %}
+    <meta name="description" content="Fungi Fusion adaptogenic mushroom drinks with Lion's Mane 900mg, Cordyceps 700mg & Reishi 400mg. Zero THC, zero caffeine. Ocean minerals for hydration.">
+  {%- elsif collection.description != blank %}
+    <meta name="description" content="{{ collection.description | strip_html | truncate: 155 }}">
+  {%- else %}
+    <meta name="description" content="{{ page_description | default: shop.description | truncate: 155 }}">
+  {%- endif %}
+{%- elsif page_description != blank %}
+  <meta name="description" content="{{ page_description | truncate: 155 }}">
+{%- else %}
+  <meta name="description" content="{{ shop.description | truncate: 155 }}">
+{%- endif %}
+    {% endif %}
+
+    {%- render 'meta-tags' -%}
+
+    {% comment %}
+      This script tag contains options for es-modules-shim, which is loaded
+      automatically by Shopify.
+    {% endcomment %}
+    <script type="esms-options">
+      {
+        "noLoadEventRetriggers": true
+      }
+    </script>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "vendor": "{{ 'vendor.bundle.min.js' | asset_url }}",
+          "data-island": "{{ 'data-island.bundle.js' | asset_url }}",
+          "product": "{{ 'island-product.bundle.js' | asset_url }}",
+          "product-model": "{{ 'island-product-model.bundle.js' | asset_url }}"
+        }
+      }
+    </script>
+<!-- Preconnect: critical third-party origins -->
+<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+<link rel="preconnect" href="https://static.klaviyo.com" crossorigin>
+<link rel="preconnect" href="https://cdn.userway.org" crossorigin>
+<link rel="dns-prefetch" href="https://static-tracking.klaviyo.com">
+<link rel="dns-prefetch" href="https://cdnwidget.judge.me">
+<link rel="dns-prefetch" href="https://connect.facebook.net">
+<link rel="dns-prefetch" href="https://subscription-admin.appstle.com">
+  <!-- Preconnect: critical third-party origins -->
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  <link rel="preconnect" href="https://static.klaviyo.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.userway.org" crossorigin>
+  <!-- DNS Prefetch: secondary domains -->
+  <link rel="dns-prefetch" href="https://static-tracking.klaviyo.com">
+  <link rel="dns-prefetch" href="https://cdnwidget.judge.me">
+  <link rel="dns-prefetch" href="https://connect.facebook.net">
+  <link rel="dns-prefetch" href="https://subscription-admin.appstle.com">
+
+    {{ content_for_header }}
+
+    {{ 'base.bundle.css' | asset_url | stylesheet_tag: preload: true }}
+
+    {% render 'js-bridge' %}
+
+    <script>
+      document.documentElement.className =
+        document.documentElement.className.replace('no-js', 'js');
+    </script>
+
+    <script>
+      function debounce(fn, wait) {
+        let t;
+        return (...args) => {
+          clearTimeout(t);
+          t = setTimeout(() => fn.apply(this, args), wait);
+        };
+      }
+    </script>
+
+    <script src="{{ 'jquery-3.7.1.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'slick.min.js' | asset_url }}" defer></script>
+    <script src="{{ 'utils.js' | asset_url }}" defer></script>
+    <script src="{{ 'custom.js' | asset_url }}" defer></script>
+
+
+    {% if request.design_mode %}
+      <script src="{{ 'shapes-animations.js' | asset_url }}" defer></script>
+      <script
+        src="{{ 'theme-editor-support.js' | asset_url }}"
+        type="module"
+      ></script>
+    {% endif %}
+
+    {% if template contains 'customers' %}
+      {% comment %}theme-check-disable ParserBlockingScript{% endcomment %}
+      {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+      {{ 'customer_area.js' | shopify_asset_url | script_tag }}
+      {% comment %}theme-check-enable ParserBlockingScript{% endcomment %}
+    {% endif %}
+
+    <script>
+      window.themeEventsDebugMode = false;
+    </script>
+    <script src="{{ 'theme-events.js' | asset_url }}" async defer></script>
+
+    <style>
+      :root {
+        --max-site-width: 1820px;
+      }
+    </style>
+
+    {% style %}
+      {{ main_font | font_face: font_display: 'swap' }}
+      {{ heading_font | font_face: font_display: 'swap' }}
+
+      {%- liquid
+        assign main_font_bolder = main_font | font_modify: 'weight', 'bolder'
+        assign main_font_italic = main_font | font_modify: 'style', 'italic'
+        assign main_font_bold_italic = main_font_bold | font_modify: 'style', 'italic'
+
+        if main_font_bold
+          echo main_font_bold | font_face: font_display: 'swap'
+        endif
+        if main_font_italic
+          echo main_font_italic | font_face: font_display: 'swap'
+        endif
+        if main_font_bold_italic
+          echo main_font_bold_italic | font_face: font_display: 'swap'
+        endif
+        if main_font_bolder
+          echo main_font_bolder | font_face: font_display: 'swap'
+        endif
+      -%}
+
+      {% if settings.heading_uppercase -%}
+        {%- capture heading_capitalize -%}uppercase{%- endcapture -%}
+      {% else -%}
+        {%- capture heading_capitalize -%}none{%- endcapture -%}
+      {% endif -%}
+      {%- capture heading_letterspacing -%}{{ settings.heading_letterspacing | divided_by: 1000.0 }}{% unless settings.heading_letterspacing == 0 -%}em{% endunless -%}{%- endcapture -%}
+
+      :root {
+        --heading-font-stack: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+        --heading-font-weight: {{ heading_font.weight }};
+        --heading-font-style: {{ heading_font.style }};
+        --heading-letterspacing: {{ heading_letterspacing }};
+        --heading-capitalize: {{ heading_capitalize }};
+        --main-font-stack: {{ main_font.family }}, {{ main_font.fallback_families }};
+        --main-font-weight: {{ main_font.weight }};
+        --main-font-style: {{ main_font.style }};
+      }
+    {% endstyle %}
+
+    {%- liquid
+      render 'css-bridge'
+      render 'critical-css'
+    -%}
+
+    <style id="manual-critical-css">
+      [x-cloak] {
+        display: none;
+      }
+
+      data-island {
+        display: block;
+      }
+
+      [data-parallax-container] {
+        will-change: opacity;
+        opacity: 0;
+        transition: opacity 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+      .no-js [data-parallax-container],
+      [data-parallax-container].animated {
+        opacity: 1;
+      }
+
+      @media (prefers-reduced-motion) {
+        [data-parallax-container] {
+          opacity: 1;
+        }
+      }
+    </style>
+
+    {% # theme-check-disable AssetPreload %}
+    {% unless heading_font.system? %}
+      <link
+        rel="preload"
+        as="font"
+        href="{{ heading_font | font_url }}"
+        type="font/woff2"
+        crossorigin
+      >
+    {% endunless %}
+    {% unless main_font.system? %}
+      <link
+        rel="preload"
+        as="font"
+        href="{{ main_font | font_url }}"
+        type="font/woff2"
+        crossorigin
+      >
+    {% endunless %}
+    {{ 'slick.css' | asset_url | stylesheet_tag }}
+    {{ 'slick-theme.css' | asset_url | stylesheet_tag }}
+
+    {% # theme-check-enable AssetPreload %}
+    {{ 'custom.css' | asset_url | stylesheet_tag }}
+    {{ 'style.css' | asset_url | stylesheet_tag }}
+  {% include 'pagefly-app-header' %}
+
+
+
+
+  {% comment %} Netterm Button CSS {% endcomment %}
+<style>
+
+.net_address_fields .new_back_link {
+display: flex !important;
+}
+.net_address_fields input[type=text], input[type=email], input[type=tel], input[type=password], .input, select {
+box-shadow: inset 0 0 0 var(--input-border-width) rgb(245 245 245);
+}
+</style>
+
+  {% comment %} Netterm Button CSS end {% endcomment %}
+
+
+{%- comment -%} ===== GEO: META ROBOTS + BREADCRUMB SCHEMA ===== {%- endcomment -%}
+{%- unless template.name == 'cart' or template.name == 'account' -%}
+  <meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+{%- endunless -%}
+{%- comment -%} BreadcrumbList Schema — auto-generates from URL path {%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "{{ shop.url }}"
+    }
+    {%- if template.name == 'product' -%}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ product.collections.first.title | default: "Products" | json }},
+      "item": "{{ shop.url }}{{ product.collections.first.url | default: '/collections/all' }}"
+    }
+    ,{
+      "@type": "ListItem",
+      "position": 3,
+      "name": {{ product.title | json }},
+      "item": "{{ shop.url }}{{ product.url }}"
+    }
+    {%- elsif template.name == 'collection' -%}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ collection.title | json }},
+      "item": "{{ shop.url }}{{ collection.url }}"
+    }
+    {%- elsif template.name == 'article' -%}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ blog.title | json }},
+      "item": "{{ shop.url }}{{ blog.url }}"
+    }
+    ,{
+      "@type": "ListItem",
+      "position": 3,
+      "name": {{ article.title | json }},
+      "item": "{{ shop.url }}{{ article.url }}"
+    }
+    {%- elsif template.name == 'blog' -%}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ blog.title | json }},
+      "item": "{{ shop.url }}{{ blog.url }}"
+    }
+    {%- elsif template.name == 'page' -%}
+    ,{
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ page.title | json }},
+      "item": "{{ shop.url }}{{ page.url }}"
+    }
+    {%- endif -%}
+  ]
+}
+</script>
+
+
+{%- comment -%} GEO: Single consolidated Organization (homepage only; replaces duplicate header + old theme blocks) {%- endcomment -%}
+{%- liquid
+  assign geo_org_logo_media = nil
+  if shop.brand.metafields.settings.logo != blank
+    assign geo_org_logo_media = shop.brand.metafields.settings.logo.value
+  elsif shop.brand != blank and shop.brand.logo != blank
+    assign geo_org_logo_media = shop.brand.logo
+  endif
+  assign geo_org_logo_url = nil
+  assign geo_org_logo_w = 600
+  assign geo_org_logo_h = 200
+  if geo_org_logo_media != blank
+    assign geo_org_logo_url = geo_org_logo_media | image_url: width: 600
+    if geo_org_logo_url != blank
+      unless geo_org_logo_url contains 'http'
+        assign geo_org_logo_url = geo_org_logo_url | prepend: 'https:'
+      endunless
+    endif
+    assign geo_org_logo_w = geo_org_logo_media.width | default: 600
+    assign geo_org_logo_h = geo_org_logo_media.height | default: 200
+    if geo_org_logo_media.width != blank and geo_org_logo_media.height != blank and geo_org_logo_media.width > 600
+      assign geo_org_logo_h = geo_org_logo_media.height | times: 600 | divided_by: geo_org_logo_media.width
+      assign geo_org_logo_w = 600
+    endif
+  else
+    assign geo_org_logo_url = 'happie-logo.png' | file_url
+    if geo_org_logo_url != blank
+      unless geo_org_logo_url contains 'http'
+        assign geo_org_logo_url = geo_org_logo_url | prepend: 'https:'
+      endunless
+    endif
+  endif
+-%}
+{%- if template.name == 'index' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Happie",
+  "alternateName": ["Drink Happie", "Happie Beverages"],
+  "url": {{ shop.url | json }},
+  {%- if geo_org_logo_url != blank -%}
+  "logo": {
+    "@type": "ImageObject",
+    "url": {{ geo_org_logo_url | json }},
+    "width": {{ geo_org_logo_w }},
+    "height": {{ geo_org_logo_h }}
+  },
+  {%- endif -%}
+  "foundingDate": "2019",
+  "founder": {
+    "@type": "Person",
+    "name": "Pete Olander",
+    "jobTitle": "Founder & CEO",
+    "url": {{ shop.url | append: '/pages/about-us' | json }},
+    "sameAs": [
+      "https://www.linkedin.com/in/peteolander/",
+      "https://drinkhappie.substack.com"
+    ]
+  },
+  "sameAs": [
+    "https://www.instagram.com/drinkhappie/",
+    "https://www.instagram.com/happiefusion/",
+    "https://www.facebook.com/profile.php?id=61559160498498",
+    "https://www.tiktok.com/@drinkhappie1",
+    "https://x.com/drinkhappie",
+    "https://www.linkedin.com/company/happie"
+  ],
+  "knowsAbout": [
+    "Functional Mushroom Beverages",
+    "Hemp-Derived THC Beverages",
+    "Lion's Mane Extract",
+    "Cordyceps Extract",
+    "Reishi Extract",
+    "Delta-9 THC",
+    "Alcohol Alternatives",
+    "Functional Hydration"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "Customer Service",
+    "email": {{ shop.email | json }}
+  },
+  "areaServed": "US",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "US"
+  }
+}
+</script>
+{%- assign geo_search_target = shop.url | append: routes.search_url | append: '?q={search_term_string}' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "publisher": {
+    "@type": "Organization",
+    "name": "Happie",
+    "url": {{ shop.url | json }}
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": {{ geo_search_target | json }}
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} GEO: Person schema on About page (handle: about, about-us, our-story) {%- endcomment -%}
+{%- if template.name == 'page' -%}
+{%- if page.handle == 'about' or page.handle == 'about-us' or page.handle == 'our-story' or page.handle == 'about-us-updated' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Pete Olander",
+  "url": {{ shop.url | append: page.url | json }},
+  "jobTitle": "Founder & CEO",
+  "description": "Founder and CEO of Happie Beverages, a functional beverage company producing Delta-9 THC drinks and Fungi Fusion mushroom wellness beverages. Former financial services professional (J.P. Morgan, First Western Trust Bank) and sports nutrition product lead (Nutrition53). Personally involved in every formulation, sourcing, and distribution decision since 2019.",
+  "alumniOf": [
+    { "@type": "Organization", "name": "J.P. Morgan" },
+    { "@type": "Organization", "name": "First Western Trust Bank" },
+    { "@type": "Organization", "name": "Nutrition53" }
+  ],
+  "workLocation": {
+    "@type": "Place",
+    "address": { "@type": "PostalAddress", "addressCountry": "US" }
+  },
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Happie",
+    "url": {{ shop.url | json }},
+    "foundingDate": "2019"
+  },
+  "knowsAbout": [
+    "Functional Mushroom Beverages",
+    "Adaptogenic Herbs",
+    "Hemp-Derived THC Beverages",
+    "Delta-9 THC Products",
+    "Beverage Formulation",
+    "Functional Ingredients",
+    "CPG Distribution",
+    "Cannabis Retail",
+    "Dietary Supplements",
+    "Alcohol Alternatives",
+    "Brand Building",
+    "Product Positioning"
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/in/peteolander/",
+    {{ shop.url | json }}
+  ]
+}
+</script>
+{%- endif -%}
+{%- endif -%}
+
+</head>
+
+  {%- liquid
+    assign body_classes = ''
+    if template == 'product.updated-pdp'
+      assign body_classes = 'updated-pdp '
+    endif
+    assign body_classes = body_classes | append: 'template-' | append: template.name
+    if template.suffix != blank
+      assign body_classes = body_classes | append: ' template-' | append: template.name | append: '-' | append: template.suffix | handle
+    endif
+  -%}
+  <body data-color-scheme="scheme1" class="{{ body_classes | strip }}">
+    {%- if settings.show_on_sale_badge -%}
+      {%- render 'static-sticker-defs', shape: settings.on_sale_badge_shape, id: 'on-sale' -%}
+    {%- endif -%}
+    {%- if settings.show_sold_out_badge -%}
+      {%- render 'static-sticker-defs', shape: settings.sold_out_badge_shape, id: 'sold-out' -%}
+    {%- endif -%}
+    {%- render 'static-sticker-defs', shape: settings.metafield_badge_shape, id: 'metafield-badge' -%}
+
+    <a class="skip-link" href="#MainContent">
+      {{- 'general.accessibility.skip_to_content' | t -}}
+    </a>
+    {%- sections 'header-group' -%}
+    {% render 'header-group-support' %}
+    <main id="MainContent" class="overflow-hidden">
+      {{ content_for_layout }}
+    </main>
+
+    {%- sections 'footer-group' -%}
+    {%- sections 'overlay-group' -%}
+
+    <div
+      id="screenreader-announce"
+      class="sr-only"
+      aria-live="polite"
+      role="status"
+    ></div>
+
+    <ul hidden>
+      <li id="a11y-refresh-page-message">
+        {{ 'general.accessibility.refresh_page' | t }}
+      </li>
+      <li id="a11y-selection-message">
+        {{ 'general.accessibility.selection_help' | t }}
+      </li>
+    </ul>
+
+    {% comment %} Modal containers {% endcomment %}
+    {% liquid
+      render 'left-drawer'
+      render 'right-drawer'
+      render 'modal'
+      render 'popup'
+    %}
+
+    {%- if settings.cart_type == 'modal' -%}
+      {% render 'drawer-cart' %}
+    {%- endif -%}
+
+    <script src="{{ 'global.bundle.js' | asset_url }}" type="module"></script>
+  </body>
+</html>

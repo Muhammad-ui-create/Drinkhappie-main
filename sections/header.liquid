@@ -1,0 +1,2180 @@
+{% comment %}theme-check-disable TemplateLength{% endcomment %}
+{%- liquid
+  assign color_scheme = section.settings.color_scheme
+  assign layout = section.settings.header_layout
+  assign uppercase = settings.header_uppercase
+  assign base_font_class = settings.header_font
+  assign active_color_scheme = section.settings.active_color_scheme
+  assign crop = section.settings.crop
+  assign predictive_search_enabled = true
+  assign counter = 0
+  assign show_icons = section.settings.show_icons
+
+  if section.settings.transparent_when_overlaid_and_stuck
+    assign change_color_scheme_when_overlaid_and_stuck = false
+  else
+    assign change_color_scheme_when_overlaid_and_stuck = true
+  endif
+
+  if section.settings.enable_overlay_on_homepage and template == 'index'
+    assign enable_overlay = true
+  endif
+  if section.settings.enable_overlay_on_collection_pages and template contains 'collection' and template != 'list-collections'
+    assign enable_overlay = true
+  endif
+  if section.settings.enable_overlay_on_product_pages and template contains 'product'
+    assign enable_overlay = true
+  endif
+  if section.settings.enable_overlay_on_page_templates and template.name == 'page'
+    assign enable_overlay = true
+  endif
+  if enable_overlay
+    assign color_scheme = section.settings.overlay_color_scheme
+
+    if change_color_scheme_when_overlaid_and_stuck
+      assign stuck_color_scheme = section.settings.color_scheme
+    endif
+  endif
+  assign has_feature_desktop_button = false
+  if section.blocks.size == 1
+    assign has_feature_desktop_button = true
+  endif
+
+  assign predictive_search_enabled = settings.predictive_search_enabled
+
+  assign nested_nav_style = section.settings.nested_nav_style
+  if nested_nav_style == 'mega_menu'
+    assign menu_style_classes = 'w-full max-h-three-quarters-screen-height px-section'
+  else
+    assign menu_style_classes = 'p-2.5 w-48 min-w-full'
+  endif
+-%}
+{%- capture logo -%}
+  {%- liquid
+    assign logo_container_class = 'font-heading text-l md:text-xl lg:text-3xl py-2.5 w-full flex '
+
+    unless layout == 'logo_left_navigation_center'
+      assign logo_container_class = logo_container_class | append: ' justify-center'
+    else
+      assign logo_container_class = logo_container_class | append: ' justify-start'
+    endunless
+  -%}
+  <div class="font-heading {{ logo_container_class }}" aria-label="{{ shop.name }}">
+    {% if section.settings.logo != blank %}
+      {% liquid
+        if section.settings.overlay_logo != blank and enable_overlay
+          assign logo = section.settings.overlay_logo
+          if change_color_scheme_when_overlaid_and_stuck
+            assign switch_between_both_logos = true
+          endif
+        else
+          assign logo = section.settings.logo
+        endif
+
+        assign image_size = section.settings.logo_max_width
+
+        # theme-check-disable VariableName
+        # https://github.com/Shopify/theme-tools/issues/397
+        assign image_size_2x = section.settings.logo_max_width | times: 2
+        assign image_size_3x = section.settings.logo_max_width | times: 3
+        # theme-check-enable VariableName
+
+      %}
+      <a href="{{ routes.root_url }}" class="site-header__logo-link inline w-full">
+        <div class="logo-image{% if switch_between_both_logos %} relative{% endif %}">
+          <img
+            src="{{ logo | image_url: width: image_size }}"
+            srcset="
+              {{- logo | image_url: width: image_size | append: ' 1x,' -}}
+              {{- logo | image_url: width: image_size_2x | append: ' 2x,' -}}
+              {{- logo | image_url: width: image_size_3x | append: ' 3x' -}}
+            "
+            alt="{{ shop.name }}"
+            width="{{ logo.width }}"
+            height="{{ logo.height }}"
+            loading="eager"
+            {% if switch_between_both_logos %}
+              class="text-transparent transition-opacity"
+              :class="{ 'opacity-100' : !isStuck, 'opacity-0' : isStuck }"
+            {% else %}
+              class="text-transparent"
+            {% endif %}
+          >
+          {% if switch_between_both_logos %}
+            {% assign non_overlay_logo = section.settings.logo %}
+            <img
+              src="{{ non_overlay_logo | image_url: width: image_size_2x }}"
+              srcset="
+              {{- non_overlay_logo | image_url: width: image_size | append: ' 1x,' -}}
+              {{- non_overlay_logo | image_url: width: image_size_2x | append: ' 2x,' -}}
+              {{- non_overlay_logo | image_url: width: image_size_3x | append: ' 3x' -}}
+              "
+              alt="{{ shop.name }}"
+              width="{{ non_overlay_logo.width }}"
+              height="{{ non_overlay_logo.height }}"
+              class="absolute inset-0 h-full w-full text-transparent transition-opacity"
+              :class="{ 'opacity-0' : !isStuck, 'opacity-100' : isStuck }"
+              loading="eager"
+              x-cloak
+            >
+          {% endif %}
+        </div>
+      </a>
+    {% else %}
+      <a href="{{ routes.root_url }}" class="break-word block w-fit md:max-w-full">{{ shop.name }}</a>
+    {% endif %}
+  </div>
+{%- endcapture -%}
+
+{%- if has_feature_desktop_button %}
+  {%- capture feature_desktop_link -%}
+    {%- for block in section.blocks -%}
+    {%- liquid
+      assign feature_desktop_link_position = block.settings.position
+      assign hide_button_shadow = false
+      if block.settings.hide_button_shadow
+        assign hide_button_shadow = true
+      endif
+    -%}
+    <a href="{{ block.settings.button_link }}" class="push-btn push-btn--pop inline-block {% if block.settings.hide_button_shadow %}push-btn--no-shadow{% endif %}">
+      <span class="push-btn__surface {{ block.settings.button_color }}">{{ block.settings.button_label }}</span>
+    </a>
+    {%- endfor -%}
+  {%- endcapture -%}
+{% endif %}
+
+{%- liquid
+  assign link_all = section.settings.show_all_navigation_links
+  assign link_classes = base_font_class | append: ' px-2.5 py-3.5 flex items-center transition'
+  assign cart_link_classes = base_font_class | append: ' pl-2.5 py-3.5 flex items-center transition'
+  assign secondary_link_classes = 'inline-block font-body px-5 py-1'
+  assign tertiary_link_classes = 'inline-block font-body px-5 py-1 max-w-full break-words'
+  assign dropdown_link_classes = base_font_class | append: ' flex items-center transition'
+  if uppercase
+    assign base_font_class = base_font_class | append: ' uppercase'
+    assign link_classes = link_classes | append: ' uppercase'
+    assign cart_link_classes = cart_link_classes | append: ' uppercase'
+    assign secondary_link_classes = secondary_link_classes | append: ' uppercase'
+    assign tertiary_link_classes = tertiary_link_classes | append: ' uppercase'
+    assign dropdown_link_classes = dropdown_link_classes | append: ' uppercase'
+  else
+    assign base_font_class = base_font_class | append: ' normal-case'
+    assign link_classes = link_classes | append: ' normal-case'
+    assign cart_link_classes = cart_link_classes | append: ' normal-case'
+    assign tertiary_link_classes = tertiary_link_classes | append: ' normal-case'
+    assign dropdown_link_classes = dropdown_link_classes | append: ' normal-case'
+  endif
+  if show_icons
+    assign icon_link_classes = base_font_class | append: ' h-full flex items-center'
+  endif
+  assign showcase_second_level_links = section.settings.showcase_second_level_links
+  assign showcase_top_level_collections = section.settings.showcase_top_level_collections
+-%}
+
+{% capture left_navigation %}
+  <nav role="navigation">
+    {% if nested_nav_style == 'dropdown' %}
+      {% # Dropdown nav background highlight %}
+      <div
+        class="pointer-events-none absolute inset-y-0 z-0 text-scheme-text max-lg:hidden"
+        x-show="activeWrappedMenuToggleEl"
+        :style="
+          {
+            left: activeWrappedMenuToggleEl ? `${activeWrappedMenuToggleEl.getBoundingClientRect().left}px` : '',
+            width: activeWrappedMenuToggleEl ? `${activeWrappedMenuToggleEl.getBoundingClientRect().width}px` : ''
+          }
+         "
+         style="display: none;"
+      ></div>
+    {% endif %}
+    <ul x-ref="navigation" class="gap-10 -mx-2.5 flex flex-wrap {% if layout contains 'navigation_left' %}justify-end{% else %}justify-center{% endif %} items-center text-base {% if uppercase %}uppercase{% endif %} {% if has_feature_desktop_button and feature_desktop_link_position == 'first_item_in_navigation' %}py-2 gap-2{% endif %}">
+      {%- if has_feature_desktop_button and feature_desktop_link_position == 'first_item_in_navigation' %}
+      <li class="no-js-focus-wrapper relative z-10 flex h-full items-center px-2.5">
+        <div class="{% unless hide_button_shadow %}{% if settings.button_shadow_direction contains 'top' %}pt-button-shadow{% else %}pb-button-shadow{% endif %}{% endunless %}">
+          {{ feature_desktop_link }}
+        </div>
+      </li>
+      {%- endif -%}
+      
+      {%- comment -%} Custom Shop Mega Menu - renders as first nav item when enabled {%- endcomment -%}
+      {%- if section.settings.enable_shop_mega_menu -%}
+        <li class="no-js-focus-wrapper inline-block h-full max-lg:hidden">
+          {% render 'mega-menu-shop' %}
+        </li>
+      {%- endif -%}
+      
+      {% for link in section.settings.left_linklist.links %}
+        {%- liquid
+          # Skip "Shop" link if custom mega menu is enabled (we render it separately above)
+          assign link_title_downcase = link.title | downcase | strip
+          assign skip_link = false
+          if section.settings.enable_shop_mega_menu and link_title_downcase == 'shop'
+            assign skip_link = true
+          endif
+        -%}
+        
+        {%- unless skip_link -%}
+        <li
+          class="no-js-focus-wrapper inline-block h-full"
+          {% if nested_nav_style == 'dropdown' %}
+            :class="{
+              'relative': navWrapped
+            }"
+          {% endif %}
+        >
+          {%- liquid
+            assign is_feature_collection_link = false
+            if link.links == blank and showcase_top_level_collections and link.type == 'collection_link' and nested_nav_style == 'mega_menu'
+              assign is_feature_collection_link = true
+            endif
+          -%}
+          {% if link.links != blank or is_feature_collection_link %}
+            <button class="relative h-full items-stretch {{ link_classes }}"
+              @click="toggleMenu({{ counter }})"
+              x-bind:aria-expanded="menuOpen.menu{{ counter }}? true: 'false'"
+              aria-controls="menu{{ counter | strip }}"
+              data-dropdown-parent="menu{{ counter | strip }}"
+              {% if nested_nav_style == 'dropdown' %}
+                x-effect="if (!navWrapped && menuOpen.menu{{ counter }} === true) activeWrappedMenuToggleEl = $el"
+                :class="
+                  {
+                    'text-[--active-color-scheme-text]': menuOpen.menu{{ counter }}
+                  }
+                "
+              {% endif %}
+              >
+                {% if nested_nav_style == 'dropdown' %}
+                  <span x-cloak :class="{ 'opacity-100': menuOpen.menu{{ counter }}, 'opacity-0': !menuOpen.menu{{ counter }} }" class="pointer-events-none absolute inset-0 z-0 bg-scheme-background" data-color-scheme="{{ active_color_scheme }}"></span>
+                {% endif %}
+              <span class="relative flex h-full items-center {% if layout contains 'navigation_center' and nested_nav_style == 'mega_menu' %}text-center{% else %}text-left{% endif %}">
+                <span class="inline-block pr-1">{{ link.title }}</span>
+                <span class="svg-scale rotate ml-1 mr-1 inline-block h-2 w-2 shrink-0 origin-center transform align-middle transition-transform duration-150" :class="{'rotate-180': menuOpen.menu{{ counter }}}">{% render 'icon-chevron-down' %}</span>
+              </span>
+            </button>
+            <div class="no-js-focus-container z-100 absolute top-full {% unless nested_nav_style == 'dropdown' %}left-0 py-half-section-vertical-spacing {% endunless %} {{ menu_style_classes }} transform {% if layout contains 'navigation_center' and nested_nav_style == 'mega_menu' %}text-center{% else %}text-left{% endif %} overflow-hidden overflow-y-auto bg-[--active-color-scheme-background] text-[--active-color-scheme-text]"
+              :class="
+                {
+                  'z-header-dropdown': menuOpen.menu{{ counter }},
+                }
+              "
+              id="menu{{ counter }}"
+              x-cloak
+              x-show="menuOpen.menu{{ counter }}"
+              {% if nested_nav_style == 'mega_menu' %}
+                x-transition:enter="transition ease-in-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in-out duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+              {% endif %}
+              data-header-dropdown
+              @focusout="focusOut($event, 'menu{{ counter }}')"
+              @click.away.prevent="menuOpen.menu{{ counter }} = false"
+              {% if nested_nav_style == 'dropdown' %}
+                :style="{
+                  minWidth: activeWrappedMenuToggleEl
+                    ? `max(12rem, ${
+                        activeWrappedMenuToggleEl.getBoundingClientRect().width
+                      }px)`
+                    : false
+                }"
+                data-color-scheme="{{ active_color_scheme }}"
+              {% endif %}
+            >
+              {%- liquid
+                assign counter = counter | plus: 1
+                assign have_feature_links = false
+                assign all_feature_links = false
+                assign feature_link_count = 0
+                assign single_level_links = link.links | where: "levels", 0
+                assign product_links = single_level_links | where: "type", "product_link"
+                assign collection_links = single_level_links | where: "type", "collection_link"
+                assign feature_link_count = product_links.size | plus: collection_links.size
+                if feature_link_count > 0
+                  assign have_feature_links = true
+                endif
+                if feature_link_count == link.links.size
+                  assign all_feature_links = true
+                endif
+                assign col_class = 'px-5'
+                assign use_grid = false
+                if nested_nav_style == 'mega_menu'
+                  if link.levels > 1
+                    assign use_grid = true
+                  endif
+                  if feature_link_count > 0 and showcase_second_level_links == true
+                    assign use_grid = true
+                  endif
+                  if collection_links.size > 0
+                    assign use_grid = true
+                  endif
+                  if use_grid
+                    assign list_class = 'grid grid-cols-1 lg:grid-cols-12 lg:gap-10 grid-flow-row-dense'
+                    assign col_class = 'lg:col-span-2'
+                  else
+                    assign list_class = 'flex items-top justify-start -mx-5'
+                  endif
+                else
+                  assign list_class = 'flex flex-col gap-3 items-top justify-start'
+                endif
+
+                assign showcase_sizes = '16.67vw'
+              %}
+
+              {% if nested_nav_style == 'mega_menu' %}
+                {%- unless is_feature_collection_link %}
+                  <ul class="{{ list_class }} {% if layout contains 'navigation_center' %}text-center{% else %}text-left{% endif %}">
+                    {% for child_link in link.links %}
+                      {% liquid
+                        assign is_feature_link = false
+                        if child_link.type == 'product_link' or child_link.type == 'collection_link' and child_link.levels == 0
+                          assign is_feature_link = true
+                        endif
+                      %}
+                      {%- unless is_feature_link and showcase_second_level_links -%}
+                        <li class="{{ col_class }}">
+                          {% if child_link.links != blank %}
+                            <h2 class="font-heading mb-2 py-1">
+                              {% if link_all %}<a {% if child_link.active %}aria-current="page"{% endif %} class="inline-block py-1" href="{{ child_link.url }}" {% if child_link.active %}aria-current="page"{% endif %}>{% endif %}
+                              {{ child_link.title }}
+                              {% if link_all %}</a>{% endif %}
+                            </h2>
+                            <ul class="font-body -mx-5 text-base ">
+                              {% for grandchild_link in child_link.links %}
+                                <li>
+                                  <a {% if grandchild_link.active %}aria-current="page"{% endif %} href="{{ grandchild_link.url }}" class="{{ tertiary_link_classes }}">
+                                    {{ grandchild_link.title }}
+                                  </a>
+                                </li>
+                              {% endfor %}
+                            </ul>
+                          {% else %}
+                            <a {% if child_link.active %}aria-current="page"{% endif %} href="{{ child_link.url }}" class="-mx-5 text-base {{ secondary_link_classes }}">
+                              {{ child_link.title }}
+                            </a>
+                          {% endif %}
+                        </li>
+                      {%- endunless -%}
+                    {% endfor %}
+
+                    {%- if have_feature_links and showcase_second_level_links -%}
+                      {% assign features_mod = feature_link_count | modulo: 2 %}
+                      {% for child_link in link.links %}
+                          {%- if child_link.type == 'product_link' or child_link.type == 'collection_link' and child_link.levels == 0 -%}
+                            {% if features_mod == 0 %}
+                              {% capture cycle_class %}{% cycle "lg:col-end-11", "lg:col-end-13" %}{% endcapture %}
+                          {% else %}
+                              {% capture cycle_class %}{% cycle "lg:col-end-13", "lg:col-end-11" %}{% endcapture %}
+                          {% endif %}
+                            <li class="-mt-2 lg:col-span-2 {% unless all_feature_links %}{{ cycle_class }}{% endunless %}">
+                              {% if nested_nav_style == 'mega_menu' %}
+                                {%- assign object = child_link.object -%}
+                                {% render 'showcase-tile', object: object, crop: crop, sizes: showcase_sizes %}
+                              {% else %}
+                                <a {% if child_link.active %}aria-current="page"{% endif %} href="{{ child_link.url }}" class="-mx-5 text-base {{ secondary_link_classes }}">
+                                  {{ child_link.title }}
+                                </a>
+                              {% endif %}
+                            </li>
+                          {%- endif -%}
+                      {% endfor %}
+                    {%- endif -%}
+                  </ul>
+                  {% else %}
+                    {%- render 'desktop-nav-featured-collection-links', link: link, crop: crop, nested_nav_style: nested_nav_style -%}
+                {% endunless %}
+              {% else %}
+                {%- unless is_feature_collection_link %}
+                  <ul class="min-w-full {{ list_class }}">
+                    {% for child_link in link.links %}
+                      {%- liquid
+                        assign child_menu_id = 'child-menu-' | append: forloop.index
+                      -%}
+                        <li>
+                          {% if child_link.links != blank %}
+                            <data-island
+                              x-data="{ expanded: false }"
+                            >
+                              <button
+                                class="font-body flex w-full cursor-pointer items-center justify-between gap-1 text-base"
+                                @click="expanded = ! expanded"
+                                :aria-expanded="expanded ? true : false"
+                                aria-controls="{{ child_menu_id }}"
+                                id="child-menu-button_{{ forloop.index }}"
+                              >
+                                <span>{{ child_link.title }}</span>
+                                <span class="svg-scale rotate ml-1 mr-1 inline-block h-2 w-2 shrink-0 origin-center transform align-middle transition-transform duration-150" :class="{'rotate-180': expanded}">{% render 'icon-chevron-down' %}</span>
+                              </button>
+                              <ul
+                                class="font-body flex flex-col text-base"
+                                x-show="expanded"
+                                x-collapse.duration.150ms
+                                x-cloak
+                                id="{{ child_menu_id }}"
+                                aria-labelledby="child-menu-button_{{ forloop.index }}"
+                              >
+                                {% for grandchild_link in child_link.links %}
+                                  <li class="mt-3 pl-5">
+                                    <a {% if grandchild_link.active %}aria-current="page"{% endif %} href="{{ grandchild_link.url }}" class="break-words normal-case">
+                                      {{ grandchild_link.title }}
+                                    </a>
+                                  </li>
+                                {% endfor %}
+                              </ul>
+                            </data-island>
+                          {% else %}
+                              <a {% if child_link.active %}aria-current="page"{% endif %} href="{{ child_link.url }}" class="font-body text-base">
+                                {{ child_link.title }}
+                              </a>
+                          {% endif %}
+                        </li>
+                    {% endfor %}
+                  </ul>
+                {% endunless %}
+              {% endif %}
+            </div>
+          {% else %}
+            <a {% if link.active %}aria-current="page"{% endif %} href="{{ link.url }}" class="{{ link_classes }}">
+              {{ link.title }}
+            </a>
+          {% endif %}
+        </li>
+        {%- endunless -%}
+      {% endfor %}
+    </ul>
+  </nav>
+{% endcapture %}
+
+{% capture right_navigation %}
+  <nav role="navigation">
+    {% if nested_nav_style == 'dropdown' %}
+      {% # Dropdown nav background highlight %}
+      <div
+        class="pointer-events-none absolute inset-y-0 z-0 bg-[--active-color-scheme-background] text-scheme-text max-lg:hidden"
+        x-show="activeWrappedMenuToggleEl"
+        :style="
+          {
+            left: activeWrappedMenuToggleEl ? `${activeWrappedMenuToggleEl.getBoundingClientRect().left}px` : '',
+            width: activeWrappedMenuToggleEl ? `${activeWrappedMenuToggleEl.getBoundingClientRect().width}px` : ''
+          }
+         "
+         style="display: none;"
+      ></div>
+    {% endif %}
+    <ul x-ref="navigation" class="gap-10 -mx-2.5 flex flex-wrap {% if layout contains 'navigation_left' %}justify-start{% else %}justify-center{% endif %} items-center text-base {% if uppercase %}uppercase{% endif %} {% if has_feature_desktop_button and feature_desktop_link_position == 'first_item_in_navigation' %}py-2 gap-2{% endif %}">
+      {%- if has_feature_desktop_button and feature_desktop_link_position == 'first_item_in_navigation' %}
+      <li class="no-js-focus-wrapper relative z-10 flex h-full items-center px-2.5">
+        <div class="{% unless hide_button_shadow %}{% if settings.button_shadow_direction contains 'top' %}pt-button-shadow{% else %}pb-button-shadow{% endif %}{% endunless %}">
+          {{ feature_desktop_link }}
+        </div>
+      </li>
+      {%- endif -%}
+      {% for link in section.settings.right_linklist.links %}
+        <li
+          class="no-js-focus-wrapper inline-block h-full"
+          {% if nested_nav_style == 'dropdown' %}
+            :class="{
+              'relative': navWrapped
+            }"
+          {% endif %}
+        >
+          {%- liquid
+            assign is_feature_collection_link = false
+            if link.links == blank and showcase_top_level_collections and link.type == 'collection_link' and nested_nav_style == 'mega_menu'
+              assign is_feature_collection_link = true
+            endif
+          -%}
+          {% if link.links != blank or is_feature_collection_link %}
+            <button class="relative h-full items-stretch {{ link_classes }}"
+              @click="toggleMenu({{ counter }})"
+              x-bind:aria-expanded="menuOpen.menu{{ counter }}? true: 'false'"
+              aria-controls="menu{{ counter | strip }}"
+              data-dropdown-parent="menu{{ counter | strip }}"
+              {% if nested_nav_style == 'dropdown' %}
+                x-effect="if (!navWrapped && menuOpen.menu{{ counter }} === true) activeWrappedMenuToggleEl = $el"
+                :class="
+                  {
+                    'text-[--active-color-scheme-text]': menuOpen.menu{{ counter }}
+                  }
+                "
+              {% endif %}
+              >
+                {% if nested_nav_style == 'dropdown' %}
+                  <span x-cloak :class="{ 'opacity-100': menuOpen.menu{{ counter }}, 'opacity-0': !menuOpen.menu{{ counter }} }" class="pointer-events-none absolute inset-0 z-0 bg-scheme-background" data-color-scheme="{{ active_color_scheme }}"></span>
+                {% endif %}
+              <span class="relative flex h-full items-center {% if layout contains 'navigation_center' and nested_nav_style == 'mega_menu' %}text-center{% else %}text-left{% endif %}">
+                <span class="inline-block pr-1">{{ link.title }}</span>
+                <span class="svg-scale rotate ml-1 mr-1 inline-block h-2 w-2 shrink-0 origin-center transform align-middle transition-transform duration-150" :class="{'rotate-180': menuOpen.menu{{ counter }}}">{% render 'icon-chevron-down' %}</span>
+              </span>
+            </button>
+            <div class="no-js-focus-container z-100 absolute top-full {% unless nested_nav_style == 'dropdown' %}left-0 py-half-section-vertical-spacing {% endunless %} {{ menu_style_classes }} transform {% if layout contains 'navigation_center' and nested_nav_style == 'mega_menu' %}text-center{% else %}text-left{% endif %} overflow-hidden overflow-y-auto bg-[--active-color-scheme-background] text-[--active-color-scheme-text]"
+              :class="
+                {
+                  'z-header-dropdown': menuOpen.menu{{ counter }},
+                }
+              "
+              id="menu{{ counter }}"
+              x-cloak
+              x-show="menuOpen.menu{{ counter }}"
+              {% if nested_nav_style == 'mega_menu' %}
+                x-transition:enter="transition ease-in-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in-out duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+              {% endif %}
+              data-header-dropdown
+              @focusout="focusOut($event, 'menu{{ counter }}')"
+              @click.away.prevent="menuOpen.menu{{ counter }} = false"
+              {% if nested_nav_style == 'dropdown' %}
+                :style="{
+                  minWidth: activeWrappedMenuToggleEl
+                    ? `max(12rem, ${
+                        activeWrappedMenuToggleEl.getBoundingClientRect().width
+                      }px)`
+                    : false
+                }"
+                data-color-scheme="{{ active_color_scheme }}"
+              {% endif %}
+            >
+              {%- liquid
+                assign counter = counter | plus: 1
+                assign have_feature_links = false
+                assign all_feature_links = false
+                assign feature_link_count = 0
+                assign single_level_links = link.links | where: "levels", 0
+                assign product_links = single_level_links | where: "type", "product_link"
+                assign collection_links = single_level_links | where: "type", "collection_link"
+                assign feature_link_count = product_links.size | plus: collection_links.size
+                if feature_link_count > 0
+                  assign have_feature_links = true
+                endif
+                if feature_link_count == link.links.size
+                  assign all_feature_links = true
+                endif
+                assign col_class = 'px-5'
+                assign use_grid = false
+                if nested_nav_style == 'mega_menu'
+                  if link.levels > 1
+                    assign use_grid = true
+                  endif
+                  if feature_link_count > 0 and showcase_second_level_links == true
+                    assign use_grid = true
+                  endif
+                  if collection_links.size > 0
+                    assign use_grid = true
+                  endif
+                  if use_grid
+                    assign list_class = 'grid grid-cols-1 lg:grid-cols-12 lg:gap-10 grid-flow-row-dense'
+                    assign col_class = 'lg:col-span-2'
+                  else
+                    assign list_class = 'flex items-top justify-start -mx-5'
+                  endif
+                else
+                  assign list_class = 'flex flex-col gap-3 items-top justify-start'
+                endif
+
+                assign showcase_sizes = '16.67vw'
+              %}
+
+              {% if nested_nav_style == 'mega_menu' %}
+                {%- unless is_feature_collection_link %}
+                  <ul class="{{ list_class }} {% if layout contains 'navigation_center' %}text-center{% else %}text-left{% endif %}">
+                    {% for child_link in link.links %}
+                      {% liquid
+                        assign is_feature_link = false
+                        if child_link.type == 'product_link' or child_link.type == 'collection_link' and child_link.levels == 0
+                          assign is_feature_link = true
+                        endif
+                      %}
+                      {%- unless is_feature_link and showcase_second_level_links -%}
+                        <li class="{{ col_class }}">
+                          {% if child_link.links != blank %}
+                            <h2 class="font-heading mb-2 py-1">
+                              {% if link_all %}<a {% if child_link.active %}aria-current="page"{% endif %} class="inline-block py-1" href="{{ child_link.url }}" {% if child_link.active %}aria-current="page"{% endif %}>{% endif %}
+                              {{ child_link.title }}
+                              {% if link_all %}</a>{% endif %}
+                            </h2>
+                            <ul class="font-body -mx-5 text-base ">
+                              {% for grandchild_link in child_link.links %}
+                                <li>
+                                  <a {% if grandchild_link.active %}aria-current="page"{% endif %} href="{{ grandchild_link.url }}" class="{{ tertiary_link_classes }}">
+                                    {{ grandchild_link.title }}
+                                  </a>
+                                </li>
+                              {% endfor %}
+                            </ul>
+                          {% else %}
+                            <a {% if child_link.active %}aria-current="page"{% endif %} href="{{ child_link.url }}" class="-mx-5 text-base {{ secondary_link_classes }}">
+                              {{ child_link.title }}
+                            </a>
+                          {% endif %}
+                        </li>
+                      {%- endunless -%}
+                    {% endfor %}
+
+                    {%- if have_feature_links and showcase_second_level_links -%}
+                      {% assign features_mod = feature_link_count | modulo: 2 %}
+                      {% for child_link in link.links %}
+                          {%- if child_link.type == 'product_link' or child_link.type == 'collection_link' and child_link.levels == 0 -%}
+                            {% if features_mod == 0 %}
+                              {% capture cycle_class %}{% cycle "lg:col-end-11", "lg:col-end-13" %}{% endcapture %}
+                          {% else %}
+                              {% capture cycle_class %}{% cycle "lg:col-end-13", "lg:col-end-11" %}{% endcapture %}
+                          {% endif %}
+                            <li class="-mt-2 lg:col-span-2 {% unless all_feature_links %}{{ cycle_class }}{% endunless %}">
+                              {% if nested_nav_style == 'mega_menu' %}
+                                {%- assign object = child_link.object -%}
+                                {% render 'showcase-tile', object: object, crop: crop, sizes: showcase_sizes %}
+                              {% else %}
+                                <a {% if child_link.active %}aria-current="page"{% endif %} href="{{ child_link.url }}" class="-mx-5 text-base {{ secondary_link_classes }}">
+                                  {{ child_link.title }}
+                                </a>
+                              {% endif %}
+                            </li>
+                          {%- endif -%}
+                      {% endfor %}
+                    {%- endif -%}
+                  </ul>
+                  {% else %}
+                    {%- render 'desktop-nav-featured-collection-links', link: link, crop: crop, nested_nav_style: nested_nav_style -%}
+                {% endunless %}
+              {% else %}
+                {%- unless is_feature_collection_link %}
+                  <ul class="min-w-full {{ list_class }}">
+                    {% for child_link in link.links %}
+                      {%- liquid
+                        assign child_menu_id = 'child-menu-' | append: forloop.index
+                      -%}
+                        <li>
+                          {% if child_link.links != blank %}
+                            <data-island
+                              x-data="{ expanded: false }"
+                            >
+                              <button
+                                class="font-body flex w-full cursor-pointer items-center justify-between gap-1 text-base"
+                                @click="expanded = ! expanded"
+                                :aria-expanded="expanded ? true : false"
+                                aria-controls="{{ child_menu_id }}"
+                                id="child-menu-button_{{ forloop.index }}"
+                              >
+                                <span>{{ child_link.title }}</span>
+                                <span class="svg-scale rotate ml-1 mr-1 inline-block h-2 w-2 shrink-0 origin-center transform align-middle transition-transform duration-150" :class="{'rotate-180': expanded}">{% render 'icon-chevron-down' %}</span>
+                              </button>
+                              <ul
+                                class="font-body flex flex-col text-base"
+                                x-show="expanded"
+                                x-collapse.duration.150ms
+                                x-cloak
+                                id="{{ child_menu_id }}"
+                                aria-labelledby="child-menu-button_{{ forloop.index }}"
+                              >
+                                {% for grandchild_link in child_link.links %}
+                                  <li class="mt-3 pl-5">
+                                    <a {% if grandchild_link.active %}aria-current="page"{% endif %} href="{{ grandchild_link.url }}" class="break-words normal-case">
+                                      {{ grandchild_link.title }}
+                                    </a>
+                                  </li>
+                                {% endfor %}
+                              </ul>
+                            </data-island>
+                          {% else %}
+                              <a {% if child_link.active %}aria-current="page"{% endif %} href="{{ child_link.url }}" class="font-body text-base">
+                                {{ child_link.title }}
+                              </a>
+                          {% endif %}
+                        </li>
+                    {% endfor %}
+                  </ul>
+                {% endunless %}
+              {% endif %}
+            </div>
+          {% else %}
+            <a {% if link.active %}aria-current="page"{% endif %} href="{{ link.url }}" class="{{ link_classes }}">
+              {{ link.title }}
+            </a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+{% endcapture %}
+
+{%- liquid
+  assign search_resources = ''
+  if settings.search_products
+    assign search_resources = ' product'
+  endif
+  if settings.search_collections
+    assign search_resources = search_resources | append: ' collection'
+  endif
+  if settings.search_articles
+    assign search_resources = search_resources | append: ' article'
+  endif
+  if settings.search_pages
+    assign search_resources = search_resources | append: ' page'
+  endif
+  if settings.search_suggestions
+    assign search_resources = search_resources | append: ' query'
+  endif
+  assign search_resources = search_resources | strip | split: ' ' | join: ','
+-%}
+{% assign close_text = 'general.accessibility.close_modal' %}
+{%- capture search_form -%}
+  <form x-ref="searchForm" action="{{ routes.search_url }}" method="get" role="search" {% if predictive_search_enabled %} @submit="onFormSubmit"{% endif %} @click.away.prevent="searchOpen = false">
+    <div x-ref="searchFieldComponent" class="relative py-2" {% unless predictive_search_enabled %}@focusout="searchFocusOut"{% endunless %}>
+      <input
+        id="header-search"
+        type="search"
+        name="q"
+        value=""
+        class="header-search-input font-secondary w-full border-0 bg-transparent py-2 pl-9 shadow-none placeholder:text-scheme-text"
+        placeholder="{{ 'general.search.placeholder' | t }}"
+        {%- if predictive_search_enabled -%}
+          aria-expanded="false"
+          aria-owns="predictive-search-results-list"
+          aria-controls="predictive-search-results-list"
+          aria-autocomplete="list"
+          autocorrect="off"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+          x-ref="input"
+          x-model="rawQuery"
+          @input.debounce.300="onChange"
+          @focus="onFocus"
+        {%- endif -%}
+      >
+      <label class="visually-hidden" for="header-search">{{ 'general.search.placeholder' | t }}</label>
+      <input type="hidden" name="options[prefix]" value="last">
+      {%- if predictive_search_enabled == false and settings.search_products or settings.search_articles or settings.search_pages -%}
+        <input type="hidden" name="type" value="{% if settings.search_products %}product{% endif %}{% if settings.search_articles %},article{% endif %}{% if settings.search_pages %},page{% endif %}">
+      {%- endif -%}
+      <button class="absolute left-0 top-1/2 flex -translate-y-1/2 transform p-1" aria-label="{{ 'general.search.submit' | t }}">
+        <span class="inline-block h-6 w-6 shrink-0">{% render 'icon-search' %}</span>
+      </button>
+      <button x-cloak {% if predictive_search_enabled %}@click="close()"{% else %}@click="closeSearch"{% endif %} class="absolute right-0 top-1/2 flex -translate-y-1/2 transform p-1" type="button">
+        <span class="visually-hidden">{{ close_text | t }}</span>
+        <span class="inline-block h-6 w-6 shrink-0">{% render 'icon-close' %}</span>
+      </button>
+    </div>
+    {%- if predictive_search_enabled -%}
+    <div id="predictiveSearchResults" tabindex="-1" x-cloak class="absolute left-0 right-0 z-40 h-screen text-scheme-text">
+      <div
+        x-show="resultsOpen"
+        class="absolute left-0 right-0 z-50 h-screen bg-scheme-text/75"
+        @click="close()"
+      ></div>
+      <template x-if="loading && !results">
+        <div class="relative z-50 bg-scheme-background">
+          <div class="mx-auto h-6 w-6 pb-12 pt-12" data-predictive-loading>
+            <div class="loading"></div>
+          </div>
+        </div>
+      </template>
+      <template x-if="resultsOpen">
+        <div x-show="resultsOpen" class="relative z-50 max-h-three-quarters-screen-height scroll-pb-5 {% unless nested_nav_style == 'dropdown' %}overflow-hidden overflow-y-auto{% endunless %} bg-scheme-background px-section pb-5 lg:scroll-pb-10 lg:pb-10" x-ref="results">
+        </div>
+      </template>
+    </div>
+    <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+    {%- endif -%}
+  </form>
+{%- endcapture -%}
+{% comment %}
+  Mobile menu icon.
+  This is mandatory on mobile. On desktop only appears if menu icon layout is selected.
+{% endcomment %}
+{%- capture menu_icon -%}
+<button
+  class="{{ base_font_class }} js-enabled -m-1 inline-block p-1 {% unless layout contains 'menu_icon' %}lg:hidden{% endunless %}"
+  type="button"
+  x-bind:aria-expanded="$store.modals.leftDrawer.contents === 'nav'"
+  @click="$store.modals.open('nav')"
+  data-menu-drawer-toggle>
+
+  <span class="{% if show_icons %}visually-hidden{% endif %} pointer-events-none">{{ 'layout.navigation.menu' | t }}</span>
+  {%- if show_icons -%}
+  <span class="icon pointer-events-none block">
+    <span class="inline-block h-7 w-7 align-middle">{% render 'icon-menu' %}</span>
+  </span>
+  {%- endif -%}
+</button>
+<noscript>
+  <div class="no-js-focus-wrapper">
+    <button
+      class="-m-1 inline-block p-1 {% unless layout contains 'menu_icon' %}lg:hidden{% endunless %}"
+      type="button"
+      data-menu-drawer-toggle>
+      <span class="{% if show_icons %}visually-hidden{% endif %}">{{ 'layout.navigation.menu' | t }}</span>
+      {%- if show_icons -%}
+      <span class="icon block">
+        <span class="inline-block h-7 w-7 align-middle">{% render 'icon-menu' %}</span>
+      </span>
+      {%- endif -%}
+    </button>
+
+    <div class="no-js-focus-container z-100 absolute top-full {% unless nested_nav_style == 'dropdown' %}left-0 py-section-vertical-spacing px-section transform{% endunless %} hidden w-11/12 md:w-7/12 lg:w-5/12 {% if layout contains 'navigation_center' and nested_nav_style == 'mega_menu' %}text-center{% else %}text-left{% endif %} max-h-three-quarters-screen-height overflow-hidden overflow-y-auto bg-scheme-background text-scheme-text">
+      {%- render 'no-js-sidebar-nav' %}
+    </div>
+  </div>
+</noscript>
+<data-island x-data on="idle">
+  <div>
+    {% render 'sidebar-nav', base_font_class: 'font-main' %}
+  </div>
+</data-island>
+{%- endcapture -%}
+
+{%- capture cart_icon %}
+  {%- if show_icons -%}
+    <div class="pointer-events-none relative my-auto align-middle">
+      <span class="inline-block h-7 w-7 fill-current align-top">
+        {%- if settings.cart_icon == 'cart' -%}
+          {%- render 'icon-cart' -%}
+        {%- else -%}
+          {%- render 'icon-bag' -%}
+        {%- endif -%}
+        <span class="visually-hidden">{{ 'layout.cart.title' | t }} </span>
+      </span>
+      <span
+        x-show="$store.cart_count.count > 0"
+        class="absolute -bottom-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-scheme-text text-[0.625rem] tracking-normal text-scheme-background"
+        x-text="$store.cart_count.count"
+        {%- if cart == empty -%}
+          style="display: none;"
+        {%- endif -%}
+      >
+        {{ cart.item_count }}
+      </span>
+      <span class="visually-hidden">
+        {%- if cart.item_count == 1 -%}
+          {{- 'layout.cart.items_count.one' | t -}}
+        {%- else -%}
+          {{- 'layout.cart.items_count.other' | t -}}
+        {%- endif -%}
+      </span>
+    </div>
+  {%- else -%}
+    {{ 'layout.cart.title' | t }} (<span  x-text="$store.cart_count.count">{{ cart.item_count }}</span>)
+    <span class="visually-hidden">
+      {%- if cart.item_count == 1 -%}
+        {{- 'layout.cart.items_count.one' | t -}}
+      {%- else -%}
+        {{- 'layout.cart.items_count.other' | t -}}
+      {%- endif -%}
+    </span>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- capture cart_button -%}
+  {% if settings.cart_type == 'modal' and template != 'cart' %}
+    <button
+      class="js-enabled whitespace-nowrap {% if show_icons %}{{ icon_link_classes }}{% else %}{{ cart_link_classes }}{% endif %}"
+      type="button"
+      id="CartButton"
+      @click.prevent="$store.modals.open('cart')"
+      >
+      {{ cart_icon }}
+    </button>
+    <noscript>
+      <a
+        class="whitespace-nowrap {{ link_classes }}"
+        href="{{ routes.cart_url }}"
+      >
+        {{ cart_icon }}
+      </a>
+    </noscript>
+  {% else %}
+    <a
+      class="whitespace-nowrap {{ link_classes }}"
+      href="{{ routes.cart_url }}"
+    >
+      {{ cart_icon }}
+    </a>
+  {% endif %}
+{%- endcapture -%}
+
+{% comment %}
+  Accounts
+{% endcomment %}
+{% comment %}
+  {%- capture accounts -%}
+    {% if shop.customer_accounts_enabled %}
+      {% if customer %}
+        <a class="{% if show_icons %}{{ icon_link_classes }}{% else %}{{ link_classes }}{% endif %}" href="{{ routes.account_url }}">
+          <span class="{% if show_icons %}visually-hidden{% endif %}">{{ 'layout.customer.account' | t }}</span>
+          {%- if show_icons -%}
+          <span class="inline-block h-7 w-7 align-middle">{%- render 'icon-account' -%}</span>
+        {%- endif -%}
+        </a>
+      {% else %}
+        <a class="{% if show_icons %}{{ icon_link_classes }}{% else %}{{ link_classes }}{% endif %}" href="{{ routes.account_login_url }}">
+          <span class="{% if show_icons %}visually-hidden{% endif %}">{{ 'layout.customer.log_in' | t }}</span>
+          {%- if show_icons -%}
+          <span class="inline-block h-7 w-7 align-middle">{%- render 'icon-account' -%}</span>
+          {%- endif -%}
+        </a>
+      {% endif %}
+    {% endif %}
+  {% endcapture %}
+{% endcomment %}
+
+<data-island
+  class="
+    site-header w-full text-scheme-text
+    {% if enable_overlay %}
+      absolute top-0 left-0 right-0 z-20 border-b-section bg-scheme-background/0
+      {% unless section.settings.overlay_show_separator_border %}
+        border-transparent
+      {% else %}
+        border-section-border
+      {% endunless %}
+    {% else %}
+      relative bg-scheme-background text-scheme-text border-b-section border-section-border
+    {% endif %}
+    transition-[background-color,border-color] duration-200 ease-in-out
+    {% if layout contains 'navigation_center' %}
+      lg:w-auto
+    {% endif %}
+  "
+  role="banner"
+  x-data="Header({{ counter }})"
+  data-color-scheme="{{ color_scheme }}"
+  {% if nested_nav_style == 'mega_menu' %}
+    {% if enable_overlay and change_color_scheme_when_overlaid_and_stuck %}
+      :data-color-scheme="headerIsActive ? '{{ active_color_scheme }}' : isStuck ? '{{ stuck_color_scheme }}' : '{{ color_scheme }}'"
+    {% else %}
+      :data-color-scheme="headerIsActive ? '{{ active_color_scheme }}' : '{{ color_scheme }}'"
+    {% endif %}
+  {% else %}
+    {% if enable_overlay and change_color_scheme_when_overlaid_and_stuck %}
+      :data-color-scheme="isStuck ? '{{ stuck_color_scheme }}' : '{{ color_scheme }}'"
+    {% endif %}
+  {% endif %}
+  {% if section.settings.sticky_header %}
+    data-sticky-header
+    {% if enable_overlay and change_color_scheme_when_overlaid_and_stuck %}
+      :class="
+        {
+          'header-is-active bg-scheme-background' : headerIsActive,
+          'bg-scheme-background': isStuck,
+          'bg-scheme-background/0': !isStuck && !headerIsActive,
+        }
+      "
+    {% else %}
+      :class="
+        {
+          'header-is-active' : headerIsActive,
+          {% if enable_overlay %}
+            'bg-scheme-background' : headerIsActive,
+            'bg-scheme-background/0' : !headerIsActive,
+            'hover:bg-scheme-background' : !headerIsActive && isStuck,
+          {% endif %}
+        }
+      "
+    {% endif %}
+  {% else %}
+    :class="
+      {
+        'header-is-active' : headerIsActive,
+          {% if enable_overlay %}
+            'bg-scheme-background' : headerIsActive,
+            'bg-scheme-background/0': !headerIsActive,
+          {% endif %}
+      }
+    "
+  {% endif %}
+  style="
+    --active-color-scheme-text: rgb(var(--color-scheme-{{ active_color_scheme.id }}-text));
+    --active-color-scheme-background: rgb(var(--color-scheme-{{ active_color_scheme.id }}-background));
+  "
+>
+  <div id="headerBorderWrap" class="headerBorderWrap">
+    <div
+      id="headerContainer"
+      class="z-10"
+    >
+      <div
+        class="{% unless nested_nav_style == 'dropdown' %}overflow-hidden{% endunless %} px-section py-2 lg:py-0"
+      >
+        {%- liquid
+          unless layout == 'logo_left_navigation_center'
+            assign header_left_group_classes = 'w-1/3 grow'
+            assign header_center_group_classes = 'grow-0 mx-5 px-5'
+            assign header_right_group_classes = 'w-1/3 grow'
+          else
+            assign header_left_group_classes = 'w-1/3 grow'
+            assign header_center_group_classes = 'hidden lg:block w-3/4 xl:w-4/5 grow'
+            assign header_right_group_classes = 'w-1/3 grow'
+          endunless
+        -%}
+        <div class="flex items-center justify-items-center gap-x-3 lg:gap-x-5">
+          {% comment %} Left {% endcomment %}
+          <div class="{{ header_left_group_classes }}">
+            {% if layout contains 'logo_center' %}
+              <div class="z-10 flex items-center">{{ menu_icon }}</div>
+            {% endif %}
+            {% if layout contains 'logo_left' %}
+              <div class="w-auto">
+                {{ logo }}
+              </div>
+            {% endif %}
+            {% if layout contains 'navigation_left' %}
+              <div class="hidden lg:block">
+                {{ left_navigation }}
+              </div>
+            {% endif %}
+          </div>
+
+          {% comment %} Center {% endcomment %}
+          <div class="{{ header_center_group_classes }} text-center">
+            {% if layout == 'logo_left_navigation_center' %}
+              {{ left_navigation }}
+            {% else %}
+              {{ logo }}
+            {% endif %}
+          </div>
+
+          {% comment %} Right {% endcomment %}
+          <div
+            class="{{ header_right_group_classes }} flex flex-wrap items-center justify-end lg:justify-start{% if show_icons %} gap-x-3{% endif %}"
+            data-utility-links
+          >
+            {% if layout contains 'navigation_left' %}
+              <div class="hidden flex-grow lg:block">
+                {{ right_navigation }}
+              </div>
+            {% endif %}
+
+            {% if layout contains 'logo_left' %}
+              <div class="lg:hidden">
+                {{ menu_icon }}
+              </div>
+            {% endif %}
+
+            {% comment %}
+              <div class="hidden h-full lg:block">
+                {{ accounts }}
+              </div>
+            {% endcomment %}
+
+            <div class="flex h-full items-center justify-end">
+              {{ cart_button }}
+            </div>
+
+            {% unless section.settings.header_show_search == false %}
+              <a
+                data-open-search
+                x-ref="search"
+                @click.prevent="openSearch"
+                @keydown.space="openSearch"
+                href="{{ routes.search_url }}"
+                class="{% if show_icons %}{{ icon_link_classes }}{% else %}hidden lg:block {{ link_classes }}{% endif %}"
+              >
+                {% if show_icons -%}
+                  <span class="inline-block h-7 w-7 fill-current align-middle">
+                    {%- render 'icon-search' -%}
+                  </span>
+                {%- endif %}
+                <span class="visually-hidden">
+                  {{- 'general.search.title' | t -}}
+                </span>
+                {%- unless show_icons -%}
+                  <span>{{ 'general.search.submit' | t }}</span>
+                {%- endunless %}
+              </a>
+              <div
+                class="absolute bottom-0 left-0 right-0 top-0 z-20 flex {{ menu_style_classes }} items-center bg-[--active-color-scheme-background] text-scheme-text"
+                x-cloak
+                x-show="searchOpen"
+                x-transition:enter="transition ease-in-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in-out duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                @click.away.prevent="searchOpen = false"
+                data-header-search
+              >
+                <data-island
+                  class="w-full"
+                  {% if predictive_search_enabled %}
+                    x-data="PredictiveSearch('{{ search_resources }}')"
+                    @keyup="onKeyup"
+                    @keydown="onKeydown"
+                    @click.outside.prevent="close()"
+                    @keyup.escape.prevent.stop="close(false)"
+                    @focusin.window="( searchOpen && ! $root.contains($event.target) ) && close()"
+                    x-trap.inert.noscroll="searchOpen"
+                  {% endif %}
+                  on="idle"
+                >
+                  {{ search_form }}
+                </data-island>
+              </div>
+            {% endunless %}
+
+            {% if has_feature_desktop_button and feature_desktop_link_position == 'right_of_cart' %}
+              <div class="relative z-10 ml-5 hidden items-center {% if show_icons %}py-2.5{% else %}py-2{% endif %} lg:flex">
+                <div class="{% unless hide_button_shadow %}{% if settings.button_shadow_direction contains 'top' %}pt-button-shadow{% else %}pb-button-shadow{% endif %}{% endunless %}">
+                  {{ feature_desktop_link }}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</data-island>
+<noscript>
+  <style>
+    html.no-js .no-js-focus-wrapper:focus-within > .no-js-focus-container {
+      display: block !important;
+    }
+  </style>
+</noscript>
+{% if section.settings.sticky_header %}
+  {% style %}
+      #shopify-section-{{ section.id }} {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+      }
+    </style>
+  {% endstyle %}
+{% endif %}
+{% if section.settings.logo != blank %}
+  <style>
+    .logo-image {
+      max-width: {{ section.settings.logo_max_width }}px;
+    }
+  </style>
+{% endif %}
+
+{%- comment -%} Custom navigation styling - floating pill design {%- endcomment -%}
+{%- liquid
+  assign nav_bg_color = section.settings.nav_background_color | default: '#FFFFFF'
+  assign nav_text_color = section.settings.nav_text_color | default: '#1A1A1A'
+  assign nav_text_hover_color = section.settings.nav_text_hover_color | default: '#4FB1BD'
+  assign cart_icon_color = section.settings.cart_icon_color | default: '#1A1A1A'
+  assign cart_badge_bg = section.settings.cart_badge_background | default: '#4FB1BD'
+  assign cart_badge_text = section.settings.cart_badge_text_color | default: '#FFFFFF'
+  assign nav_shadow_opacity = section.settings.nav_shadow_opacity | default: 6
+  assign enable_scroll_hide = section.settings.enable_scroll_hide
+  assign mobile_logo_width = section.settings.mobile_logo_max_width | default: 80
+-%}
+<style>
+  /* ========================================
+     DESKTOP: Floating pill navigation
+     ======================================== */
+  @media (min-width: 1024px) {
+    /* Section wrapper - MUST be transparent */
+    #shopify-section-{{ section.id }} {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 40 !important;
+      background: transparent !important;
+      background-color: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+    }
+    
+    /* The data-island site-header element */
+    #shopify-section-{{ section.id }} > data-island,
+    #shopify-section-{{ section.id }} .site-header {
+      background: transparent !important;
+      background-color: transparent !important;
+      border: none !important;
+      padding: 12px 40px 0 40px !important;
+    }
+    
+    /* The pill container */
+    #shopify-section-{{ section.id }} .headerBorderWrap {
+      background: {{ nav_bg_color }} !important;
+      background-color: {{ nav_bg_color }} !important;
+      border-radius: 999px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, {{ nav_shadow_opacity | divided_by: 100.0 }});
+      max-width: 1105px;
+      height: 72px !important;
+      margin: 0 auto;
+      overflow: visible;
+      position: relative;
+    }
+    
+    /* Header container */
+    #shopify-section-{{ section.id }} #headerContainer {
+      background: transparent !important;
+      height: 72px !important;
+      max-height: 72px !important;
+    }
+    
+    /* Inner wrapper */
+    #shopify-section-{{ section.id }} #headerContainer > div {
+      padding: 0 32px !important;
+      height: 72px !important;
+      max-height: 72px !important;
+      overflow: visible;
+    }
+    
+    /* Main flex container */
+    #shopify-section-{{ section.id }} #headerContainer > div > div {
+      height: 72px !important;
+      align-items: center !important;
+    }
+    
+    /* Force nav to single line */
+    #shopify-section-{{ section.id }} nav ul {
+      flex-wrap: nowrap !important;
+      gap: 8px !important;
+      margin: 0 !important;
+    }
+    
+    #shopify-section-{{ section.id }} nav ul li {
+      flex-shrink: 0;
+    }
+    
+    /* Nav links styling */
+    #shopify-section-{{ section.id }} nav a,
+    #shopify-section-{{ section.id }} nav button {
+      font-size: 13px !important;
+      padding: 8px 12px !important;
+      white-space: nowrap !important;
+      color: {{ nav_text_color }} !important;
+      transition: color 0.2s ease !important;
+    }
+    
+    #shopify-section-{{ section.id }} nav a:hover,
+    #shopify-section-{{ section.id }} nav button:hover {
+      color: {{ nav_text_hover_color }} !important;
+    }
+    
+    /* Logo sizing - uses theme setting */
+    #shopify-section-{{ section.id }} .logo-image {
+      max-width: {{ section.settings.logo_max_width }}px !important;
+    }
+    
+    /* Text color */
+    #shopify-section-{{ section.id }} .headerBorderWrap,
+    #shopify-section-{{ section.id }} .site-header a,
+    #shopify-section-{{ section.id }} .site-header button,
+    #shopify-section-{{ section.id }} .site-header span {
+      color: {{ nav_text_color }} !important;
+    }
+    
+    /* Menu icon */
+    #shopify-section-{{ section.id }} [data-menu-drawer-toggle] svg,
+    #shopify-section-{{ section.id }} [data-menu-drawer-toggle] span.icon {
+      color: {{ nav_text_color }} !important;
+    }
+    
+    /* Cart icon - explicit styling */
+    #shopify-section-{{ section.id }} #CartButton {
+      position: relative;
+    }
+    
+    #shopify-section-{{ section.id }} #CartButton svg {
+      color: {{ cart_icon_color }} !important;
+      fill: {{ cart_icon_color }} !important;
+      width: 28px !important;
+      height: 28px !important;
+    }
+    
+    #shopify-section-{{ section.id }} #CartButton:hover svg {
+      color: {{ nav_text_hover_color }} !important;
+      fill: {{ nav_text_hover_color }} !important;
+    }
+    
+    /* Cart count badge */
+    #shopify-section-{{ section.id }} #CartButton .bg-scheme-text,
+    #shopify-section-{{ section.id }} #CartButton span[x-text] {
+      background-color: {{ cart_badge_bg }} !important;
+      color: {{ cart_badge_text }} !important;
+      font-size: 11px !important;
+      font-weight: 600 !important;
+      min-width: 20px !important;
+      height: 20px !important;
+      border-radius: 50% !important;
+    }
+    
+    /* Hide search if disabled */
+    #shopify-section-{{ section.id }} [data-open-search] {
+      display: none !important;
+    }
+    
+    /* Dropdown menus — white panel matching Shop style */
+    #shopify-section-{{ section.id }} [data-header-dropdown],
+    #shopify-section-{{ section.id }} .no-js-focus-container {
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      background-color: #ffffff !important;
+      color: #1a1a1a !important;
+    }
+
+    #shopify-section-{{ section.id }} [data-header-dropdown] a,
+    #shopify-section-{{ section.id }} .no-js-focus-container a {
+      color: #1a1a1a !important;
+    }
+
+    #shopify-section-{{ section.id }} [data-header-dropdown] a:hover,
+    #shopify-section-{{ section.id }} .no-js-focus-container a:hover {
+      color: #F37024 !important;
+    }
+
+    /* Hide the full-height teal background highlight div behind the active nav item */
+    #shopify-section-{{ section.id }} nav > div[x-show] {
+      display: none !important;
+    }
+
+    /* Remove teal fill from the button's active-state span */
+    #shopify-section-{{ section.id }} button span.bg-scheme-background[data-color-scheme] {
+      background-color: transparent !important;
+    }
+
+    /* Keep button text dark when dropdown is open */
+    #shopify-section-{{ section.id }} button[aria-expanded="true"] {
+      color: #1a1a1a !important;
+    }
+    
+    /* Scroll hide/show classes - Desktop */
+    #shopify-section-{{ section.id }} {
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    
+    #shopify-section-{{ section.id }}.header-hidden {
+      transform: translateY(-100%);
+    }
+    
+    #shopify-section-{{ section.id }}.header-visible {
+      transform: translateY(0);
+    }
+  }
+  
+  /* ========================================
+     MOBILE: Sticky + scroll-to-reveal
+     ======================================== */
+  @media (max-width: 1023px) {
+    #shopify-section-{{ section.id }} {
+      position: sticky !important;
+      top: 0 !important;
+      z-index: 40 !important;
+      transition: transform 0.3s ease-in-out;
+      background: transparent !important;
+      background-color: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+    }
+    
+    #shopify-section-{{ section.id }} > data-island,
+    #shopify-section-{{ section.id }} .site-header {
+      background: transparent !important;
+      background-color: transparent !important;
+      border: none !important;
+      padding: 16px !important;
+    }
+    
+    #shopify-section-{{ section.id }} .headerBorderWrap {
+      background: {{ nav_bg_color }} !important;
+      background-color: {{ nav_bg_color }} !important;
+      border-radius: 999px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, {{ nav_shadow_opacity | divided_by: 100.0 }});
+      height: 56px !important;
+      overflow: hidden;
+    }
+    
+    #shopify-section-{{ section.id }} #headerContainer {
+      height: 56px !important;
+      display: flex !important;
+      align-items: center !important;
+    }
+    
+    #shopify-section-{{ section.id }} #headerContainer > div {
+      padding: 0 20px !important;
+      height: 56px !important;
+      display: flex !important;
+      align-items: center !important;
+      width: 100% !important;
+    }
+    
+    /* Main flex row - center items vertically */
+    #shopify-section-{{ section.id }} #headerContainer > div > div {
+      display: flex !important;
+      align-items: center !important;
+      height: 100% !important;
+      width: 100% !important;
+    }
+    
+    /* Text color */
+    #shopify-section-{{ section.id }} .headerBorderWrap,
+    #shopify-section-{{ section.id }} .site-header a,
+    #shopify-section-{{ section.id }} .site-header button,
+    #shopify-section-{{ section.id }} .site-header span {
+      color: {{ nav_text_color }} !important;
+    }
+    
+    /* Menu icon */
+    #shopify-section-{{ section.id }} [data-menu-drawer-toggle] svg,
+    #shopify-section-{{ section.id }} [data-menu-drawer-toggle] span.icon {
+      color: {{ nav_text_color }} !important;
+    }
+    
+    /* Cart icon */
+    #shopify-section-{{ section.id }} #CartButton svg {
+      color: {{ cart_icon_color }} !important;
+      fill: {{ cart_icon_color }} !important;
+      width: 26px !important;
+      height: 26px !important;
+    }
+    
+    /* Cart count badge */
+    #shopify-section-{{ section.id }} #CartButton .bg-scheme-text,
+    #shopify-section-{{ section.id }} #CartButton span[x-text] {
+      background-color: {{ cart_badge_bg }} !important;
+      color: {{ cart_badge_text }} !important;
+      font-size: 10px !important;
+      font-weight: 600 !important;
+      min-width: 18px !important;
+      height: 18px !important;
+    }
+    
+    /* Mobile logo size */
+    #shopify-section-{{ section.id }} .logo-image {
+      max-width: {{ mobile_logo_width }}px !important;
+    }
+    
+    #shopify-section-{{ section.id }} [data-open-search] {
+      display: none !important;
+    }
+    
+    /* Scroll hide/show classes */
+    #shopify-section-{{ section.id }}.header-hidden {
+      transform: translateY(-100%);
+    }
+    
+    #shopify-section-{{ section.id }}.header-visible {
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    // Scroll-to-reveal navigation - hides on scroll down, shows on scroll up
+    const SCROLL_THRESHOLD = 15;
+    const ENABLE_SCROLL_HIDE = {% if section.settings.enable_scroll_hide == false %}false{% else %}true{% endif %};
+    const SECTION_ID = 'shopify-section-{{ section.id }}';
+    
+    let lastScrollY = window.scrollY;
+    let isHidden = false;
+    let ticking = false;
+    let headerSection = null;
+    
+    function init() {
+      headerSection = document.getElementById(SECTION_ID);
+      
+      if (!headerSection) {
+        console.warn('Happie Nav: Header section not found:', SECTION_ID);
+        return;
+      }
+      
+      if (!ENABLE_SCROLL_HIDE) {
+        console.log('Happie Nav: Scroll-hide is disabled');
+        return;
+      }
+      
+      // Apply base transition style
+      headerSection.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+      headerSection.style.willChange = 'transform';
+      
+      console.log('Happie Nav: Scroll-hide initialized');
+      
+      window.addEventListener('scroll', onScroll, { passive: true });
+      
+      // Initial state - ensure visible
+      showHeader();
+    }
+    
+    function showHeader() {
+      if (headerSection && isHidden) {
+        headerSection.style.transform = 'translateY(0)';
+        isHidden = false;
+      }
+    }
+    
+    function hideHeader() {
+      if (headerSection && !isHidden) {
+        headerSection.style.transform = 'translateY(-100%)';
+        isHidden = true;
+      }
+    }
+    
+    function updateHeader() {
+      if (!headerSection) {
+        ticking = false;
+        return;
+      }
+      
+      const currentScrollY = window.scrollY;
+      
+      // At the top of the page (within 120px), always show
+      if (currentScrollY < 120) {
+        showHeader();
+        lastScrollY = currentScrollY;
+        ticking = false;
+        return;
+      }
+      
+      const scrollDiff = currentScrollY - lastScrollY;
+      
+      // Scrolling down past threshold - hide header
+      if (scrollDiff > SCROLL_THRESHOLD) {
+        hideHeader();
+        lastScrollY = currentScrollY;
+      }
+      // Scrolling up past threshold - show header
+      else if (scrollDiff < -SCROLL_THRESHOLD) {
+        showHeader();
+        lastScrollY = currentScrollY;
+      }
+      
+      ticking = false;
+    }
+    
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    }
+    
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      // Small delay to ensure Shopify has rendered everything
+      setTimeout(init, 100);
+    }
+  })();
+</script>
+{%- if enable_overlay -%}
+  <script>
+    document.getElementById('shopify-section-{{ section.id }}').classList.add('has-no-height');
+  </script>
+  <style>
+    #MainContent .shopify-section:first-child > section:not(.full-bleed-section),
+    #MainContent .shopify-section:first-child > data-island[role="banner"]:not(.full-bleed-section) {
+      padding-top: {{ section.settings.overlay_first_section_padding_top_mobile }}rem;
+    }
+
+    @media (min-width: 990px) {
+      #MainContent .shopify-section:first-child > section:not(.full-bleed-section),
+      #MainContent .shopify-section:first-child > data-island[role="banner"]:not(.full-bleed-section) {
+        padding-top: {{ section.settings.overlay_first_section_padding_top_desktop }}rem;
+      }
+    }
+  </style>
+{%- endif -%}
+
+{% comment %}theme-check-enable TemplateLength{% endcomment %}
+
+{%- comment -%} Organization + WebSite JSON-LD moved to layout/theme.liquid (single canonical Organization on homepage) {%- endcomment -%}
+
+{% schema %}
+{
+  "name": "t:sections.header.name",
+  "class": "section-site-header relative z-40",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:common.settings.logo.label"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "t:common.settings.logo.label",
+      "info": "t:common.settings.logo.info"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "min": 20,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "label": "t:common.settings.logo_max_width.label",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "mobile_logo_max_width",
+      "min": 20,
+      "max": 500,
+      "step": 5,
+      "unit": "px",
+      "label": "Mobile Logo Max Width",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Left Main Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "left_linklist",
+      "label": "t:sections.header.settings.main_linklist.label",
+      "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Right Main Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "right_linklist",
+      "label": "t:sections.header.settings.main_linklist.label",
+      "default": "main-menu"
+    },
+    {
+      "type": "select",
+      "id": "nested_nav_style",
+      "label": "t:sections.header.settings.nested_nav_style.label",
+      "options": [
+        {
+          "value": "mega_menu",
+          "label": "t:sections.header.settings.nested_nav_style.options.mega_menu.label"
+        },
+        {
+          "value": "dropdown",
+          "label": "t:sections.header.settings.nested_nav_style.options.dropdown.label"
+        }
+      ],
+      "default": "mega_menu"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.nested_nav_style.options.mega_menu.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "showcase_top_level_collections",
+      "label": "t:sections.header.settings.showcase_top_level_collections.label",
+      "info": "t:sections.header.settings.showcase_top_level_collections.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_all_navigation_links",
+      "label": "t:sections.header.settings.show_all_navigation_links.label",
+      "info": "t:sections.header.settings.show_all_navigation_links.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "showcase_second_level_links",
+      "label": "t:sections.header.settings.showcase_second_level_links.label",
+      "info": "t:sections.header.settings.showcase_second_level_links.info"
+    },
+    {
+      "type": "select",
+      "id": "crop",
+      "label": "t:sections.header.settings.crop.label",
+      "options": [
+        {
+          "value": "",
+          "label": "t:common.options.no_crop.label"
+        },
+        {
+          "value": "aspect-w-4 aspect-h-3",
+          "label": "t:common.options.landscape.label"
+        },
+        {
+          "value": "aspect-w-1 aspect-h-1",
+          "label": "t:common.options.square.label"
+        },
+        {
+          "value": "aspect-w-3 aspect-h-4",
+          "label": "t:common.options.portrait.label"
+        }
+      ],
+      "default": "aspect-w-1 aspect-h-1"
+    },
+    {
+      "type": "header",
+      "content": "t:common.settings.header_layout"
+    },
+    {
+      "type": "select",
+      "id": "header_layout",
+      "label": "t:sections.header.settings.header_layout.label",
+      "options": [
+        {
+          "value": "menu_icon_logo_center",
+          "label": "t:sections.header.settings.header_layout.options.menu_icon_left_logo_center.label"
+        },
+        {
+          "value": "navigation_left_logo_center",
+          "label": "t:sections.header.settings.header_layout.options.navigation_left_logo_center.label"
+        },
+        {
+          "value": "logo_left_navigation_center",
+          "label": "t:sections.header.settings.header_layout.options.logo_left_navigation_center.label"
+        }
+      ],
+      "default": "navigation_left_logo_center"
+    },
+    {
+      "type": "checkbox",
+      "id": "header_show_search",
+      "label": "t:sections.header.settings.header_show_search.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_header",
+      "label": "t:sections.header.settings.sticky_header.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_icons",
+      "label": "t:sections.header.settings.show_icons.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header_overlay_settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_overlay_on_homepage",
+      "label": "t:sections.header.settings.enable_overlay_on_homepage.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_overlay_on_collection_pages",
+      "label": "t:sections.header.settings.enable_overlay_on_collection_pages.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_overlay_on_product_pages",
+      "label": "t:sections.header.settings.enable_overlay_on_product_pages.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_overlay_on_page_templates",
+      "label": "Enable overlay on Pages",
+      "default": true,
+      "info": "Transparent header over page content so background (e.g. peach) reads behind the nav, consistent with Index/Product."
+    },
+    {
+      "type": "image_picker",
+      "id": "overlay_logo",
+      "label": "t:sections.header.settings.overlay_logo.label",
+      "info": "t:sections.header.settings.overlay_logo.info"
+    },
+    {
+      "type": "color_scheme",
+      "id": "overlay_color_scheme",
+      "default": "scheme1",
+      "label": "t:sections.header.settings.overlay_color_scheme.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "transparent_when_overlaid_and_stuck",
+      "label": "t:sections.header.settings.transparent_when_overlaid_and_stuck.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "overlay_show_separator_border",
+      "label": "t:sections.header.settings.overlay_show_separator_border.label",
+      "info": "t:sections.header.settings.overlay_show_separator_border.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header_overlay_compensation",
+      "info": "Adjust the padding above the first section when overlay header is enabled."
+    },
+    {
+      "type": "range",
+      "id": "overlay_first_section_padding_top_desktop",
+      "label": "t:sections.header.settings.overlay_first_section_padding_top_desktop.label",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "rem",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "overlay_first_section_padding_top_mobile",
+      "label": "t:sections.header.settings.overlay_first_section_padding_top_mobile.label",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "rem",
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Navigation Bar Style"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_scroll_hide",
+      "label": "Hide on scroll down (mobile)",
+      "default": true,
+      "info": "Navigation hides when scrolling down, reappears when scrolling up"
+    },
+    {
+      "type": "color",
+      "id": "nav_background_color",
+      "label": "Navigation Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "nav_text_color",
+      "label": "Navigation Text Color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "nav_text_hover_color",
+      "label": "Navigation Text Hover",
+      "default": "#4FB1BD"
+    },
+    {
+      "type": "range",
+      "id": "nav_shadow_opacity",
+      "label": "Navigation Shadow",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "default": 6,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Cart Icon"
+    },
+    {
+      "type": "color",
+      "id": "cart_icon_color",
+      "label": "Cart Icon Color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "cart_badge_background",
+      "label": "Cart Badge Background",
+      "default": "#4FB1BD"
+    },
+    {
+      "type": "color",
+      "id": "cart_badge_text_color",
+      "label": "Cart Badge Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "t:common.settings.header_color"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "scheme1",
+      "label": "t:common.settings.color_scheme.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header_active_color_scheme"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:sections.header.settings.paragraph_active_color_scheme"
+    },
+    {
+      "type": "color_scheme",
+      "id": "active_color_scheme",
+      "default": "scheme1",
+      "label": "t:common.settings.color_scheme.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header_sidebar_menu"
+    },
+    {
+      "type": "link_list",
+      "id": "mobile_main_linklist",
+      "label": "t:sections.header.settings.mobile_main_linklist.label",
+      "info": "t:sections.header.settings.mobile_main_linklist.info"
+    },
+    {
+      "type": "select",
+      "id": "sidebar_menu_font_size",
+      "label": "t:common.settings.font_size.label",
+      "options": [
+        {
+          "value": "heading-secondary",
+          "label": "t:sections.feature_text_columns.settings.heading_size.options.secondary.label"
+        },
+        {
+          "value": "heading-standard",
+          "label": "t:common.options.standard.label"
+        },
+        {
+          "value": "heading-feature",
+          "label": "t:common.options.feature.label"
+        }
+      ],
+      "default": "heading-secondary"
+    },
+    {
+      "type": "checkbox",
+      "id": "sidebar_show_footer_menu",
+      "label": "t:sections.header.settings.sidebar_show_footer_menu.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "sidebar_show_social_icons",
+      "label": "t:sections.header.settings.sidebar_show_social_icons.label"
+    },
+    {
+      "type": "header",
+      "content": "Shop Mega Menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_shop_mega_menu",
+      "label": "Enable Shop Mega Menu",
+      "default": true,
+      "info": "Replaces the default Shop dropdown with a custom mega menu"
+    },
+    {
+      "type": "link_list",
+      "id": "shop_mega_thc_menu",
+      "label": "THC Infused Menu",
+      "info": "Select menu for THC Infused products"
+    },
+    {
+      "type": "link_list",
+      "id": "shop_mega_fungi_menu",
+      "label": "Fungi Fusion Menu",
+      "info": "Select menu for Fungi Fusion products"
+    },
+    {
+      "type": "header",
+      "content": "Shop Mega Menu - Card 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "shop_mega_card_1_image",
+      "label": "Card 1 Image"
+    },
+    {
+      "type": "text",
+      "id": "shop_mega_card_1_title",
+      "label": "Card 1 Title",
+      "default": "Variety Pack"
+    },
+    {
+      "type": "text",
+      "id": "shop_mega_card_1_subtitle",
+      "label": "Card 1 Subtitle",
+      "default": "Try all flavors"
+    },
+    {
+      "type": "url",
+      "id": "shop_mega_card_1_link",
+      "label": "Card 1 Link"
+    },
+    {
+      "type": "header",
+      "content": "Shop Mega Menu - Card 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "shop_mega_card_2_image",
+      "label": "Card 2 Image"
+    },
+    {
+      "type": "text",
+      "id": "shop_mega_card_2_title",
+      "label": "Card 2 Title",
+      "default": "Shop Fungi Fusion"
+    },
+    {
+      "type": "text",
+      "id": "shop_mega_card_2_subtitle",
+      "label": "Card 2 Subtitle",
+      "default": "Zero THC drinks"
+    },
+    {
+      "type": "url",
+      "id": "shop_mega_card_2_link",
+      "label": "Card 2 Link"
+    },
+    {
+      "type": "header",
+      "content": "Shop Mega Menu - Card 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "shop_mega_card_3_image",
+      "label": "Card 3 Image"
+    },
+    {
+      "type": "text",
+      "id": "shop_mega_card_3_title",
+      "label": "Card 3 Title",
+      "default": "THC Infused"
+    },
+    {
+      "type": "text",
+      "id": "shop_mega_card_3_subtitle",
+      "label": "Card 3 Subtitle",
+      "default": "Cannabis seltzers"
+    },
+    {
+      "type": "url",
+      "id": "shop_mega_card_3_link",
+      "label": "Card 3 Link"
+    },
+    {
+      "type": "header",
+      "content": "Merch CTA Banner"
+    },
+    {
+      "type": "checkbox",
+      "id": "shop_mega_show_merch",
+      "label": "Show merch banner",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "shop_mega_merch_image",
+      "label": "Merch graphic"
+    },
+    {
+      "type": "text",
+      "id": "shop_mega_merch_label",
+      "label": "Eyebrow tag",
+      "default": "New Drop"
+    },
+    {
+      "type": "text",
+      "id": "shop_mega_merch_title",
+      "label": "Banner headline",
+      "default": "Happie Merch"
+    },
+    {
+      "type": "text",
+      "id": "shop_mega_merch_cta",
+      "label": "Button text",
+      "default": "Shop Merch"
+    },
+    {
+      "type": "url",
+      "id": "shop_mega_merch_url",
+      "label": "Merch URL"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "mobile_nav_menu",
+      "label": "Mobile Menu",
+      "info": "Select a menu for mobile navigation. Leave blank to use default."
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_nav_thc_image",
+      "label": "THC Seltzers Card Image"
+    },
+    {
+      "type": "url",
+      "id": "mobile_nav_thc_link",
+      "label": "THC Seltzers Card Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_nav_fungi_image",
+      "label": "Fungi Fusion Card Image"
+    },
+    {
+      "type": "url",
+      "id": "mobile_nav_fungi_link",
+      "label": "Fungi Fusion Card Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature_desktop_link",
+      "limit": 1,
+      "name": "t:sections.header.blocks.feature_desktop_link.name",
+      "settings": [
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "t:common.settings.button_link.label"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "t:common.settings.button_label.label",
+          "default": "Shop Now"
+        },
+        {
+          "type": "select",
+          "id": "position",
+          "label": "t:sections.header.blocks.feature_desktop_link.settings.position.label",
+          "options": [
+            {
+              "value": "first_item_in_navigation",
+              "label": "t:sections.header.blocks.feature_desktop_link.settings.position.options.first_item_in_navigation.label"
+            },
+            {
+              "value": "right_of_cart",
+              "label": "t:sections.header.blocks.feature_desktop_link.settings.position.options.right_of_cart.label"
+            }
+          ],
+          "default": "first_item_in_navigation"
+        },
+        {
+          "type": "select",
+          "id": "button_color",
+          "label": "t:common.settings.color.label",
+          "options": [
+            {
+              "value": "",
+              "label": "t:common.options.default.label"
+            },
+            {
+              "value": "bg-scheme-text text-scheme-text-contrast",
+              "label": "t:common.options.text.label"
+            },
+            {
+              "value": "bg-scheme-accent-1 text-scheme-accent-1-contrast",
+              "label": "t:common.options.accent_1.label"
+            },
+            {
+              "value": "bg-scheme-accent-2 text-scheme-accent-2-contrast",
+              "label": "t:common.options.accent_2.label"
+            }
+          ],
+          "default": ""
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_button_shadow",
+          "label": "t:sections.header.blocks.feature_desktop_link.settings.hide_button_shadow.label"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

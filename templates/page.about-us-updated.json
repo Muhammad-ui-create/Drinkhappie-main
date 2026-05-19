@@ -1,0 +1,71 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "about_us_updated": {
+      "type": "about-us-updated",
+      "settings": {
+        "color_bg_hero": "#ffe6cb",
+        "color_hero_orb": "#f37024",
+        "color_bg_values_top": "#ffffff",
+        "color_bg_values_mid": "#fffaf6",
+        "color_bg_values_bottom": "#ffffff",
+        "color_bg_value_cards": "#ffffff",
+        "color_bg_editorial": "#ffffff",
+        "color_bg_founder": "#ffe6cb",
+        "color_founder_orb": "#50b2bd",
+        "color_bg_founder_card": "#ffffff",
+        "flavors_section_bg": "#ffffff",
+        "color_bg_cta_top": "#ffffff",
+        "color_bg_cta_bottom": "#ffe6cb",
+        "story_eyebrow": "About Happie",
+        "story_headline": "Born in California. Built for",
+        "story_headline_accent": "Better.",
+        "story_body": "<p>Happie started with a simple belief: what you drink should make you feel good — and you should feel good about drinking it.</p><p>Founded in 2019 by Pete Olander, Happie is a functional beverage company rooted in Northern California’s plant medicine culture. We make two product lines — hemp-derived Delta-9 THC seltzers and Fungi Fusion adaptogenic mushroom drinks — designed for adults who want something better than alcohol and more effective than another sparkling water.</p><p>Every can is batch-tested, transparently labeled, and formulated with intention. Our THC seltzers use nano-emulsified hemp extract for fast-acting effects you can feel in 15 minutes — not two hours. Our Fungi Fusion line delivers clinical-dose functional mushrooms (Lion’s Mane, Cordyceps, and Reishi) with ocean-derived minerals, no THC, and no compromises.</p><p>We’re not here to follow the beverage industry playbook. We’re here to rewrite it — with science-backed formulations, radical transparency, and a brand built on the belief that wellness and enjoyment belong in the same can.</p>",
+        "image_hero_cloud": "shopify://shop_images/5f8260cd-ba14-4ba1-a42f-fe426dc8a7df_1.png",
+        "padding_hero_top": 84,
+        "hero_header_extra_clearance": 36,
+        "padding_hero_bottom": 48,
+        "show_hero_wave": true,
+        "hero_wave_curve_height": 80,
+        "hero_wave_style": "wave",
+        "hero_wave_color": "#ffe6cb",
+        "hero_wave_animate": true,
+        "hero_wave_animation_speed": 8,
+        "hero_wave_flip": false,
+        "values_heading": "What we stand for",
+        "value_1_title": "Transparency First",
+        "value_1_text": "Every batch comes with a Certificate of Analysis. We test for potency and purity because trust isn’t a marketing line — it’s the product.",
+        "value_2_title": "Plant-Powered Science",
+        "value_2_text": "Dual-extracted mushrooms with 3–7x bioavailability. Nano-emulsified cannabinoids. Ocean-sourced minerals. We formulate for function, not hype.",
+        "value_3_title": "Wellness Without the Hangover",
+        "value_3_text": "Whether you reach for THC or mushrooms, Happie is designed so tomorrow feels as good as tonight.",
+        "value_4_title": "California Roots, National Reach",
+        "value_4_text": "Born from NorCal’s wellness and cannabis culture, now available in retail locations across multiple states and shipping direct nationwide.",
+        "image_editorial": "shopify://shop_images/happie-about-building-community.jpg",
+        "founder_heading": "Meet the Founder",
+        "founder_name": "Pete Olander",
+        "founder_role": "Founder & CEO",
+        "founder_body": "<p>Pete Olander built Happie at the intersection of finance, wellness, and plant medicine. His career started on Wall Street — working at J.P. Morgan and First Western Trust Bank — before moving into the consumer wellness space with Nutrition53, where he gained deep experience in CPG product development and brand building.</p><p>At Nutrition53, Pete worked alongside professional athletes and leading experts in the wellness space, developing a deep understanding of what functional ingredients can actually do when formulated with care and intention. That experience shaped his conviction: hemp-derived cannabinoids and functional mushrooms could reshape how people think about social drinking and daily wellness.</p><p>In 2019, he launched Happie — and soon after, relocated operations to California to get closer to the plant, immerse himself in the culture, and understand firsthand what quality means in this industry. From sourcing to formulation, the goal was simple: bring the highest quality ingredients from farm to table for every customer. That commitment to transparency and craft is what drives Happie today, as the brand scales across DTC, Amazon and a growing network of retail and distributor partners nationwide.</p>",
+        "image_founder": "shopify://shop_images/photo.webp",
+        "image_flavors": "shopify://shop_images/Happie_-_Collection_Hero_1.jpg",
+        "flavors_full_bleed": true,
+        "flavors_image_radius": 0,
+        "closing_heading": "Feel Good About Feeling Good",
+        "closing_body": "<p>Whether you’re reaching for a THC seltzer after a long day or fueling your morning with functional mushrooms, Happie is here to make wellness something you actually enjoy. Join us on the journey.</p>",
+        "cta_label": "Shop Now",
+        "cta_url": "shopify://pages/shop"
+      }
+    }
+  },
+  "order": [
+    "about_us_updated"
+  ]
+}

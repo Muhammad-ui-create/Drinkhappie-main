@@ -1,0 +1,1030 @@
+{%- comment -%}
+  About Us — content matches happie-about-us-content.docx.md only (4 sections).
+  Optional editorial image between pillars and founder (no headline — markdown allows discretionary imagery).
+{%- endcomment -%}
+{%- liquid
+  assign au_curve_h = section.settings.hero_wave_curve_height | default: 80
+  assign au_wave_color = section.settings.hero_wave_color | default: '#ffffff'
+-%}
+
+<style>
+  #about-us-updated-{{ section.id }} {
+    --au-bg-hero: {{ section.settings.color_bg_hero | default: '#ffe6cb' }};
+    --au-bg-values-top: {{ section.settings.color_bg_values_top | default: '#ffffff' }};
+    --au-bg-values-mid: {{ section.settings.color_bg_values_mid | default: '#fffaf6' }};
+    --au-bg-values-bottom: {{ section.settings.color_bg_values_bottom | default: '#ffffff' }};
+    --au-bg-cards: {{ section.settings.color_bg_value_cards | default: '#ffffff' }};
+    --au-bg-editorial: {{ section.settings.color_bg_editorial | default: '#ffffff' }};
+    --au-bg-founder: {{ section.settings.color_bg_founder | default: '#ffe6cb' }};
+    --au-bg-cta-top: {{ section.settings.color_bg_cta_top | default: '#ffffff' }};
+    --au-bg-cta-bottom: {{ section.settings.color_bg_cta_bottom | default: '#ffe6cb' }};
+    --au-bg-founder-card: {{ section.settings.color_bg_founder_card | default: '#ffffff' }};
+    --au-teal: #50b2bd;
+    --au-orange: #f37024;
+    --au-yellow: #ffcb05;
+    --au-text: #1a1a1a;
+    --au-muted: #4a4a4a;
+    --au-read: 40rem;
+    --about-hero-pad-top: {{ section.settings.padding_hero_top }}px;
+    /*
+      Clear the sticky header group even when --header-group-height is 0 on first paint.
+      max() enforces a floor; + --au-header-extra adds air below the nav pill.
+    */
+    --au-header-clearance: max(168px, var(--header-group-height, 176px));
+    --au-header-extra: {{ section.settings.hero_header_extra_clearance | default: 36 }}px;
+    position: relative;
+    overflow: visible;
+  }
+  @media (max-width: 767px) {
+    #about-us-updated-{{ section.id }} {
+      --au-header-clearance: max(138px, var(--header-group-height, 148px));
+    }
+  }
+
+  #about-us-updated-{{ section.id }} .au__inner {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(18px, 4vw, 28px);
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ── Hero: tighter type scale, readable measure ── */
+  #about-us-updated-{{ section.id }} .au__hero {
+    background: var(--au-bg-hero);
+    margin-top: calc(-1 * var(--au-header-clearance)) !important;
+    padding-top: calc(var(--about-hero-pad-top) + var(--au-header-clearance) + var(--au-header-extra)) !important;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: {{ section.settings.padding_hero_bottom }}px;
+    position: relative;
+    overflow: visible;
+  }
+  #about-us-updated-{{ section.id }} .au__hero::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    right: -60px;
+    width: min(380px, 90vw);
+    height: min(380px, 90vw);
+    border-radius: 50%;
+    background: color-mix(in srgb, {{ section.settings.color_hero_orb | default: '#f37024' }} 14%, transparent);
+    pointer-events: none;
+  }
+  #about-us-updated-{{ section.id }} .au__hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(28px, 5vw, 48px);
+    align-items: start;
+  }
+  @media (min-width: 960px) {
+    #about-us-updated-{{ section.id }} .au__hero-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.88fr);
+      align-items: center;
+      gap: 48px;
+    }
+  }
+
+  #about-us-updated-{{ section.id }} .au__eyebrow {
+    display: inline-block;
+    background: var(--au-yellow);
+    color: var(--au-text);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+
+  /* H1: mobile-first — smaller on phone, caps lower on desktop than before */
+  #about-us-updated-{{ section.id }} .au__h1 {
+    font-size: clamp(1.5rem, 0.35rem + 3.8vw, 2.35rem);
+    font-weight: 700;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    color: var(--au-text);
+    margin: 0 0 clamp(14px, 3vw, 20px);
+    font-family: var(--heading-font-stack, inherit);
+    max-width: 22ch;
+  }
+  @media (min-width: 960px) {
+    #about-us-updated-{{ section.id }} .au__h1 {
+      max-width: 20ch;
+    }
+  }
+  #about-us-updated-{{ section.id }} .au__h1 em {
+    font-style: normal;
+    color: var(--au-orange);
+  }
+
+  #about-us-updated-{{ section.id }} .au__prose {
+    color: var(--au-muted);
+    font-size: clamp(0.9375rem, 0.88rem + 0.2vw, 1.0625rem);
+    line-height: 1.72;
+    max-width: var(--au-read);
+  }
+  #about-us-updated-{{ section.id }} .au__prose p {
+    margin: 0 0 0.95em;
+  }
+  #about-us-updated-{{ section.id }} .au__prose p:last-child {
+    margin-bottom: 0;
+  }
+
+  #about-us-updated-{{ section.id }} .au__hero-media {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+    background: var(--au-bg-hero);
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    position: relative;
+    isolation: isolate;
+  }
+  #about-us-updated-{{ section.id }} .au__hero-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  /* Homepage-style bottom curve: extends into section below (no transparent SVG gap) */
+  #about-us-updated-{{ section.id }} .au__hero-wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: {{ au_curve_h }}px;
+    z-index: 6;
+    overflow: visible;
+    transform: translateY(100%);
+    pointer-events: none;
+    line-height: 0;
+  }
+  #about-us-updated-{{ section.id }} .au__hero-wave-inner {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  #about-us-updated-{{ section.id }} .au__hero-wave-inner--flip {
+    transform: scaleY(-1);
+    transform-origin: bottom center;
+  }
+  #about-us-updated-{{ section.id }} .au__hero-wave svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #about-us-updated-{{ section.id }} .au__hero-wave svg animate {
+      display: none;
+    }
+  }
+
+  /* ── Values: on-brand bento-adjacent cards + icons ── */
+  #about-us-updated-{{ section.id }} .au__values {
+    background: linear-gradient(180deg, var(--au-bg-values-top) 0%, var(--au-bg-values-mid) 50%, var(--au-bg-values-bottom) 100%);
+    padding: calc(clamp(48px, 8vw, 72px) + {% if section.settings.show_hero_wave %}{{ au_curve_h | times: 42 | divided_by: 100 }}{% else %}0{% endif %}px) 0 clamp(40px, 6vw, 56px);
+    position: relative;
+    z-index: 1;
+  }
+  #about-us-updated-{{ section.id }} .au__values-head {
+    text-align: center;
+    margin-bottom: clamp(28px, 5vw, 40px);
+  }
+  #about-us-updated-{{ section.id }} .au__h2 {
+    font-size: clamp(1.35rem, 0.9rem + 1.4vw, 1.85rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--au-text);
+    margin: 0 0 12px;
+    font-family: var(--heading-font-stack, inherit);
+  }
+  #about-us-updated-{{ section.id }} .au__values-sub {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 0 auto;
+    max-width: 320px;
+  }
+  #about-us-updated-{{ section.id }} .au__values-sub-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(26,26,26,0.12), transparent);
+  }
+  #about-us-updated-{{ section.id }} .au__values-sub-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--au-orange);
+    flex-shrink: 0;
+  }
+
+  #about-us-updated-{{ section.id }} .au__value-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(14px, 3vw, 20px);
+  }
+  @media (min-width: 640px) {
+    #about-us-updated-{{ section.id }} .au__value-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1000px) {
+    #about-us-updated-{{ section.id }} .au__value-grid {
+      gap: 22px;
+    }
+  }
+
+  #about-us-updated-{{ section.id }} .au__value-card {
+    --card-accent: var(--au-teal);
+    background: var(--au-bg-cards);
+    border-radius: 20px;
+    padding: clamp(20px, 3.5vw, 26px) clamp(20px, 3vw, 26px) 22px;
+    border: 1px solid rgba(26, 26, 26, 0.06);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  #about-us-updated-{{ section.id }} .au__value-card:hover {
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.07);
+    border-color: rgba(80, 178, 189, 0.15);
+  }
+
+  #about-us-updated-{{ section.id }} .au__value-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    background: color-mix(in srgb, var(--card-accent) 14%, white);
+    color: var(--card-accent);
+  }
+  #about-us-updated-{{ section.id }} .au__value-icon svg {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+  }
+
+  #about-us-updated-{{ section.id }} .au__value-card h3 {
+    margin: 0 0 8px;
+    font-size: clamp(1rem, 0.92rem + 0.25vw, 1.125rem);
+    font-weight: 700;
+    color: var(--au-text);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  #about-us-updated-{{ section.id }} .au__value-card p {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--au-muted);
+  }
+
+  /* Optional silent editorial image (markdown: imagery discretionary) */
+  #about-us-updated-{{ section.id }} .au__editorial {
+    padding: clamp(24px, 5vw, 40px) 0;
+    background: var(--au-bg-editorial);
+  }
+  #about-us-updated-{{ section.id }} .au__editorial figure {
+    margin: 0;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  }
+  #about-us-updated-{{ section.id }} .au__editorial img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Founder */
+  #about-us-updated-{{ section.id }} .au__founder {
+    background: var(--au-bg-founder);
+    padding: clamp(48px, 8vw, 72px) 0;
+    position: relative;
+    overflow: hidden;
+  }
+  #about-us-updated-{{ section.id }} .au__founder::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: -40px;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: color-mix(in srgb, {{ section.settings.color_founder_orb | default: '#50b2bd' }} 14%, transparent);
+    pointer-events: none;
+  }
+  #about-us-updated-{{ section.id }} .au__founder .au__values-head {
+    margin-bottom: clamp(24px, 4vw, 32px);
+  }
+  #about-us-updated-{{ section.id }} .au__founder-card {
+    background: var(--au-bg-founder-card);
+    border-radius: 22px;
+    padding: clamp(28px, 4vw, 40px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.07);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+  }
+  @media (min-width: 800px) {
+    #about-us-updated-{{ section.id }} .au__founder-card {
+      grid-template-columns: minmax(220px, 280px) 1fr;
+      gap: 36px;
+      padding: 40px 44px;
+    }
+  }
+  #about-us-updated-{{ section.id }} .au__founder-photo {
+    border-radius: 18px;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+  @media (min-width: 800px) {
+    #about-us-updated-{{ section.id }} .au__founder-photo {
+      margin: 0;
+      max-width: none;
+    }
+  }
+  #about-us-updated-{{ section.id }} .au__founder-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  #about-us-updated-{{ section.id }} .au__founder-name {
+    font-size: clamp(1.25rem, 1rem + 0.8vw, 1.5rem);
+    font-weight: 700;
+    margin: 0 0 4px;
+    color: var(--au-text);
+  }
+  #about-us-updated-{{ section.id }} .au__founder-role {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--au-teal);
+    margin: 0 0 16px;
+  }
+
+  #about-us-updated-{{ section.id }} .au__flavors {
+    background: {{ section.settings.flavors_section_bg | default: '#ffffff' }};
+    padding: 0 0 clamp(28px, 5vw, 48px);
+    width: 100%;
+  }
+  #about-us-updated-{{ section.id }} .au__flavors--bleed {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding-left: 0;
+    padding-right: 0;
+  }
+  #about-us-updated-{{ section.id }} .au__flavors img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: {{ section.settings.flavors_image_radius }}px;
+    box-shadow: {% if section.settings.flavors_image_radius > 0 %}0 12px 40px rgba(0, 0, 0, 0.08){% else %}none{% endif %};
+  }
+
+  #about-us-updated-{{ section.id }} .au__cta-wrap {
+    text-align: center;
+    padding: clamp(40px, 7vw, 56px) 0 clamp(56px, 10vw, 88px);
+    background: linear-gradient(180deg, var(--au-bg-cta-top) 0%, var(--au-bg-cta-bottom) 100%);
+  }
+  #about-us-updated-{{ section.id }} .au__cta-wrap .au__prose {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #about-us-updated-{{ section.id }} .au__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--au-orange);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 14px 32px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 6px 20px rgba(243, 112, 36, 0.32);
+    cursor: pointer;
+  }
+  #about-us-updated-{{ section.id }} .au__cta:hover {
+    background: #d95f18;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(243, 112, 36, 0.42);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #about-us-updated-{{ section.id }} .au__cta:hover,
+    #about-us-updated-{{ section.id }} .au__value-card:hover {
+      transform: none;
+    }
+  }
+</style>
+
+<div id="about-us-updated-{{ section.id }}" class="about-us-updated-section">
+  <div class="au__hero">
+    <div class="au__inner">
+      <div class="au__hero-grid">
+        <div>
+          {%- if section.settings.story_eyebrow != blank -%}
+            <span class="au__eyebrow">{{ section.settings.story_eyebrow }}</span>
+          {%- endif -%}
+          {%- if section.settings.story_headline != blank or section.settings.story_headline_accent != blank -%}
+            <h1 class="au__h1">
+              {{- section.settings.story_headline | strip -}}
+              {%- if section.settings.story_headline_accent != blank -%}
+                <em> {{ section.settings.story_headline_accent | strip }}</em>
+              {%- endif -%}
+            </h1>
+          {%- endif -%}
+          <div class="au__prose">{{ section.settings.story_body }}</div>
+        </div>
+        {%- if section.settings.image_hero_cloud != blank -%}
+          <div class="au__hero-media">
+            <img
+              src="{{ section.settings.image_hero_cloud | image_url: width: 880 }}"
+              srcset="{{ section.settings.image_hero_cloud | image_url: width: 480 }} 480w, {{ section.settings.image_hero_cloud | image_url: width: 880 }} 880w"
+              sizes="(min-width: 960px) 42vw, 100vw"
+              alt="{{ section.settings.image_hero_cloud.alt | default: 'Happie' }}"
+              loading="eager"
+              width="880"
+              height="600"
+            >
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if section.settings.show_hero_wave -%}
+      <div class="au__hero-wave" aria-hidden="true">
+        <div class="au__hero-wave-inner{% if section.settings.hero_wave_flip %} au__hero-wave-inner--flip{% endif %}">
+          <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            {%- case section.settings.hero_wave_style -%}
+              {%- when 'wave' -%}
+                <path d="M0,0 L0,0 Q360,120 720,60 T1440,60 L1440,0 Z" fill="{{ au_wave_color }}">
+                  {%- if section.settings.hero_wave_animate -%}
+                    <animate attributeName="d" dur="{{ section.settings.hero_wave_animation_speed }}s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1" values="M0,0 L0,0 Q360,120 720,60 T1440,60 L1440,0 Z;M0,0 L0,0 Q360,90 720,80 T1440,40 L1440,0 Z;M0,0 L0,0 Q360,30 720,100 T1440,90 L1440,0 Z;M0,0 L0,0 Q360,110 720,50 T1440,70 L1440,0 Z;M0,0 L0,0 Q360,120 720,60 T1440,60 L1440,0 Z"/>
+                  {%- endif -%}
+                </path>
+              {%- when 'wave-smooth' -%}
+                <path d="M0,0 L0,0 Q720,120 1440,60 L1440,0 Z" fill="{{ au_wave_color }}">
+                  {%- if section.settings.hero_wave_animate -%}
+                    <animate attributeName="d" dur="{{ section.settings.hero_wave_animation_speed }}s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1" values="M0,0 L0,0 Q720,120 1440,60 L1440,0 Z;M0,0 L0,0 Q720,80 1440,40 L1440,0 Z;M0,0 L0,0 Q720,60 1440,80 L1440,0 Z;M0,0 L0,0 Q720,100 1440,50 L1440,0 Z;M0,0 L0,0 Q720,120 1440,60 L1440,0 Z"/>
+                  {%- endif -%}
+                </path>
+              {%- when 'arc' -%}
+                <path d="M0,0 L0,0 Q720,120 1440,0 L1440,0 Z" fill="{{ au_wave_color }}">
+                  {%- if section.settings.hero_wave_animate -%}
+                    <animate attributeName="d" dur="{{ section.settings.hero_wave_animation_speed }}s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1" values="M0,0 L0,0 Q720,120 1440,0 L1440,0 Z;M0,0 L0,0 Q720,90 1440,0 L1440,0 Z;M0,0 L0,0 Q720,70 1440,0 L1440,0 Z;M0,0 L0,0 Q720,100 1440,0 L1440,0 Z;M0,0 L0,0 Q720,120 1440,0 L1440,0 Z"/>
+                  {%- endif -%}
+                </path>
+              {%- when 'slope-left' -%}
+                <path d="M0,0 L0,120 L1440,0 L1440,0 Z" fill="{{ au_wave_color }}"/>
+              {%- when 'slope-right' -%}
+                <path d="M0,0 L0,0 L1440,120 L1440,0 Z" fill="{{ au_wave_color }}"/>
+              {%- else -%}
+                <path d="M0,0 L0,0 Q360,120 720,60 T1440,60 L1440,0 Z" fill="{{ au_wave_color }}">
+                  {%- if section.settings.hero_wave_animate -%}
+                    <animate attributeName="d" dur="{{ section.settings.hero_wave_animation_speed }}s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1" values="M0,0 L0,0 Q360,120 720,60 T1440,60 L1440,0 Z;M0,0 L0,0 Q360,90 720,80 T1440,40 L1440,0 Z;M0,0 L0,0 Q360,30 720,100 T1440,90 L1440,0 Z;M0,0 L0,0 Q360,110 720,50 T1440,70 L1440,0 Z;M0,0 L0,0 Q360,120 720,60 T1440,60 L1440,0 Z"/>
+                  {%- endif -%}
+                </path>
+            {%- endcase -%}
+          </svg>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="au__values">
+    <div class="au__inner">
+      <div class="au__values-head">
+        {%- if section.settings.values_heading != blank -%}
+          <h2 class="au__h2">{{ section.settings.values_heading }}</h2>
+        {%- endif -%}
+        <div class="au__values-sub" aria-hidden="true">
+          <span class="au__values-sub-line"></span>
+          <span class="au__values-sub-dot"></span>
+          <span class="au__values-sub-line"></span>
+        </div>
+      </div>
+
+      <div class="au__value-grid">
+        <article class="au__value-card" style="--card-accent: #50b2bd;">
+          <div class="au__value-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15l2 2 4-4"/></svg>
+          </div>
+          <h3>{{ section.settings.value_1_title }}</h3>
+          <p>{{ section.settings.value_1_text }}</p>
+        </article>
+
+        <article class="au__value-card" style="--card-accent: #a42384;">
+          <div class="au__value-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v5.5c0 1.2-.6 2.3-1.6 3l-2.4 1.6A4 4 0 0 0 5 15.2V19a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3.8a4 4 0 0 0-1-2.6l-2.4-1.6c-1-.7-1.6-1.8-1.6-3V3"/><path d="M8 14h8"/></svg>
+          </div>
+          <h3>{{ section.settings.value_2_title }}</h3>
+          <p>{{ section.settings.value_2_text }}</p>
+        </article>
+
+        <article class="au__value-card" style="--card-accent: #7fb540;">
+          <div class="au__value-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v1"/><path d="M12 20v1"/><path d="M3 12h1"/><path d="M20 12h1"/><circle cx="12" cy="12" r="4"/><path d="M4.93 4.93l.7.7"/><path d="M18.36 18.36l.7.7"/><path d="M4.93 19.07l.7-.7"/><path d="M18.36 5.64l.7-.7"/></svg>
+          </div>
+          <h3>{{ section.settings.value_3_title }}</h3>
+          <p>{{ section.settings.value_3_text }}</p>
+        </article>
+
+        <article class="au__value-card" style="--card-accent: #f37024;">
+          <div class="au__value-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C8.5 17.4 6 13.4 6 10a6 6 0 0 1 12 0c0 3.4-2.5 7.4-6 11.7z"/></svg>
+          </div>
+          <h3>{{ section.settings.value_4_title }}</h3>
+          <p>{{ section.settings.value_4_text }}</p>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  {%- if section.settings.image_editorial != blank -%}
+    <div class="au__editorial">
+      <div class="au__inner">
+        <figure>
+          <img
+            src="{{ section.settings.image_editorial | image_url: width: 1400 }}"
+            alt="{{ section.settings.image_editorial.alt | default: 'Happie' }}"
+            loading="lazy"
+            width="1400"
+            height="700"
+          >
+        </figure>
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="au__founder">
+    <div class="au__inner">
+      <div class="au__values-head">
+        {%- if section.settings.founder_heading != blank -%}
+          <h2 class="au__h2">{{ section.settings.founder_heading }}</h2>
+        {%- endif -%}
+        <div class="au__values-sub" aria-hidden="true">
+          <span class="au__values-sub-line"></span>
+          <span class="au__values-sub-dot"></span>
+          <span class="au__values-sub-line"></span>
+        </div>
+      </div>
+      <div class="au__founder-card">
+        {%- if section.settings.image_founder != blank -%}
+          <div class="au__founder-photo">
+            <img
+              src="{{ section.settings.image_founder | image_url: width: 640 }}"
+              alt="{{ section.settings.image_founder.alt | default: 'Pete Olander, Founder and CEO of Happie' }}"
+              loading="lazy"
+              width="400"
+              height="500"
+            >
+          </div>
+        {%- endif -%}
+        <div>
+          <p class="au__founder-name">{{ section.settings.founder_name }}</p>
+          <p class="au__founder-role">{{ section.settings.founder_role }}</p>
+          <div class="au__prose">{{ section.settings.founder_body }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- if section.settings.image_flavors != blank -%}
+    <div class="au__flavors{% if section.settings.flavors_full_bleed %} au__flavors--bleed{% endif %}">
+      <img
+        src="{{ section.settings.image_flavors | image_url: width: 2400 }}"
+        srcset="{{ section.settings.image_flavors | image_url: width: 1200 }} 1200w, {{ section.settings.image_flavors | image_url: width: 1800 }} 1800w, {{ section.settings.image_flavors | image_url: width: 2400 }} 2400w"
+        sizes="100vw"
+        alt="{{ section.settings.image_flavors.alt | default: 'Happie beverage flavors' }}"
+        loading="lazy"
+        width="2400"
+        height="900"
+      >
+    </div>
+  {%- endif -%}
+
+  <div class="au__cta-wrap">
+    <div class="au__inner">
+      {%- if section.settings.closing_heading != blank -%}
+        <h2 class="au__h2">{{ section.settings.closing_heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.closing_body != blank -%}
+        <div class="au__prose" style="margin-bottom: 24px;">{{ section.settings.closing_body }}</div>
+      {%- endif -%}
+      {%- assign about_cta_href = section.settings.cta_url | default: '/pages/shop' -%}
+      {%- if section.settings.cta_label != blank -%}
+        <a href="{{ about_cta_href }}" class="au__cta">
+          {{ section.settings.cta_label }}
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About Us - Updated",
+  "tag": "section",
+  "class": "about-us-updated-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background colors"
+    },
+    {
+      "type": "paragraph",
+      "content": "Each band on this page. Set all three “What we stand for” colors to the same hex for a flat background. Wave divider has its own color under Hero → values curve."
+    },
+    {
+      "type": "color",
+      "id": "color_bg_hero",
+      "label": "Hero (story) background",
+      "default": "#ffe6cb"
+    },
+    {
+      "type": "color",
+      "id": "color_hero_orb",
+      "label": "Hero decorative circle",
+      "default": "#f37024",
+      "info": "Soft tint in the corner; blended at low opacity."
+    },
+    {
+      "type": "color",
+      "id": "color_bg_values_top",
+      "label": "What we stand for — gradient top",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color_bg_values_mid",
+      "label": "What we stand for — gradient middle",
+      "default": "#fffaf6"
+    },
+    {
+      "type": "color",
+      "id": "color_bg_values_bottom",
+      "label": "What we stand for — gradient bottom",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color_bg_value_cards",
+      "label": "Pillar card backgrounds",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color_bg_editorial",
+      "label": "Editorial image band",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color_bg_founder",
+      "label": "Founder section background",
+      "default": "#ffe6cb"
+    },
+    {
+      "type": "color",
+      "id": "color_founder_orb",
+      "label": "Founder decorative circle",
+      "default": "#50b2bd"
+    },
+    {
+      "type": "color",
+      "id": "color_bg_founder_card",
+      "label": "Founder content card",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "flavors_section_bg",
+      "label": "Flavors / full-width image band",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color_bg_cta_top",
+      "label": "Closing CTA — gradient top",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "color_bg_cta_bottom",
+      "label": "Closing CTA — gradient bottom",
+      "default": "#ffe6cb"
+    },
+    {
+      "type": "header",
+      "content": "Section 1 — Company story (approved copy)"
+    },
+    {
+      "type": "text",
+      "id": "story_eyebrow",
+      "label": "Eyebrow",
+      "default": "About Happie"
+    },
+    {
+      "type": "text",
+      "id": "story_headline",
+      "label": "Headline (line before accent)",
+      "default": "Born in California. Built for"
+    },
+    {
+      "type": "text",
+      "id": "story_headline_accent",
+      "label": "Headline accent (orange)",
+      "default": "Better."
+    },
+    {
+      "type": "richtext",
+      "id": "story_body",
+      "label": "Body",
+      "default": "<p>Happie started with a simple belief: what you drink should make you feel good — and you should feel good about drinking it.</p><p>Founded in 2019 by Pete Olander, Happie is a functional beverage company rooted in Northern California’s plant medicine culture. We make two product lines — hemp-derived Delta-9 THC seltzers and Fungi Fusion adaptogenic mushroom drinks — designed for adults who want something better than alcohol and more effective than another sparkling water.</p><p>Every can is batch-tested, transparently labeled, and formulated with intention. Our THC seltzers use nano-emulsified hemp extract for fast-acting effects you can feel in 15 minutes — not two hours. Our Fungi Fusion line delivers clinical-dose functional mushrooms (Lion’s Mane, Cordyceps, and Reishi) with ocean-derived minerals, no THC, and no compromises.</p><p>We’re not here to follow the beverage industry playbook. We’re here to rewrite it — with science-backed formulations, radical transparency, and a brand built on the belief that wellness and enjoyment belong in the same can.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_hero_cloud",
+      "label": "Hero image (optional)",
+      "info": "e.g. happie-cloud.png — layout only; copy is fixed in markdown"
+    },
+    {
+      "type": "range",
+      "id": "padding_hero_top",
+      "min": 40,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Hero padding top",
+      "default": 84,
+      "info": "Adds to automatic clearance for the announcement bar + nav. Increase if text still tucks under the menu."
+    },
+    {
+      "type": "range",
+      "id": "hero_header_extra_clearance",
+      "min": 0,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "label": "Extra space below header",
+      "default": 36,
+      "info": "Breathing room between the nav pill and the first line of hero copy."
+    },
+    {
+      "type": "range",
+      "id": "padding_hero_bottom",
+      "min": 32,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Hero padding bottom",
+      "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Hero → values curve (same system as homepage)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Curve sits on the bottom edge of the peach hero and projects into the white section below—match Wave fill to the section below (usually white)."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_hero_wave",
+      "label": "Show curve under hero",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "hero_wave_curve_height",
+      "min": 30,
+      "max": 150,
+      "step": 10,
+      "unit": "px",
+      "label": "Curve height",
+      "default": 80
+    },
+    {
+      "type": "select",
+      "id": "hero_wave_style",
+      "label": "Curve style",
+      "options": [
+        { "value": "wave", "label": "Wave" },
+        { "value": "wave-smooth", "label": "Wave (smooth)" },
+        { "value": "arc", "label": "Arc" },
+        { "value": "slope-left", "label": "Slope (left to right)" },
+        { "value": "slope-right", "label": "Slope (right to left)" }
+      ],
+      "default": "wave"
+    },
+    {
+      "type": "color",
+      "id": "hero_wave_color",
+      "label": "Curve fill (section below)",
+      "default": "#ffffff"
+    },
+    {
+      "type": "checkbox",
+      "id": "hero_wave_animate",
+      "label": "Animate curve",
+      "default": true,
+      "info": "Flowing motion like Choose your vibe / Best sellers"
+    },
+    {
+      "type": "range",
+      "id": "hero_wave_animation_speed",
+      "min": 3,
+      "max": 15,
+      "step": 1,
+      "unit": "s",
+      "label": "Animation cycle duration",
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "hero_wave_flip",
+      "label": "Flip curve vertically",
+      "default": false,
+      "info": "Bulge aims up into the hero instead of down into the next section"
+    },
+    {
+      "type": "header",
+      "content": "Section 2 — What we stand for"
+    },
+    {
+      "type": "text",
+      "id": "values_heading",
+      "label": "Section heading",
+      "default": "What we stand for"
+    },
+    {
+      "type": "text",
+      "id": "value_1_title",
+      "label": "Pillar 1 title",
+      "default": "Transparency First"
+    },
+    {
+      "type": "textarea",
+      "id": "value_1_text",
+      "label": "Pillar 1 text",
+      "default": "Every batch comes with a Certificate of Analysis. We test for potency and purity because trust isn’t a marketing line — it’s the product."
+    },
+    {
+      "type": "text",
+      "id": "value_2_title",
+      "label": "Pillar 2 title",
+      "default": "Plant-Powered Science"
+    },
+    {
+      "type": "textarea",
+      "id": "value_2_text",
+      "label": "Pillar 2 text",
+      "default": "Dual-extracted mushrooms with 3–7x bioavailability. Nano-emulsified cannabinoids. Ocean-sourced minerals. We formulate for function, not hype."
+    },
+    {
+      "type": "text",
+      "id": "value_3_title",
+      "label": "Pillar 3 title",
+      "default": "Wellness Without the Hangover"
+    },
+    {
+      "type": "textarea",
+      "id": "value_3_text",
+      "label": "Pillar 3 text",
+      "default": "Whether you reach for THC or mushrooms, Happie is designed so tomorrow feels as good as tonight."
+    },
+    {
+      "type": "text",
+      "id": "value_4_title",
+      "label": "Pillar 4 title",
+      "default": "California Roots, National Reach"
+    },
+    {
+      "type": "textarea",
+      "id": "value_4_text",
+      "label": "Pillar 4 text",
+      "default": "Born from NorCal’s wellness and cannabis culture, now available in retail locations across multiple states and shipping direct nationwide."
+    },
+    {
+      "type": "header",
+      "content": "Optional image (no headline)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_editorial",
+      "label": "Editorial image between pillars and founder",
+      "info": "Optional. Markdown allows discretionary imagery only — no extra copy. Leave blank to hide."
+    },
+    {
+      "type": "header",
+      "content": "Section 3 — Founder"
+    },
+    {
+      "type": "text",
+      "id": "founder_heading",
+      "label": "Section heading",
+      "default": "Meet the Founder"
+    },
+    {
+      "type": "text",
+      "id": "founder_name",
+      "label": "Name",
+      "default": "Pete Olander"
+    },
+    {
+      "type": "text",
+      "id": "founder_role",
+      "label": "Title",
+      "default": "Founder & CEO"
+    },
+    {
+      "type": "richtext",
+      "id": "founder_body",
+      "label": "Bio",
+      "default": "<p>Pete Olander built Happie at the intersection of finance, wellness, and plant medicine. His career started on Wall Street — working at J.P. Morgan and First Western Trust Bank — before moving into the consumer wellness space with Nutrition53, where he gained deep experience in CPG product development and brand building.</p><p>At Nutrition53, Pete worked alongside professional athletes and leading experts in the wellness space, developing a deep understanding of what functional ingredients can actually do when formulated with care and intention. That experience shaped his conviction: hemp-derived cannabinoids and functional mushrooms could reshape how people think about social drinking and daily wellness.</p><p>In 2019, he launched Happie — and soon after, relocated operations to California to get closer to the plant, immerse himself in the culture, and understand firsthand what quality means in this industry. From sourcing to formulation, the goal was simple: bring the highest quality ingredients from farm to table for every customer. That commitment to transparency and craft is what drives Happie today, as the brand scales across DTC, Amazon and a growing network of retail and distributor partners nationwide.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_founder",
+      "label": "Founder photo"
+    },
+    {
+      "type": "header",
+      "content": "Optional flavors graphic"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_flavors",
+      "label": "Full-width image above closing CTA"
+    },
+    {
+      "type": "checkbox",
+      "id": "flavors_full_bleed",
+      "label": "Edge-to-edge (full viewport width)",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "flavors_image_radius",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Image corner radius",
+      "default": 0,
+      "info": "Use 0 for a true full-bleed bar; increase for a softer card-like crop."
+    },
+    {
+      "type": "header",
+      "content": "Section 4 — Closing CTA"
+    },
+    {
+      "type": "text",
+      "id": "closing_heading",
+      "label": "Heading",
+      "default": "Feel Good About Feeling Good"
+    },
+    {
+      "type": "richtext",
+      "id": "closing_body",
+      "label": "Body",
+      "default": "<p>Whether you’re reaching for a THC seltzer after a long day or fueling your morning with functional mushrooms, Happie is here to make wellness something you actually enjoy. Join us on the journey.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button URL",
+      "info": "Defaults to /pages/shop if blank"
+    }
+  ],
+  "presets": [{ "name": "About Us - Updated" }]
+}
+{% endschema %}

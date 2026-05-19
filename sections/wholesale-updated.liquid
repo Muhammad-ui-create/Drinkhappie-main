@@ -1,0 +1,438 @@
+<style>
+  #wholesale-updated-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── Decorative blob ── */
+  #wholesale-updated-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    right: -120px;
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    background: rgba(243, 112, 36, 0.07);
+    pointer-events: none;
+  }
+  #wholesale-updated-{{ section.id }}::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    left: -80px;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: rgba(80, 178, 189, 0.08);
+    pointer-events: none;
+  }
+
+  /* ── Container ── */
+  .wholesale-updated__container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+
+  /* ── Drink Happie logo ── */
+  .wholesale-updated__brand-logo {
+    margin: 0 auto 48px;
+    display: flex;
+    justify-content: center;
+  }
+  .wholesale-updated__brand-logo img {
+    max-width: {{ section.settings.brand_logo_max_width }}px;
+    height: auto;
+    display: block;
+  }
+
+  /* ── Eyebrow tag ── */
+  .wholesale-updated__eyebrow {
+    display: inline-block;
+    background-color: #FFCB05;
+    color: #1A1A1A;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 50px;
+    margin-bottom: 24px;
+  }
+
+  /* ── Headline ── */
+  .wholesale-updated__headline {
+    font-size: 4rem !important;
+    font-weight: 700;
+    color: {{ section.settings.headline_color }};
+    line-height: 1.15;
+    margin: 0 auto 24px;
+    max-width: 780px;
+    font-family: var(--heading-font-stack, inherit);
+  }
+  .wholesale-updated__headline em {
+    font-style: normal;
+    color: #F37024;
+  }
+  @media screen and (min-width: 768px) {
+    .wholesale-updated__headline {
+      font-size: 2.8rem !important;
+    }
+  }
+
+  /* ── Body copy ── */
+  .wholesale-updated__body {
+    font-size: clamp(1rem, 0.5rem + 1vw, 1.2rem);
+    color: {{ section.settings.body_color }};
+    line-height: 1.7;
+    max-width: 620px;
+    margin: 0 auto 56px;
+  }
+
+  /* ── Divider ── */
+  .wholesale-updated__divider {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 0 auto 56px;
+    max-width: 500px;
+  }
+  .wholesale-updated__divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(26,26,26,0.15), transparent);
+  }
+  .wholesale-updated__divider-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #F37024;
+    flex-shrink: 0;
+  }
+
+  /* ── Partner block ── */
+  .wholesale-updated__partner {
+    background-color: {{ section.settings.partner_card_bg }};
+    border-radius: 24px;
+    padding: 48px 40px;
+    max-width: 640px;
+    margin: 0 auto;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.06);
+  }
+
+  .wholesale-updated__partner-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #50B2BD;
+    margin-bottom: 20px;
+  }
+
+  .wholesale-updated__partner-logo {
+    margin: 0 auto 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+  }
+  .wholesale-updated__partner-logo img {
+    max-width: {{ section.settings.partner_logo_max_width }}px;
+    max-height: 80px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+  .wholesale-updated__partner-logo-placeholder {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    letter-spacing: -0.02em;
+    font-family: var(--heading-font-stack, inherit);
+  }
+
+  .wholesale-updated__partner-text {
+    font-size: 1rem;
+    color: {{ section.settings.body_color }};
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  /* ── CTA button ── */
+  .wholesale-updated__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #F37024;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 18px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+    box-shadow: 0 4px 16px rgba(243, 112, 36, 0.3);
+    cursor: pointer;
+  }
+  .wholesale-updated__cta:hover {
+    background-color: #d95f18;
+    box-shadow: 0 6px 24px rgba(243, 112, 36, 0.45);
+    transform: translateY(-2px);
+    color: #fff;
+    text-decoration: none;
+  }
+  .wholesale-updated__cta svg {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+  .wholesale-updated__cta:hover svg {
+    transform: translateX(3px);
+  }
+
+  /* ── Mobile ── */
+  @media screen and (max-width: 768px) {
+    .wholesale-updated__partner {
+      padding: 36px 24px;
+    }
+  }
+</style>
+
+<section id="wholesale-updated-{{ section.id }}">
+  <div class="wholesale-updated__container">
+
+    {%- if section.settings.brand_logo != blank -%}
+      <div class="wholesale-updated__brand-logo">
+        <img
+          src="{{ section.settings.brand_logo | image_url: width: 600 }}"
+          srcset="{{ section.settings.brand_logo | image_url: width: 300 }} 300w, {{ section.settings.brand_logo | image_url: width: 600 }} 600w"
+          sizes="{{ section.settings.brand_logo_max_width }}px"
+          alt="{{ section.settings.brand_logo.alt | default: 'Drink Happie' }}"
+          width="{{ section.settings.brand_logo_max_width }}"
+          loading="eager"
+        >
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="wholesale-updated__eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+
+    {%- if section.settings.headline != blank -%}
+      <h1 class="wholesale-updated__headline">{{ section.settings.headline }}</h1>
+    {%- endif -%}
+
+    {%- if section.settings.body_text != blank -%}
+      <p class="wholesale-updated__body">{{ section.settings.body_text }}</p>
+    {%- endif -%}
+
+    <div class="wholesale-updated__divider" aria-hidden="true">
+      <span class="wholesale-updated__divider-line"></span>
+      <span class="wholesale-updated__divider-dot"></span>
+      <span class="wholesale-updated__divider-line"></span>
+    </div>
+
+    <div class="wholesale-updated__partner">
+
+      {%- if section.settings.partner_eyebrow != blank -%}
+        <p class="wholesale-updated__partner-eyebrow">{{ section.settings.partner_eyebrow }}</p>
+      {%- endif -%}
+
+      <div class="wholesale-updated__partner-logo">
+        {%- if section.settings.partner_logo != blank -%}
+          <img
+            src="{{ section.settings.partner_logo | image_url: width: 400 }}"
+            srcset="{{ section.settings.partner_logo | image_url: width: 200 }} 200w, {{ section.settings.partner_logo | image_url: width: 400 }} 400w"
+            sizes="{{ section.settings.partner_logo_max_width }}px"
+            alt="{{ section.settings.partner_logo.alt | default: section.settings.partner_name }}"
+            width="{{ section.settings.partner_logo_max_width }}"
+            loading="lazy"
+          >
+        {%- else -%}
+          <span class="wholesale-updated__partner-logo-placeholder">{{ section.settings.partner_name }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.partner_body != blank -%}
+        <p class="wholesale-updated__partner-text">{{ section.settings.partner_body }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.cta_text != blank and section.settings.cta_url != blank -%}
+        <a
+          href="{{ section.settings.cta_url }}"
+          class="wholesale-updated__cta"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {{ section.settings.cta_text }}
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      {%- endif -%}
+
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wholesale - Updated",
+  "tag": "section",
+  "class": "wholesale-updated-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FFE6CB"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 40,
+      "max": 160,
+      "step": 8,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 40,
+      "max": 160,
+      "step": 8,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "header",
+      "content": "Drink Happie Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "brand_logo",
+      "label": "Brand logo image"
+    },
+    {
+      "type": "range",
+      "id": "brand_logo_max_width",
+      "label": "Logo max width",
+      "min": 80,
+      "max": 320,
+      "step": 10,
+      "unit": "px",
+      "default": 180
+    },
+    {
+      "type": "header",
+      "content": "Headline & Copy"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow tag",
+      "default": "Wholesale"
+    },
+    {
+      "type": "richtext",
+      "id": "headline",
+      "label": "Headline",
+      "default": "<p>Your happy place to stock up.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "body_text",
+      "label": "Body copy",
+      "default": "Interested in carrying Drink Happie at your store? We've partnered with Air Goods to make wholesale ordering simple, fast, and transparent."
+    },
+    {
+      "type": "color",
+      "id": "headline_color",
+      "label": "Headline color",
+      "default": "#1A1A1A"
+    },
+    {
+      "type": "color",
+      "id": "body_color",
+      "label": "Body text color",
+      "default": "#444444"
+    },
+    {
+      "type": "header",
+      "content": "Partner Card"
+    },
+    {
+      "type": "color",
+      "id": "partner_card_bg",
+      "label": "Card background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "text",
+      "id": "partner_eyebrow",
+      "label": "Partner eyebrow label",
+      "default": "Wholesale Orders Fulfilled By"
+    },
+    {
+      "type": "image_picker",
+      "id": "partner_logo",
+      "label": "Partner logo (Air Goods)"
+    },
+    {
+      "type": "text",
+      "id": "partner_name",
+      "label": "Partner name (fallback if no logo)",
+      "default": "Air Goods"
+    },
+    {
+      "type": "range",
+      "id": "partner_logo_max_width",
+      "label": "Partner logo max width",
+      "min": 80,
+      "max": 320,
+      "step": 10,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "textarea",
+      "id": "partner_body",
+      "label": "Partner description",
+      "default": "Air Goods handles all our wholesale fulfillment — making it easy for retailers, gyms, and cafés to stock Drink Happie with no hassle."
+    },
+    {
+      "type": "header",
+      "content": "CTA Button"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "Place a Wholesale Order"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button URL (external Air Goods link)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wholesale - Updated"
+    }
+  ]
+}
+{% endschema %}

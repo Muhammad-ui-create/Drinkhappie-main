@@ -1,0 +1,43 @@
+{%- comment -%}
+  CollectionPage JSON-LD schema for GEO optimization.
+  Emits a CollectionPage with an ItemList (first 20 products) so AI engines
+  and search crawlers can understand this as a curated product collection.
+  Rewritten 2026-04-18 — replaces progressively-indented broken version.
+{%- endcomment -%}
+{%- if collection -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": "{{ shop.url }}{{ collection.url }}#collectionpage",
+  "url": "{{ shop.url }}{{ collection.url }}",
+  "name": {{ collection.title | json }},
+  {%- if collection.description != blank -%}
+  "description": {{ collection.description | strip_html | strip_newlines | truncate: 300 | json }},
+  {%- else -%}
+  "description": {{ collection.title | append: ' from Happie Beverages' | json }},
+  {%- endif -%}
+  "isPartOf": {
+    "@type": "WebSite",
+    "@id": "{{ shop.url }}#website",
+    "url": "{{ shop.url }}",
+    "name": {{ shop.name | json }}
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": {{ collection.products_count }},
+    "itemListElement": [
+      {%- assign max_items = 20 -%}
+      {%- for product in collection.products limit: max_items -%}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.index }},
+        "url": "{{ shop.url }}{{ product.url }}",
+        "name": {{ product.title | json }}
+      }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  }
+}
+</script>
+{%- endif -%}

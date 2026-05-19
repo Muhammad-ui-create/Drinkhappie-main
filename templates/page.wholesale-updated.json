@@ -1,0 +1,38 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "wholesale_updated": {
+      "type": "wholesale-updated",
+      "settings": {
+        "background_color": "#ffe6cb",
+        "padding_top": 80,
+        "padding_bottom": 96,
+        "brand_logo_max_width": 180,
+        "eyebrow": "Wholesale",
+        "headline": "<p>Your <em>happie place</em> to stock up.</p>",
+        "body_text": "Interested in carrying Happie at your store? We’ve partnered with Air Goods to make wholesale ordering simple, fast, and transparent.",
+        "headline_color": "#1a1a1a",
+        "body_color": "#444444",
+        "partner_card_bg": "#ffffff",
+        "partner_eyebrow": "Wholesale Orders Fulfilled By",
+        "partner_logo": "shopify://shop_images/airgoods_logo.cde55f86.svg",
+        "partner_name": "Air Goods",
+        "partner_logo_max_width": 160,
+        "partner_body": "Air Goods handles all our wholesale fulfillment — making it easy for retailers, gyms, and cafés to stock Happie with no hassle.",
+        "cta_text": "Place a Wholesale Order",
+        "cta_url": "https://airgoods.com/u/happie"
+      }
+    }
+  },
+  "order": [
+    "wholesale_updated"
+  ]
+}
