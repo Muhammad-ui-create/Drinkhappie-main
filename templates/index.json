@@ -738,7 +738,6 @@
         "row_fqzpYm",
         "row_rdnHit"
       ],
-      "disabled": true,
       "settings": {
         "title": "How We Compare",
         "display_on_card": false,
@@ -1041,7 +1040,6 @@
     },
     "blog-posts": {
       "type": "blog-posts",
-      "disabled": true,
       "settings": {
         "display_on_card": true,
         "posts_per_row_desktop": 3,

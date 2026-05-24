@@ -389,7 +389,7 @@ box-shadow: inset 0 0 0 var(--input-border-width) rgb(245 245 245);
 </script>
 
 
-{%- comment -%} GEO: Single consolidated Organization (homepage only; replaces duplicate header + old theme blocks) {%- endcomment -%}
+{%- comment -%} GEO: Organization schema fires on ALL pages for AI search visibility; WebSite+SearchAction stays homepage-only {%- endcomment -%}
 {%- liquid
   assign geo_org_logo_media = nil
   if shop.brand.metafields.settings.logo != blank
@@ -422,7 +422,6 @@ box-shadow: inset 0 0 0 var(--input-border-width) rgb(245 245 245);
     endif
   endif
 -%}
-{%- if template.name == 'index' -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -479,6 +478,7 @@ box-shadow: inset 0 0 0 var(--input-border-width) rgb(245 245 245);
   }
 }
 </script>
+{%- if template.name == 'index' -%}
 {%- assign geo_search_target = shop.url | append: routes.search_url | append: '?q={search_term_string}' -%}
 <script type="application/ld+json">
 {
