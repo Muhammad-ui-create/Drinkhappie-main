@@ -106,6 +106,7 @@
     "name": {{ brand_name | json }}
   },
   "category": "Functional Beverages",
+  "keywords": {%- if is_fungi_fusion -%}"functional mushroom drink, adaptogenic beverage, Lion's Mane drink, Cordyceps drink, Reishi drink, nootropic beverage, mushroom seltzer, caffeine-free energy drink, focus drink, mushroom coffee alternative, natural energy drink, adaptogen soda"{%- else -%}"THC seltzer, Delta-9 THC drink, hemp-derived THC beverage, cannabis seltzer, THC sparkling water, weed drink, hemp seltzer, alcohol alternative, zero-proof cocktail, sober curious drink, THC infused drink, low calorie THC drink, nano-emulsified THC, CBD drink, social tonic, microdose THC"{%- endif -%},
   {%- if schema_has_aggregate -%}
   "aggregateRating": {
     "@type": "AggregateRating",

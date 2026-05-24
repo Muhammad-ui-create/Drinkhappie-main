@@ -1,0 +1,50 @@
+{%- comment -%}
+  SEO keyword-enriched content for product pages.
+  Renders a brief semantic paragraph under the product info with targeted keywords.
+  Conditionally shows THC vs. mushroom product keywords.
+  Added 2026-05-25 for competitive keyword ranking.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fungi = false
+  assign pt_lc = product.title | downcase
+  if pt_lc contains 'fungi' or pt_lc contains 'mushroom'
+    assign is_fungi = true
+  endif
+  for tag in product.tags
+    assign tag_lc = tag | downcase
+    if tag_lc contains 'fungi' or tag_lc contains 'mushroom'
+      assign is_fungi = true
+    endif
+  endfor
+-%}
+
+<div class="happie-seo-product-info" style="
+  max-width: 720px;
+  margin: 32px auto 0;
+  padding: 24px 20px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.75;
+  border-top: 1px solid rgba(0,0,0,0.06);
+">
+  {%- if is_fungi -%}
+    <p style="margin: 0;">
+      <strong>{{ product.title }}</strong> is a premium functional mushroom drink by Happie® featuring
+      Lion's Mane, Cordyceps, and Reishi adaptogenic mushroom extracts. This nootropic beverage supports
+      focus, natural energy, and calm — without caffeine, THC, or sugar. A healthier alternative to
+      coffee and energy drinks. Vegan, gluten-free, non-GMO. Ocean-derived minerals for natural
+      hydration. Ships nationwide. Subscribe & save 20%.
+    </p>
+  {%- else -%}
+    <p style="margin: 0;">
+      <strong>{{ product.title }}</strong> is a premium hemp-derived Delta-9 THC seltzer by Happie®.
+      Nano-emulsified for fast-acting effects in 15–30 minutes with a balanced 1:1 THC-to-CBD ratio.
+      Only 30 calories per can — the best low-calorie THC drink available. Sweetened with organic agave
+      nectar, infused with ocean minerals, and made with real fruit flavor. Zero alcohol, zero hangover.
+      Vegan, gluten-free, lab tested. 2018 Farm Bill compliant. Free shipping on orders $50+.
+      Subscribe & save 20%.
+    </p>
+  {%- endif -%}
+</div>

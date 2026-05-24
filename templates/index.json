@@ -15,7 +15,7 @@
         "eyebrow": "California Crafted",
         "title": "THC Seltzers & Mushroom Drinks",
         "title_highlight": "",
-        "richtext": "Flavor-forward beverages infused with functional mushrooms & hemp-derived cannabinoids — made for the good-vibe seekers.",
+        "richtext": "Premium THC seltzers & functional mushroom drinks — nano-emulsified, fast-acting, zero alcohol. The best hemp-derived Delta-9 beverages, crafted in California for the good-vibe seekers.",
         "cta_1_text": "Shop THC Seltzers",
         "cta_1_url": "shopify:\/\/collections\/thc-drinks",
         "cta_2_text": "Shop Fungi Fusion",
@@ -108,7 +108,7 @@
         "header_icon": "shopify:\/\/shop_images\/happie-cloud.png",
         "icon_size": 104,
         "title": "Choose Your Vibe",
-        "subtitle": "Two product lines, one mission — plant-powered happiness for every moment.",
+        "subtitle": "Two product lines, one mission — plant-powered happiness for every moment. Premium THC seltzers and adaptogenic mushroom drinks.",
         "card_1_badge": "MOST POPULAR",
         "card_1_image": "shopify:\/\/shop_images\/Happie_Thc_collection.jpg",
         "card_1_title": "THC Infused Seltzers",
@@ -256,7 +256,7 @@
         "padding_top_mobile": 60,
         "padding_bottom_mobile": 60,
         "title": "Best Sellers",
-        "subtitle": "Our most-loved flavors, chosen by the Happie community.",
+        "subtitle": "Our most-loved THC seltzers and mushroom drinks, chosen by the Happie community. Premium hemp-derived beverages shipped nationwide.",
         "collection_1": "thc-drinks",
         "collection_1_label": "THC Seltzers",
         "collection_2": "fungi-fusion",
@@ -433,7 +433,7 @@
       "settings": {
         "product": "happie-social-4-pack",
         "heading": "Find Your Flavor",
-        "description": "Not sure where to start? Our variety pack lets you try all our most popular flavors and find your perfect vibe.",
+        "description": "Not sure which THC seltzer to try first? Our variety pack lets you sample all our most popular hemp-derived THC flavors and find your perfect vibe. The best way to discover why Happie is the top-rated THC drink brand.",
         "button_text": "Shop Variety Pack",
         "image": "shopify:\/\/shop_images\/DrinkHappieVarietyPack-min.jpg",
         "heading_size": 42,
@@ -495,7 +495,7 @@
           "settings": {
             "icon": "circle-slash",
             "title": "High-Quality THC & CBD",
-            "description": "Nano-emulsified for fast onset — feel it in 15 minutes, not 2 hours. Lab-tested, Farm Bill compliant, and consistent every single time"
+            "description": "Nano-emulsified for fast onset — feel it in 15 minutes, not 2 hours. Lab-tested, 2018 Farm Bill compliant, and consistent every single time. Better absorption than Brez, Cann, or any other THC seltzer brand"
           }
         }
       },
@@ -511,7 +511,7 @@
         "padding_bottom": 80,
         "padding_top_mobile": 60,
         "padding_bottom_mobile": 60,
-        "title": "Clean Ingredients That Hit Different",
+        "title": "Clean Ingredients — What Makes Happie the Best THC Seltzer",
         "main_image": "shopify:\/\/shop_images\/Grapefruitfarmedacanimage-min.jpg",
         "background_color": "#ffcb08",
         "card_bg_color": "#fff8dc",

@@ -41,44 +41,46 @@
 
     <title>
   {%- if template.name == 'index' %}
-    Happie® | Premium THC Seltzers & Functional Mushroom Drinks
+    Happie® | Best THC Seltzers & Mushroom Drinks | Buy Online
   {%- elsif template.name == 'product' %}
-    {{ page_title }} | Happie
+    {{ page_title }} | Hemp-Derived THC Drink | Happie®
   {%- elsif template.name == 'collection' %}
-    {%- if collection.handle == 'thc' or collection.handle == 'frontpage' %}
-      Delta-9 THC Seltzers | Hemp-Derived THC Drinks | Happie®
+    {%- if collection.handle == 'thc-drinks' or collection.handle == 'thc' or collection.handle == 'frontpage' %}
+      Buy THC Seltzers Online | Delta-9 Hemp Drinks 5mg & 10mg | Happie®
     {%- elsif collection.handle == 'fungi' or collection.handle == 'fungi-fusion' %}
-      Fungi Fusion Mushroom Drinks | Lion's Mane & Cordyceps | Happie®
+      Fungi Fusion Mushroom Drinks | Lion's Mane, Cordyceps & Reishi | Happie®
     {%- elsif collection.handle == 'social' %}
-      THC Social Seltzers | 5mg & 10mg | Happie®
+      THC Social Seltzers | Best Alcohol Alternative | 5mg & 10mg | Happie®
     {%- elsif collection.handle == 'merch' %}
       Happie® Merch | Official Gear
     {%- else %}
       {{ collection.title }} | Happie®
     {%- endif %}
   {%- elsif template.name == 'article' %}
-    {{ article.title }} | Happie® Blog
+    {{ article.title }} | THC & Mushroom Drink Blog | Happie®
   {%- elsif template.name == 'blog' %}
     {%- if current_page > 1 %}
       {{ blog.title }} — Page {{ current_page }} | Happie® Blog
     {%- else %}
-      THC Seltzer & Mushroom Drink Insights | Happie® Blog
+      THC Seltzer & Functional Mushroom Drink Blog | Happie®
     {%- endif %}
   {%- elsif template.name == 'page' %}
     {%- if page.handle == 'faq' %}
-      FAQ — THC Drinks & Mushroom Beverages | Happie®
+      FAQ — THC Drinks, Hemp Seltzers & Mushroom Beverages | Happie®
     {%- elsif page.handle == 'wholesale' %}
-      Wholesale THC Seltzers & Mushroom Drinks | Happie®
-    {%- elsif page.handle == 'about-us' %}
-      About Happie® | California-Crafted Functional Beverages
+      Wholesale THC Seltzers & Mushroom Drinks for Retailers | Happie®
+    {%- elsif page.handle == 'about-us' or page.handle == 'about-us-updated' %}
+      About Happie® | California-Crafted THC & Mushroom Beverages
     {%- elsif page.handle == 'contact' %}
-      Contact Us | Happie®
+      Contact Us | Happie® THC Seltzers
     {%- elsif page.handle == 'subscribe-and-save' %}
-      Subscribe & Save on THC Seltzers | Happie®
+      Subscribe & Save 20% on THC Seltzers | Happie®
     {%- elsif page.handle == 'coas' %}
-      Lab Test Results (COAs) | Happie®
+      Lab Test Results (COAs) | Third-Party Tested | Happie®
     {%- elsif page.handle == 'shop' %}
-      Shop All THC Drinks & Mushroom Beverages | Happie®
+      Shop All THC Drinks & Mushroom Beverages Online | Happie®
+    {%- elsif page.handle == 'store-locator' or page.handle == 'mappy' %}
+      Find THC Seltzers Near Me | Store Locator | Happie®
     {%- else %}
       {{ page.title }} | Happie®
     {%- endif %}
@@ -102,16 +104,32 @@
     {%- endif -%}
 
     {%- if template.name == 'index' %}
-  <meta name="description" content="Shop premium hemp-derived Delta-9 THC seltzers (5mg/10mg) and Fungi Fusion mushroom drinks (Lion's Mane, Cordyceps, Reishi). Nano-emulsified, fast-acting. Feel Good. Feel Happie.®">
+  <meta name="description" content="Happie® — premium hemp-derived Delta-9 THC seltzers (5mg & 10mg) and Fungi Fusion mushroom drinks with Lion's Mane, Cordyceps & Reishi. Nano-emulsified, fast-acting, zero alcohol, low calorie. The best THC seltzer brand — better than Brez, Cann & Wynk. Ships to 40+ states. Subscribe & save 20%.">
+{%- elsif template.name == 'product' %}
+  <meta name="description" content="{{ product.title }} by Happie® — {{ product.description | strip_html | truncate: 80 }} Premium hemp-derived THC drink, nano-emulsified for fast onset. Low calorie, vegan, gluten-free. Shop online with free shipping.">
 {%- elsif template.name == 'collection' %}
-  {%- if collection.handle == 'thc' or collection.handle == 'frontpage' %}
-    <meta name="description" content="Hemp-derived Delta-9 THC seltzers in 5mg and 10mg. 7 fruit flavors, fast-acting nano-emulsified formula, zero alcohol, zero hangover. Ships to 40+ states.">
+  {%- if collection.handle == 'thc-drinks' or collection.handle == 'thc' or collection.handle == 'frontpage' %}
+    <meta name="description" content="Buy the best Delta-9 THC seltzers online. Happie hemp-derived THC drinks in 5mg & 10mg — 7 fruit flavors, nano-emulsified fast-acting formula. Zero alcohol, zero hangover, 30 calories. Better than Brez, Cann, Wynk & Cycling Frog. Free shipping on $50+.">
   {%- elsif collection.handle == 'fungi' or collection.handle == 'fungi-fusion' %}
-    <meta name="description" content="Fungi Fusion adaptogenic mushroom drinks with Lion's Mane 900mg, Cordyceps 700mg & Reishi 400mg. Zero THC, zero caffeine. Ocean minerals for hydration.">
+    <meta name="description" content="Fungi Fusion functional mushroom drinks — Lion's Mane 900mg, Cordyceps 700mg & Reishi 400mg per can. Zero THC, zero caffeine, zero sugar. Best mushroom beverage for focus, energy & calm. Ocean minerals for hydration. Ships nationwide.">
+  {%- elsif collection.handle == 'social' %}
+    <meta name="description" content="Happie Social THC Seltzers — 5mg and 10mg hemp-derived Delta-9 THC drinks perfect for parties, social gatherings & relaxation. The best alcohol alternative. Zero hangover, low calorie, vegan.">
   {%- elsif collection.description != blank %}
     <meta name="description" content="{{ collection.description | strip_html | truncate: 155 }}">
   {%- else %}
     <meta name="description" content="{{ page_description | default: shop.description | truncate: 155 }}">
+  {%- endif %}
+{%- elsif template.name == 'page' %}
+  {%- if page.handle == 'faq' %}
+    <meta name="description" content="Happie FAQ — everything about hemp-derived THC drinks, Delta-9 seltzers, functional mushroom beverages, dosing, shipping states, legality & how Happie compares to Brez, Cann, Wynk & Cycling Frog.">
+  {%- elsif page.handle == 'about-us' or page.handle == 'about-us-updated' %}
+    <meta name="description" content="About Happie® — California-crafted functional beverages by founder Pete Olander. Premium THC seltzers and Fungi Fusion mushroom drinks. Plant-powered happiness since 2019.">
+  {%- elsif page.handle == 'wholesale' %}
+    <meta name="description" content="Wholesale Happie THC seltzers and mushroom drinks for retailers, bars, restaurants & dispensaries. Premium hemp-derived beverages with competitive margins. Apply today.">
+  {%- elsif page_description != blank %}
+    <meta name="description" content="{{ page_description | truncate: 155 }}">
+  {%- else %}
+    <meta name="description" content="{{ shop.description | truncate: 155 }}">
   {%- endif %}
 {%- elsif page_description != blank %}
   <meta name="description" content="{{ page_description | truncate: 155 }}">
@@ -464,7 +482,33 @@ box-shadow: inset 0 0 0 var(--input-border-width) rgb(245 245 245);
     "Reishi Extract",
     "Delta-9 THC",
     "Alcohol Alternatives",
-    "Functional Hydration"
+    "Functional Hydration",
+    "THC Seltzer",
+    "THC Drinks",
+    "Cannabis Beverages",
+    "THC Infused Drinks",
+    "Hemp Seltzer",
+    "Weed Drinks",
+    "Nano-Emulsified THC",
+    "CBD Drinks",
+    "THC Sparkling Water",
+    "Adaptogenic Beverages",
+    "Nootropic Drinks",
+    "Sober Curious Beverages",
+    "Mindful Drinking",
+    "Plant-Based Wellness",
+    "2018 Farm Bill Compliant Products",
+    "Mushroom Coffee Alternative",
+    "Zero-Proof Cocktails",
+    "Functional Soda",
+    "Low-Calorie THC Drinks",
+    "Vegan THC Beverages",
+    "Gluten-Free Cannabis Drinks",
+    "Social Tonic",
+    "Microdose THC Drinks",
+    "Relaxation Beverages",
+    "Focus Drinks",
+    "Energy Drinks Without Caffeine"
   ],
   "contactPoint": {
     "@type": "ContactPoint",
@@ -499,6 +543,82 @@ box-shadow: inset 0 0 0 var(--input-border-width) rgb(245 245 245);
     },
     "query-input": "required name=search_term_string"
   }
+}
+</script>
+{%- endif -%}
+
+{%- comment -%} GEO: FAQPage schema on FAQ page for Google rich results {%- endcomment -%}
+{%- if template.name == 'page' and page.handle == 'faq' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the best THC seltzer brand?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Happie is one of the best THC seltzer brands available online. Unlike competitors like Brez, Cann, Wynk, and Cycling Frog, Happie uses nano-emulsified THC for faster onset (15–30 min), organic agave nectar sweetener, ocean-derived minerals, and a balanced 1:1 THC-to-CBD ratio. Available in 7 fruit flavors with just 30 calories per can."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does Happie compare to Brez, Cann, and Wynk?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Happie stands apart from Brez, Cann, Wynk, and Cycling Frog with nano-emulsified THC for faster absorption, organic agave sweetener instead of cane sugar, ocean-derived minerals for hydration, and both a THC seltzer line and a functional mushroom drink line. At 30 calories per can with a 1:1 THC-to-CBD ratio, Happie delivers a cleaner, smoother experience."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are THC drinks a good alcohol alternative?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, THC seltzers like Happie are an excellent alcohol alternative. They deliver a relaxing buzz without the hangover, empty calories, or health risks of alcohol. At only 30 calories per can, they're perfect for sober curious adults, mindful drinkers, and social gatherings. Many people are switching from beer, wine, and cocktails to THC seltzers as a healthier way to unwind."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Delta-9 THC and is it legal?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Delta-9 THC is the primary psychoactive compound in cannabis. Hemp-derived Delta-9 THC products containing less than 0.3% THC by dry weight are federally legal under the 2018 Farm Bill. Happie THC seltzers are Farm Bill compliant and ship to 40+ states. State laws vary, so check your local regulations before ordering."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where can I buy THC seltzers online?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can buy THC seltzers online at drinkhappie.com with fast shipping to 40+ states. Happie offers free shipping on orders over $50 and a Subscribe & Save program with 20% off every delivery. Orders typically ship within 1 business day."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the health benefits of mushroom drinks?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Functional mushroom drinks like Happie Fungi Fusion contain Lion's Mane for cognitive function and focus, Cordyceps for natural energy and athletic performance, and Reishi for relaxation and immune support. They're a caffeine-free, sugar-free alternative to coffee and energy drinks with zero THC."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How many calories are in a THC seltzer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Happie THC seltzers contain approximately 30 calories per 12 oz can, sweetened with organic agave nectar. That's significantly fewer calories than beer (150+), wine (120+), or cocktails (200+), making them one of the lowest-calorie THC drinks available."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the best THC seltzer for beginners?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Happie 5mg Social Seltzers are ideal for beginners. The balanced 1:1 ratio of 5mg THC and 5mg CBD delivers a mild, functional buzz. The nano-emulsified formula provides consistent effects in 15–30 minutes. Start with one can and wait before consuming more."
+      }
+    }
+  ]
 }
 </script>
 {%- endif -%}
@@ -580,6 +700,9 @@ box-shadow: inset 0 0 0 var(--input-border-width) rgb(245 245 245);
     {% render 'header-group-support' %}
     <main id="MainContent" class="overflow-hidden">
       {{ content_for_layout }}
+      {%- if template.name == 'index' -%}
+        {%- render 'seo-homepage-content' -%}
+      {%- endif -%}
     </main>
 
     {%- sections 'footer-group' -%}
