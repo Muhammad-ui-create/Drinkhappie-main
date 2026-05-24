@@ -1066,6 +1066,15 @@
         "wave_animation_speed": 8
       }
     },
+    "seo_keyword_content": {
+      "type": "custom-liquid",
+      "settings": {
+        "title": "",
+        "custom_liquid": "{% render 'seo-homepage-content' %}",
+        "full_width": true,
+        "color_scheme": ""
+      }
+    },
     "scrolling-text-with-icons": {
       "type": "scrolling-text-with-icons",
       "blocks": {
@@ -1158,6 +1167,7 @@
     "video_with_text_overlay_hRNKJB",
     "mixed_shape_product_grid_te4gMG",
     "blog-posts",
+    "seo_keyword_content",
     "scrolling-text-with-icons"
   ]
 }
