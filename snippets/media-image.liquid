@@ -36,6 +36,8 @@
   endif
 -%}
 
+{%- assign media_alt_text = media.alt | default: product.title | escape -%}
+
 {%- if shape contains 'default' or shape == '' or shape == blank -%}
   <div class="media {% if is_card == false %}media--css-only{% endif %} media-{{ media_id }} {% if disable_media_style %}media--disable-styles{% endif %} {{ shape | split: '_' | last }} {% unless crop == '' or crop == blank or crop == 'natural' %}object-wrapper {{ crop }}{% endunless %}">
     {%- unless media == blank -%}
@@ -43,7 +45,7 @@
         media
         | image_url: width: 3000
         | image_tag:
-          alt: media.alt | default: product.title | escape,
+          alt: media_alt_text,
           class: media_element_class,
           loading: loading,
           widths: widths,
@@ -69,7 +71,7 @@
             media
             | image_url: width: 2000
             | image_tag:
-              alt: media.alt | default: product.title | escape,
+              alt: media_alt_text,
               class: clip_path_media_class,
               loading: loading,
               sizes: sizes,
