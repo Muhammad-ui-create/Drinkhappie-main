@@ -23,13 +23,13 @@
       endif
     -%}
     <div class="relative flex w-full items-center justify-between border-b-general border-scheme-text pb-2.5 pt-5">
-      <h1
+      <h2
         class="font-heading  heading-standard heading-style full_shadow"
         class=""
         tabindex="-1"
       >
         {{ 'facets.filters.title_tags' | t }}
-      </h1>
+      </h2>
       <button
         @click.prevent="$store.modals.close('filters')"
         class="top-0 block"

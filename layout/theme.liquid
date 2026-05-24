@@ -1,7 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="{{ request.locale.iso_code }}">
   <head>
-    <script src="https://cdn.userway.org/widget.js" data-account="Qd6zudTeks"></script>
+    <script async src="https://cdn.userway.org/widget.js" data-account="Qd6zudTeks"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -43,7 +43,7 @@
   {%- if template.name == 'index' %}
     Happie® | Premium THC Seltzers & Functional Mushroom Drinks
   {%- elsif template.name == 'product' %}
-    {{ page_title }}
+    {{ page_title }} | Happie
   {%- elsif template.name == 'collection' %}
     {%- if collection.handle == 'thc' or collection.handle == 'frontpage' %}
       Delta-9 THC Seltzers | Hemp-Derived THC Drinks | Happie®
@@ -101,8 +101,7 @@
       {%- endif -%}
     {%- endif -%}
 
-    {% if page_description %}
-      {%- if template.name == 'index' %}
+    {%- if template.name == 'index' %}
   <meta name="description" content="Shop premium hemp-derived Delta-9 THC seltzers (5mg/10mg) and Fungi Fusion mushroom drinks (Lion's Mane, Cordyceps, Reishi). Nano-emulsified, fast-acting. Feel Good. Feel Happie.®">
 {%- elsif template.name == 'collection' %}
   {%- if collection.handle == 'thc' or collection.handle == 'frontpage' %}
@@ -119,7 +118,6 @@
 {%- else %}
   <meta name="description" content="{{ shop.description | truncate: 155 }}">
 {%- endif %}
-    {% endif %}
 
     {%- render 'meta-tags' -%}
 
@@ -151,15 +149,6 @@
 <link rel="dns-prefetch" href="https://cdnwidget.judge.me">
 <link rel="dns-prefetch" href="https://connect.facebook.net">
 <link rel="dns-prefetch" href="https://subscription-admin.appstle.com">
-  <!-- Preconnect: critical third-party origins -->
-  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-  <link rel="preconnect" href="https://static.klaviyo.com" crossorigin>
-  <link rel="preconnect" href="https://cdn.userway.org" crossorigin>
-  <!-- DNS Prefetch: secondary domains -->
-  <link rel="dns-prefetch" href="https://static-tracking.klaviyo.com">
-  <link rel="dns-prefetch" href="https://cdnwidget.judge.me">
-  <link rel="dns-prefetch" href="https://connect.facebook.net">
-  <link rel="dns-prefetch" href="https://subscription-admin.appstle.com">
 
     {{ content_for_header }}
 

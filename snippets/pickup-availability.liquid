@@ -81,12 +81,12 @@
               <div class="flex h-screen flex-col">
                 <div class="px-section">
                   <div class="relative flex items-center justify-between border-b-general border-scheme-text pb-2.5 pt-5">
-                    <h1 id="ModalTitle" class="">
+                    <h2 id="ModalTitle" class="">
                       <div class="font-heading text-lg">
                         {{ variant.product.title }}
                       </div>
                       <div>{{ variant.title }}</div>
-                    </h1>
+                    </h2>
                     <button
                       @click.prevent="$store.modals.close('pickup-availability-{{ variant.id }}')"
                       class="top-0 ml-2.5 block"

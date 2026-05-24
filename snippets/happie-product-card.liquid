@@ -73,16 +73,20 @@
       {%- if primary_image != blank -%}
         <img
           src="{{ primary_image | image_url: width: 800, height: 800, crop: 'center' }}"
+          srcset="{{ primary_image | image_url: width: 400, height: 400, crop: 'center' }} 400w, {{ primary_image | image_url: width: 600, height: 600, crop: 'center' }} 600w, {{ primary_image | image_url: width: 800, height: 800, crop: 'center' }} 800w"
+          sizes="(max-width: 640px) 400px, (max-width: 1024px) 600px, 800px"
           alt="{{ primary_image.alt | escape | default: product.title }}"
           width="800"
           height="800"
           loading="{{ loading_attr }}"
           class="happie-product-card__image happie-product-card__image--primary"
         >
-        
+
         {%- if has_secondary_image -%}
           <img
             src="{{ secondary_image | image_url: width: 800, height: 800, crop: 'center' }}"
+            srcset="{{ secondary_image | image_url: width: 400, height: 400, crop: 'center' }} 400w, {{ secondary_image | image_url: width: 600, height: 600, crop: 'center' }} 600w, {{ secondary_image | image_url: width: 800, height: 800, crop: 'center' }} 800w"
+            sizes="(max-width: 640px) 400px, (max-width: 1024px) 600px, 800px"
             alt="{{ secondary_image.alt | escape | default: product.title }}"
             width="800"
             height="800"

@@ -43,6 +43,7 @@
         media
         | image_url: width: 3000
         | image_tag:
+          alt: media.alt | default: product.title | escape,
           class: media_element_class,
           loading: loading,
           widths: widths,
@@ -68,6 +69,7 @@
             media
             | image_url: width: 2000
             | image_tag:
+              alt: media.alt | default: product.title | escape,
               class: clip_path_media_class,
               loading: loading,
               sizes: sizes,
