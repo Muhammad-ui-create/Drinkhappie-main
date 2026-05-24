@@ -86,9 +86,9 @@
           endif
         -%}
         <li
-          class="{{ col_span }} {% if section.settings.display_on_card %}text-scheme-text card{% endif %}"
+          class="{{ col_span }} h-full {% if section.settings.display_on_card %}text-scheme-text card{% endif %}"
         >
-          <div class="relative {% if section.settings.display_on_card %}card__surface p-5{% endif %} text-center">
+          <div class="relative h-full flex flex-col {% if section.settings.display_on_card %}card__surface p-5{% endif %} text-center">
             {%- if article.image -%}
               <div class="mb-5 {% if settings.media_shadow_direction contains 'top' %}pt-media-shadow{% else %}pb-media-shadow{% endif %}">
                 {%- render 'media-image',
@@ -130,7 +130,7 @@
             {% endif %}
 
             {% if section.settings.show_post_excerpt %}
-              <div class="rte mt-2.5">
+              <div class="rte mt-2.5 flex-1">
                 {% if article.excerpt.size > 0 %}
                   {{ article.excerpt }}
                 {% else %}
