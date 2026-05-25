@@ -168,6 +168,12 @@
             margin-bottom: 1rem;
             display: inline-block;
             width: 100%;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            border-radius: var(--card-border-radius, 1rem);
+          }
+          #blog-masonry-{{ section.id }} .blog-masonry__item:hover {
+            box-shadow: 0 0 20px rgba(107, 45, 139, 0.35), 0 0 40px rgba(107, 45, 139, 0.15);
+            transform: translateY(-3px);
           }
           @media (max-width: 989px) {
             #blog-masonry-{{ section.id }} {
