@@ -41,11 +41,11 @@
       ],
       "settings": {
         "display_on_card": true,
-        "posts_per_row_desktop": 3,
+        "posts_per_row_desktop": 4,
         "show_blog_title": true,
         "show_tags": false,
         "crop": "aspect-w-4 aspect-h-3",
-        "image_shape": "squircle",
+        "image_shape": "default_pill",
         "blog_show_author": false,
         "blog_show_date": false,
         "show_post_excerpt": true,
