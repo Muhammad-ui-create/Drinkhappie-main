@@ -17,7 +17,7 @@
   endif
 -%}
 
-{%- paginate blog.articles by 6 -%}
+{%- paginate blog.articles by 50 -%}
   {%- render 'collection-shape-defs',
     shape: section.settings.image_shape,
     section_id: section.id,
@@ -78,18 +78,12 @@
           </div>
         {% endif %}
 
-        <ul class="grid grid-cols-1 gap-4 lg:grid-cols-12">
+        <div class="blog-masonry" id="blog-masonry-{{ section.id }}">
           {% for article in blog.articles %}
             {%- liquid
               assign shape_id = section.id
               if section.settings.image_shape == 'blob'
                 assign shape_id = section.id | append: '-' | append: forloop.index0
-              endif
-
-              if section.index == 1 and forloop.first
-                assign preload = true
-              else
-                assign preload = false
               endif
 
               if section.index <= 3 and forloop.index <= 3
@@ -98,85 +92,94 @@
                 assign loading = 'lazy'
               endif
             -%}
-            <li
-              class="{{ post_class }} {% if section.settings.display_on_card %}text-scheme-text card{% endif %}"
-            >
-              <div class="relative {% if section.settings.display_on_card %}card__surface p-5{% endif %} text-center">
+            <div class="blog-masonry__item {% if section.settings.display_on_card %}text-scheme-text card{% endif %}">
+              <div class="relative {% if section.settings.display_on_card %}card__surface p-4{% endif %} text-center">
                 {%- if article.image -%}
-                  <div class="mb-5 {% if settings.media_shadow_direction contains 'top' %}pt-media-shadow{% else %}pb-media-shadow{% endif %}">
-                    {%- render 'media-image',
-                      media: article.image,
-                      shape: section.settings.image_shape,
-                      shape_id: shape_id,
-                      is_card: section.settings.display_on_card,
-                      crop: section.settings.crop,
-                      container_id: section.id,
-                      index: forloop.index0,
-                      loading: loading,
-                      preload: preload,
-                      sizes: sizes
-                    -%}
+                  <div class="mb-3">
+                    <a href="{{ article.url }}" class="block overflow-hidden" style="border-radius: 8px;">
+                      <img
+                        src="{{ article.image | image_url: width: 600 }}"
+                        alt="{{ article.image.alt | escape }}"
+                        loading="{{ loading }}"
+                        width="{{ article.image.width }}"
+                        height="{{ article.image.height }}"
+                        style="width: 100%; height: auto; display: block; transition: transform 0.3s ease;"
+                        onmouseover="this.style.transform='scale(1.03)'"
+                        onmouseout="this.style.transform='scale(1)'"
+                      >
+                    </a>
                   </div>
                 {%- endif -%}
 
-                <h2 class="font-heading heading-secondary">
+                <h2 class="font-heading text-sm lg:text-base font-bold leading-snug">
                   <a href="{{ article.url }}">
                     {{ article.title }}
-                    <span
-                      class="absolute left-0 top-0 z-10 block h-full w-full"
-                    ></span>
+                    <span class="absolute left-0 top-0 z-10 block h-full w-full"></span>
                   </a>
                 </h2>
 
                 {%- if section.settings.blog_show_date -%}
                   <time
-                    class="font-body mt-2.5 block text-base"
+                    class="font-body mt-1.5 block text-xs opacity-60"
                     datetime="{{ article.published_at | date: '%Y-%m-%d' }}"
                   >
-                    {{-
-                      article.published_at
-                      | date: format: 'month_day_year'
-                    -}}
+                    {{ article.published_at | date: format: 'month_day_year' }}
                   </time>
                 {%- endif -%}
                 {% if section.settings.blog_show_author %}
-                  <p class="font-body mt-2.5 block text-base">
+                  <p class="font-body mt-1.5 block text-xs opacity-60">
                     {{ 'blogs.article.by_author' | t: author: article.author }}
                   </p>
                 {% endif %}
 
                 {% if section.settings.show_post_excerpt %}
-                  <div class="rte mt-2.5">
+                  <div class="rte mt-1.5 text-sm leading-relaxed opacity-80">
                     {% if article.excerpt.size > 0 %}
-                      {{ article.excerpt }}
+                      {{ article.excerpt | strip_html | truncatewords: 25 }}
                     {% else %}
-                      <p>
-                        {{ article.content | strip_html | truncatewords: 40 }}
-                      </p>
+                      <p>{{ article.content | strip_html | truncatewords: 25 }}</p>
                     {% endif %}
                   </div>
                 {% endif %}
 
                 {%- if section.settings.show_tags %}
-                  <div class="mt-2.5">
-                    <ul class="article-tags flex flex-wrap items-center justify-center">
+                  <div class="mt-2">
+                    <ul class="article-tags flex flex-wrap items-center justify-center gap-1">
                       {% for tag in article.tags %}
                         <li class="relative z-10 inline-block">
-                          <a
-                            class="inline-block p-1"
-                            href="{{ blog.url }}/tagged/{{ tag | handle }}"
-                            >#{{ tag -}}
-                          </a>
-                          {%- unless forloop.last %}&nbsp;{% endunless %}
+                          <a class="inline-block text-xs px-2 py-0.5 rounded-full opacity-70 hover:opacity-100" href="{{ blog.url }}/tagged/{{ tag | handle }}">#{{ tag }}</a>
                         </li>
                       {% endfor %}
                     </ul>
                   </div>
                 {%- endif -%}
               </div>
-            </li>
+            </div>
           {% endfor %}
-        </ul>
+        </div>
+
+        <style>
+          #blog-masonry-{{ section.id }} {
+            columns: {{ section.settings.posts_per_row_desktop }};
+            column-gap: 1rem;
+          }
+          #blog-masonry-{{ section.id }} .blog-masonry__item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+            display: inline-block;
+            width: 100%;
+          }
+          @media (max-width: 989px) {
+            #blog-masonry-{{ section.id }} {
+              columns: 2;
+            }
+          }
+          @media (max-width: 599px) {
+            #blog-masonry-{{ section.id }} {
+              columns: 1;
+            }
+          }
+        </style>
       </div>
 
       {%- liquid
