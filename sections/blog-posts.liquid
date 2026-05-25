@@ -107,8 +107,8 @@
                       </div>
                     {%- endif -%}
 
-                    <{{ block_heading_level }} class="font-heading heading-secondary break-words">
-                      <a href="{{ article.url }}">
+                    <{{ block_heading_level }} class="font-heading heading-secondary break-words" style="color: #50463e;">
+                      <a href="{{ article.url }}" style="color: inherit;">
                         {{ article.title }}
                         <span class="absolute left-0 top-0 z-10 block h-full w-full"></span>
                       </a>
@@ -117,19 +117,20 @@
                     {%- if section.settings.blog_show_date -%}
                       <time
                         class="font-body mt-2.5 block text-base"
+                        style="color: #50463e;"
                         datetime="{{ article.published_at | date: '%Y-%m-%d' }}"
                       >
                         {{- article.published_at | date: format: 'month_day_year' -}}
                       </time>
                     {%- endif -%}
                     {% if section.settings.blog_show_author %}
-                      <p class="font-body mt-2.5 block text-base">
+                      <p class="font-body mt-2.5 block text-base" style="color: #50463e;">
                         {{ 'blogs.article.by_author' | t: author: article.author }}
                       </p>
                     {% endif %}
 
                     {% if section.settings.show_post_excerpt %}
-                      <div class="rte mt-2.5 flex-1">
+                      <div class="rte mt-2.5 flex-1" style="color: #50463e;">
                         {% if article.excerpt.size > 0 %}
                           {{ article.excerpt }}
                         {% else %}
