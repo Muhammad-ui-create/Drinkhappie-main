@@ -1149,6 +1149,255 @@
         "background_image_opacity": 40,
         "background_min_height": 0
       }
+    },
+    "amazon_reviews_Kz9mWq": {
+      "type": "amazon-reviews",
+      "blocks": {
+        "ar_01": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Really nice for mood!",
+            "review_body": "Very refreshing taste leaves a slight film texture in mouth though but I mixed with other sparkling waters and it mixed well. I could tell it improved my mood and energy almost immediately felt like a cleaner energy drink if that makes sense",
+            "reviewer_name": "jujuklasek",
+            "product_flavor": "Blue Raspberry",
+            "verified": true
+          }
+        },
+        "ar_02": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Delicious and Fun!",
+            "review_body": "I really enjoy this drink. This is truly a Blue Raspberry Delight!! Sooo good!!",
+            "reviewer_name": "Brenda",
+            "product_flavor": "Blue Raspberry",
+            "verified": true
+          }
+        },
+        "ar_03": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Great Flavor! Perfect Drink!",
+            "review_body": "Excellent! Couldn't taste mushrooms and loved the feel of this drink! Perfect! Better than Brez!",
+            "reviewer_name": "Anonymous",
+            "product_flavor": "Blue Raspberry",
+            "verified": true
+          }
+        },
+        "ar_04": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Tastes great",
+            "review_body": "Best adaptogen drink I've tried! Love the mild relaxed feeling from the magnesium. Tastes great without being too sweet or having a fake sugar/stevia taste",
+            "reviewer_name": "Shannon Brown",
+            "product_flavor": "Blue Raspberry",
+            "verified": true
+          }
+        },
+        "ar_05": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Good stuff",
+            "review_body": "Love this stuff. It's like a clean good for you energy drink.",
+            "reviewer_name": "Kolby Lankford",
+            "product_flavor": "Blue Raspberry",
+            "verified": true
+          }
+        },
+        "ar_06": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Love this brand!",
+            "review_body": "Delicious! Great for mood! Love the flavor and will purchase again!",
+            "reviewer_name": "Amazon Customer",
+            "product_flavor": "Blue Raspberry",
+            "verified": true
+          }
+        },
+        "ar_07": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Happy Fungi",
+            "review_body": "Refreshing mango flavor with light fizz. Not overly sweet, and I felt a smooth boost in focus without caffeine jitters. Great afternoon alternative to soda.",
+            "reviewer_name": "Natalie Cesare",
+            "product_flavor": "Mango",
+            "verified": true
+          }
+        },
+        "ar_08": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Like a healthy soda!",
+            "review_body": "Not bad! Even though I like mango, it's pleasant - fruity and mildly sweet some carbonation to make it feel like a soda.",
+            "reviewer_name": "Artist",
+            "product_flavor": "Mango",
+            "verified": false
+          }
+        },
+        "ar_09": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Happie refresher mango carbonated water drink",
+            "review_body": "I was a lil scared because it was made with mushrooms but it was really good it taste like a carbonated drink with a kind of mango. I've been trying to cut back on alcohol so this was great when I made mango mocktails",
+            "reviewer_name": "Shanice Adina",
+            "product_flavor": "Mango",
+            "verified": true
+          }
+        },
+        "ar_10": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Love it",
+            "review_body": "My wife and I have replaced morning coffee with this drink and we are loving it. Big fan of mango and blueberry flavors",
+            "reviewer_name": "Nicole G",
+            "product_flavor": "Mango",
+            "verified": true
+          }
+        },
+        "ar_11": {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "review_title": "Tasty",
+            "review_body": "This was a really tasty sparkling water. It actually does taste sweet and not bland like regular sparkling water.",
+            "reviewer_name": "Pinkkitty4",
+            "product_flavor": "Mango",
+            "verified": true
+          }
+        },
+        "ar_12": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Excellent product and highly recommended.",
+            "review_body": "Very good quality product. Highly recommended for everyday use.",
+            "reviewer_name": "Cristina",
+            "product_flavor": "Mango",
+            "verified": true
+          }
+        },
+        "ar_13": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Great focus/mental drink!",
+            "review_body": "This is my favorite flavor - watermelon. Immediately after a few sips, you can feel the effects in your brain. I believe this is the only drink that does this.",
+            "reviewer_name": "Kristine Manlapaz",
+            "product_flavor": "Watermelon",
+            "verified": true
+          }
+        },
+        "ar_14": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Refreshing, Clean Energy Without the Crash!",
+            "review_body": "I really enjoyed this Happie Fungi Fusion Watermelon drink! The watermelon flavor is light, refreshing, and not overly sweet - exactly what I like in a functional beverage.",
+            "reviewer_name": "Luciana",
+            "product_flavor": "Watermelon",
+            "verified": true
+          }
+        },
+        "ar_15": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Surprisingly Good Taste and Steady Energy",
+            "review_body": "Wasn't sure what to expect, but the watermelon flavor is actually really refreshing. It makes me feel clear, focused, and with smooth energy throughout the day.",
+            "reviewer_name": "wendolin reyes",
+            "product_flavor": "Watermelon",
+            "verified": true
+          }
+        },
+        "ar_16": {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "review_title": "Light watermelon seltzer adaptogen drink",
+            "review_body": "This Happie Fungi Fusion Watermelon sparkling adaptogen drink has a light taste. It reminds of a watermelon-flavored seltzer, but with benefits.",
+            "reviewer_name": "BookishTechie",
+            "product_flavor": "Watermelon",
+            "verified": false
+          }
+        },
+        "ar_17": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Good",
+            "review_body": "A refreshing drink with a light fruity taste. It's not too sweet and feels unique because of the functional mushroom ingredients.",
+            "reviewer_name": "Nataliia Dzikunska",
+            "product_flavor": "Watermelon",
+            "verified": true
+          }
+        },
+        "ar_18": {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "review_title": "Refreshing and energizing",
+            "review_body": "Tastes great and gives a clean boost of focus and energy without the crash. Light, refreshing, and easy to drink.",
+            "reviewer_name": "Misoi",
+            "product_flavor": "Watermelon",
+            "verified": true
+          }
+        },
+        "ar_19": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Sparkling water",
+            "review_body": "Happie Fungi Fusion Mango is more than just a tasty sparkling drink - it's a smart pick when you want something flavorful and functional.",
+            "reviewer_name": "Maria Goncalves",
+            "product_flavor": "Mango",
+            "verified": true
+          }
+        },
+        "ar_20": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_title": "Very Tasty",
+            "review_body": "Light and delicious!",
+            "reviewer_name": "Symone",
+            "product_flavor": "Mango",
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "ar_01", "ar_07", "ar_13", "ar_02", "ar_09", "ar_14",
+        "ar_04", "ar_10", "ar_15", "ar_03", "ar_08", "ar_17",
+        "ar_05", "ar_11", "ar_18", "ar_06", "ar_12", "ar_16",
+        "ar_19", "ar_20"
+      ],
+      "settings": {
+        "title": "What Amazon Customers Are Saying",
+        "subtitle": "Real reviews from verified Amazon purchases of Fungi Fusion",
+        "rating_text": "4.7 out of 5 | 40+ Reviews",
+        "card_width": 320,
+        "card_width_mobile": 270,
+        "color_scheme": "scheme-4b2ebea0-b230-45ef-a163-d2110d2f932e",
+        "use_gradient_background": false,
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "wave_height": 80,
+        "show_top_wave": false,
+        "top_wave_color": "#ffffff",
+        "top_wave_animate": true,
+        "show_bottom_wave": false,
+        "bottom_wave_color": "#ffffff",
+        "bottom_wave_animate": true
+      }
     }
   },
   "order": [
@@ -1160,6 +1409,7 @@
     "best_sellers_mJyW9V",
     "moast_app_wxMn7C",
     "testimonials_DxgE8b",
+    "amazon_reviews_Kz9mWq",
     "variety_pack_promo_WJybee",
     "ingredients_showcase_Gf3aRd",
     "featured-collection",
