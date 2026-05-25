@@ -28,43 +28,29 @@
     {% endif %}
 
     {%- if blog != blank and blog.articles_count > 0 -%}
-      <div class="{% if section.settings.title != blank %}section-content-top-margin{% endif %} flex flex-col gap-6">
+      <div class="{% if section.settings.title != blank %}section-content-top-margin{% endif %} flex flex-col gap-4">
         {% for article in blog.articles limit: post_limit %}
           <a href="{{ article.url }}" class="blog-wide-card group block" style="text-decoration: none; color: inherit;">
-            <div class="flex flex-col lg:flex-row gap-0 overflow-hidden" style="background: {{ section.settings.card_bg_color }}; border-radius: {{ section.settings.card_radius }}px;">
+            <div class="flex flex-row items-center gap-0 overflow-hidden" style="background: {{ section.settings.card_bg_color }}; border-radius: {{ section.settings.card_radius }}px; height: {{ section.settings.card_height }}px;">
               {%- if article.image -%}
-                <div class="lg:flex-shrink-0" style="width: 100%; max-width: 100%;">
-                  <div class="lg:hidden" style="width: 100%; aspect-ratio: 16/9; overflow: hidden;">
-                    <img
-                      src="{{ article.image | image_url: width: 800 }}"
-                      alt="{{ article.image.alt | escape }}"
-                      width="{{ article.image.width }}"
-                      height="{{ article.image.height }}"
-                      loading="lazy"
-                      style="width: 100%; height: 100%; object-fit: cover; display: block;"
-                    >
-                  </div>
-                  <div class="hidden lg:block" style="width: {{ section.settings.image_width }}px; height: 100%;">
-                    <img
-                      src="{{ article.image | image_url: width: 900 }}"
-                      alt="{{ article.image.alt | escape }}"
-                      width="{{ article.image.width }}"
-                      height="{{ article.image.height }}"
-                      loading="lazy"
-                      style="width: 100%; height: 100%; object-fit: cover; display: block;"
-                    >
-                  </div>
+                <div class="flex-shrink-0 hidden sm:block" style="width: {{ section.settings.image_width }}px; height: 100%; overflow: hidden; border-radius: {{ section.settings.card_radius }}px 0 0 {{ section.settings.card_radius }}px;">
+                  <img
+                    src="{{ article.image | image_url: width: 600 }}"
+                    alt="{{ article.image.alt | escape }}"
+                    loading="lazy"
+                    style="width: 100%; height: 100%; object-fit: cover; display: block;"
+                  >
                 </div>
               {%- endif -%}
 
-              <div class="flex-1 flex flex-col justify-center p-6 lg:p-8" style="color: {{ section.settings.card_text_color }};">
-                <h3 class="font-heading text-lg lg:text-xl font-bold leading-snug mb-2 group-hover:opacity-80 transition-opacity" style="color: {{ section.settings.card_heading_color }};">
+              <div class="flex-1 flex flex-col justify-center px-5 py-4 lg:px-6" style="color: {{ section.settings.card_text_color }};">
+                <h3 class="font-heading text-sm lg:text-base font-bold leading-snug mb-1 group-hover:opacity-80 transition-opacity" style="color: {{ section.settings.card_heading_color }};">
                   {{ article.title }}
                 </h3>
 
                 {%- if section.settings.blog_show_date -%}
                   <time
-                    class="text-sm mb-3 block opacity-60"
+                    class="text-xs mb-1 block opacity-50"
                     datetime="{{ article.published_at | date: '%Y-%m-%d' }}"
                   >
                     {{ article.published_at | date: format: 'month_day_year' }}
@@ -72,19 +58,19 @@
                 {%- endif -%}
 
                 {% if section.settings.show_post_excerpt %}
-                  <div class="text-sm lg:text-base leading-relaxed opacity-80">
+                  <p class="text-xs lg:text-sm leading-relaxed opacity-75 mb-0 hidden sm:block">
                     {% if article.excerpt.size > 0 %}
-                      {{ article.excerpt | strip_html | truncatewords: 35 }}
+                      {{ article.excerpt | strip_html | truncatewords: 20 }}
                     {% else %}
-                      {{ article.content | strip_html | truncatewords: 35 }}
+                      {{ article.content | strip_html | truncatewords: 20 }}
                     {% endif %}
-                  </div>
+                  </p>
                 {% endif %}
 
-                <div class="mt-4">
-                  <span class="inline-flex items-center gap-1 text-sm font-semibold group-hover:gap-2 transition-all" style="color: {{ section.settings.card_link_color }};">
+                <div class="mt-2">
+                  <span class="inline-flex items-center gap-1 text-xs font-semibold group-hover:gap-2 transition-all" style="color: {{ section.settings.card_link_color }};">
                     Read More
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                   </span>
                 </div>
               </div>
@@ -160,12 +146,22 @@
     {
       "type": "range",
       "id": "image_width",
-      "min": 200,
-      "max": 500,
+      "min": 120,
+      "max": 400,
       "step": 10,
       "unit": "px",
       "label": "Image width (desktop)",
-      "default": 380
+      "default": 200
+    },
+    {
+      "type": "range",
+      "id": "card_height",
+      "min": 80,
+      "max": 250,
+      "step": 10,
+      "unit": "px",
+      "label": "Card height",
+      "default": 130
     },
     {
       "type": "range",
