@@ -133,7 +133,7 @@
                 {% endif %}
 
                 {% if section.settings.show_post_excerpt %}
-                  <div class="rte mt-1.5 text-sm leading-relaxed opacity-80">
+                  <div class="rte mt-1.5 text-sm leading-relaxed">
                     {% if article.excerpt.size > 0 %}
                       {{ article.excerpt | strip_html | truncatewords: 25 }}
                     {% else %}
