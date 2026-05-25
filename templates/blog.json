@@ -45,7 +45,7 @@
         "show_blog_title": true,
         "show_tags": false,
         "crop": "",
-        "image_shape": "default_pill",
+        "image_shape": "default",
         "blog_show_author": false,
         "blog_show_date": false,
         "show_post_excerpt": true,
