@@ -44,7 +44,7 @@
         "posts_per_row_desktop": 4,
         "show_blog_title": true,
         "show_tags": false,
-        "crop": "aspect-w-4 aspect-h-3",
+        "crop": "",
         "image_shape": "default_pill",
         "blog_show_author": false,
         "blog_show_date": false,
