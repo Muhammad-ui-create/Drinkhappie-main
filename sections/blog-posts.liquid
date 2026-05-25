@@ -65,110 +65,126 @@
     {% endif %}
 
     {%- assign blog = section.settings.blog -%}
-    <ul class="{% if section.settings.title != '' %}section-content-top-margin{% endif %} grid grid-cols-1 gap-10 lg:grid-cols-12">
-      {% for article in blog.articles limit: section.settings.post_limit %}
-        {%- liquid
-          assign shape_id = section.id
-          if section.settings.image_shape == 'blob'
-            assign shape_id = section.id | append: '-' | append: forloop.index0
-          endif
+    {%- if blog.articles_count > 0 -%}
+      <div
+        id="blog-carousel-{{ section.id }}"
+        class="splide {% if section.settings.title != '' %}section-content-top-margin{% endif %}"
+      >
+        <div class="splide__track">
+          <ul class="splide__list">
+            {% for article in blog.articles limit: section.settings.post_limit %}
+              {%- liquid
+                assign shape_id = section.id
+                if section.settings.image_shape == 'blob'
+                  assign shape_id = section.id | append: '-' | append: forloop.index0
+                endif
 
-          if section.index == 1 and forloop.first
-            assign preload = true
-          else
-            assign preload = false
-          endif
+                if section.index <= 3 and forloop.index <= eager_loading_limit
+                  assign loading = 'eager'
+                else
+                  assign loading = 'lazy'
+                endif
+              -%}
+              <li class="splide__slide">
+                <div class="h-full {% if section.settings.display_on_card %}text-scheme-text card{% endif %}">
+                  <div class="relative w-full h-full flex flex-col {% if section.settings.display_on_card %}card__surface p-5{% endif %} text-center">
+                    {%- if article.image -%}
+                      <div class="mb-5 {% if settings.media_shadow_direction contains 'top' %}pt-media-shadow{% else %}pb-media-shadow{% endif %}">
+                        {%- render 'media-image',
+                          media: article.image,
+                          shape: section.settings.image_shape,
+                          shape_id: shape_id,
+                          is_card: section.settings.display_on_card,
+                          crop: crop,
+                          container_id: section.id,
+                          index: forloop.index0,
+                          loading: loading,
+                          preload: false,
+                          sizes: '(min-width: 990px) 400px, 300px'
+                        -%}
+                      </div>
+                    {%- endif -%}
 
-          if section.index <= 3 and forloop.index <= eager_loading_limit
-            assign loading = 'eager'
-          else
-            assign loading = 'lazy'
-          endif
-        -%}
-        <li
-          class="{{ col_span }} flex {% if section.settings.display_on_card %}text-scheme-text card{% endif %}"
-        >
-          <div class="relative w-full flex-1 flex flex-col {% if section.settings.display_on_card %}card__surface p-5{% endif %} text-center">
-            {%- if article.image -%}
-              <div class="mb-5 {% if settings.media_shadow_direction contains 'top' %}pt-media-shadow{% else %}pb-media-shadow{% endif %}">
-                {%- render 'media-image',
-                  media: article.image,
-                  shape: section.settings.image_shape,
-                  shape_id: shape_id,
-                  is_card: section.settings.display_on_card,
-                  crop: crop,
-                  container_id: section.id,
-                  index: forloop.index0,
-                  loading: loading,
-                  preload: preload,
-                  sizes: sizes
-                -%}
-              </div>
-            {%- endif -%}
+                    <{{ block_heading_level }} class="font-heading heading-secondary break-words">
+                      <a href="{{ article.url }}">
+                        {{ article.title }}
+                        <span class="absolute left-0 top-0 z-10 block h-full w-full"></span>
+                      </a>
+                    </{{ block_heading_level }}>
 
-            <{{ block_heading_level }} class="font-heading heading-secondary break-words">
-              <a href="{{ article.url }}">
-                {{ article.title }}
-                <span
-                  class="absolute left-0 top-0 z-10 block h-full w-full"
-                ></span>
-              </a>
-            </{{ block_heading_level }}>
+                    {%- if section.settings.blog_show_date -%}
+                      <time
+                        class="font-body mt-2.5 block text-base"
+                        datetime="{{ article.published_at | date: '%Y-%m-%d' }}"
+                      >
+                        {{- article.published_at | date: format: 'month_day_year' -}}
+                      </time>
+                    {%- endif -%}
+                    {% if section.settings.blog_show_author %}
+                      <p class="font-body mt-2.5 block text-base">
+                        {{ 'blogs.article.by_author' | t: author: article.author }}
+                      </p>
+                    {% endif %}
 
-            {%- if section.settings.blog_show_date -%}
-              <time
-                class="font-body mt-2.5 block text-base"
-                datetime="{{ article.published_at | date: '%Y-%m-%d' }}"
-              >
-                {{- article.published_at | date: format: 'month_day_year' -}}
-              </time>
-            {%- endif -%}
-            {% if section.settings.blog_show_author %}
-              <p class="font-body mt-2.5 block text-base">
-                {{ 'blogs.article.by_author' | t: author: article.author }}
-              </p>
-            {% endif %}
+                    {% if section.settings.show_post_excerpt %}
+                      <div class="rte mt-2.5 flex-1">
+                        {% if article.excerpt.size > 0 %}
+                          {{ article.excerpt }}
+                        {% else %}
+                          <p>{{ article.content | strip_html | truncatewords: 40 }}</p>
+                        {% endif %}
+                      </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
 
-            {% if section.settings.show_post_excerpt %}
-              <div class="rte mt-2.5 flex-1">
-                {% if article.excerpt.size > 0 %}
-                  {{ article.excerpt }}
-                {% else %}
-                  <p>{{ article.content | strip_html | truncatewords: 40 }}</p>
-                {% endif %}
-              </div>
-            {% endif %}
-          </div>
-        </li>
-      {% else %}
-        {% for i in (1..section.settings.post_limit) %}
-          {%- liquid
-            assign shape_id = section.id
-            if section.settings.image_shape == 'blob'
-              assign shape_id = section.id | append: '-' | append: forloop.index0
-            endif
-          -%}
-          <li
-            class=" {{ col_span }} {% if section.settings.display_on_card %}text-scheme-text card{% endif %}"
-          >
-            <div class="relative {% if section.settings.display_on_card %}card__surface p-5 h-full{% endif %} text-center">
-              <div class="mb-5 {% if settings.media_shadow_direction contains 'top' %}pt-media-shadow{% else %}pb-media-shadow{% endif %}">
-                {%- render 'media-image-placeholder',
-                  container_id: section.id,
-                  shape_id: shape_id,
-                  shape: section.settings.image_shape,
-                  crop: section.settings.crop,
-                  is_card: section.settings.display_on_card
-                -%}
-              </div>
-              <{{ block_heading_level }} class="font-heading heading-secondary">
-                {{- 'homepage.onboarding.blog_title' | t -}}
-              </{{ block_heading_level }}>
-            </div>
-          </li>
-        {% endfor %}
-      {% endfor %}
-    </ul>
+        <div class="splide__arrows mt-5 flex items-center justify-between px-section">
+          {%- render 'splide-navigation' %}
+        </div>
+
+        <script class="slideshow-options" type="application/json">
+          {
+            "mediaQuery": "min",
+            "arrows": true,
+            "pagination": false,
+            "rewind": true,
+            "autoWidth": true,
+            "gap": "1.5rem",
+            "focus": "left",
+            "type": "loop",
+            "autoScroll": {
+              "autoStart": true,
+              "speed": 0.6
+            },
+            "padding": {
+              "left": "1.25rem",
+              "right": "1.25rem"
+            },
+            "clones": {{ section.settings.post_limit | times: 3 }},
+            "breakpoints": {
+              "768": {
+                "gap": "1rem"
+              }
+            }
+          }
+        </script>
+
+        <style>
+          #blog-carousel-{{ section.id }} .splide__slide {
+            width: {{ section.settings.slide_width }}px;
+          }
+          @media (max-width: 768px) {
+            #blog-carousel-{{ section.id }} .splide__slide {
+              width: {{ section.settings.slide_width_mobile }}px;
+            }
+          }
+        </style>
+      </div>
+    {%- endif -%}
 
     {%- if section.settings.show_view_all and section.settings.post_limit < section.settings.blog.articles_count -%}
       <div class="relative z-10 mt-10 text-center">
@@ -259,6 +275,26 @@
       "max": 12,
       "step": 3,
       "default": 3
+    },
+    {
+      "type": "range",
+      "id": "slide_width",
+      "min": 280,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "label": "Slide width (desktop)",
+      "default": 380
+    },
+    {
+      "type": "range",
+      "id": "slide_width_mobile",
+      "min": 240,
+      "max": 350,
+      "step": 10,
+      "unit": "px",
+      "label": "Slide width (mobile)",
+      "default": 280
     },
     {
       "type": "select",
