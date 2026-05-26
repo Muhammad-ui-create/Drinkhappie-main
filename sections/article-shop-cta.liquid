@@ -47,8 +47,7 @@
       {%- render 'happie-product-card-styles' -%}
 
       <div
-        class="article-shop-cta__grid grid gap-4"
-        style="grid-template-columns: repeat({{ section.settings.products_per_row_mobile }}, minmax(0, 1fr));"
+        class="article-shop-cta__grid"
       >
         {%- for product in coll.products limit: products_to_show -%}
           <div class="article-shop-cta__item">
@@ -73,9 +72,27 @@
     <style>
       .article-shop-cta__btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); transition: all 0.2s ease; }
       .article-shop-cta__subheading { font-size: 1.125rem; opacity: 0.85; }
+      .article-shop-cta__grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1.5rem;
+      }
+      .article-shop-cta__item {
+        width: calc(50% - 0.75rem);
+        text-align: center;
+      }
+      .article-shop-cta__item .happie-product-card__content {
+        text-align: center;
+      }
+      .article-shop-cta__item .happie-product-card__tagline,
+      .article-shop-cta__item .happie-product-card__tagline p {
+        text-align: center;
+      }
       @media (min-width: 768px) {
-        .article-shop-cta__grid {
-          grid-template-columns: repeat({{ section.settings.products_per_row_desktop }}, minmax(0, 1fr)) !important;
+        .article-shop-cta__item {
+          width: calc({{ 100.0 | divided_by: section.settings.products_per_row_desktop }}% - 1.5rem);
+          max-width: 320px;
         }
       }
     </style>

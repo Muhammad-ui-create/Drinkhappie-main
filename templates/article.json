@@ -90,7 +90,7 @@
         "subheading": "Pair what you just read with the drinks made for it.",
         "thc_collection": "thc",
         "fungi_collection": "fungi-fusion",
-        "products_per_row_desktop": 4,
+        "products_per_row_desktop": 3,
         "products_per_row_mobile": 2,
         "show_view_all": true,
         "color_scheme": "scheme1"
