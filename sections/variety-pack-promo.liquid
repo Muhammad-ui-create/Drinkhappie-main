@@ -224,6 +224,13 @@
     border-radius: 32px;
     overflow: hidden;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+
+  #variety-pack-{{ section.id }} .variety-pack-promo__card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
   }
 
   /* Grid Layout */

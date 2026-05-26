@@ -386,6 +386,13 @@
     border-radius: 24px;
     overflow: hidden;
     padding: 24px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+
+  #choose-vibe-{{ section.id }} .choose-vibe__card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
   }
 
   /* Card Image Area */
