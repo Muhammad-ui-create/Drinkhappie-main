@@ -33,12 +33,12 @@
     <div class="px-section py-section-vertical-spacing max-w-site mx-auto">
       <div class="text-center mb-8">
         {%- if section.settings.title != blank -%}
-          <h2 class="font-heading heading-feature heading-style mb-3">
+          <h2 class="font-heading heading-feature heading-style" style="margin-bottom: 0.75rem;">
             {{ section.settings.title }}
           </h2>
         {%- endif -%}
         {%- if section.settings.subheading != blank -%}
-          <p class="article-shop-cta__subheading max-w-2xl mx-auto">
+          <p class="article-shop-cta__subheading max-w-2xl mx-auto" style="margin-top: 0;">
             {{ section.settings.subheading }}
           </p>
         {%- endif -%}
@@ -60,8 +60,8 @@
         <div class="text-center mt-8">
           <a
             href="{{ coll.url }}"
-            class="article-shop-cta__btn inline-block px-8 py-3 font-heading uppercase tracking-wider"
-            style="background-color: var(--cta-bg, #f7cd46); color: var(--cta-text, #1a1a1a); border-radius: 9999px;"
+            class="article-shop-cta__btn inline-block font-heading uppercase tracking-wider"
+            style="background-color: var(--cta-bg, #f7cd46); color: var(--cta-text, #1a1a1a); border-radius: 9999px; padding: 16px 40px; font-size: 16px; font-weight: 600;"
           >
             {{ view_all_text }}
           </a>
@@ -71,7 +71,7 @@
 
     <style>
       .article-shop-cta__btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); transition: all 0.2s ease; }
-      .article-shop-cta__subheading { font-size: 1.125rem; opacity: 0.85; }
+      .article-shop-cta__subheading { font-size: 1rem; opacity: 0.7; line-height: 1.5; display: block; }
       .article-shop-cta__grid {
         display: flex;
         flex-wrap: wrap;
