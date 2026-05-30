@@ -233,6 +233,82 @@
       </svg>
     </div>
   {%- endif -%}
+
+  <!-- Auto-scroll Moast carousel -->
+  <script>
+    (function() {
+      function initMoastAutoScroll() {
+        var moastEl = document.querySelector('#moast-app-{{ section.id }} moast-carousel');
+        if (!moastEl || !moastEl.shadowRoot) {
+          setTimeout(initMoastAutoScroll, 500);
+          return;
+        }
+        var shadow = moastEl.shadowRoot;
+        var slidesContainer = shadow.querySelector('.slides');
+        if (!slidesContainer || slidesContainer.children.length === 0) {
+          setTimeout(initMoastAutoScroll, 500);
+          return;
+        }
+
+        var carousel = shadow.querySelector('.carousel');
+        if (!carousel) return;
+
+        /* Make the carousel overflow hidden for marquee effect */
+        carousel.style.overflow = 'hidden';
+        carousel.style.webkitMaskImage = 'linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%)';
+        carousel.style.maskImage = 'linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%)';
+
+        /* Clone all slides for seamless loop */
+        var origSlides = Array.from(slidesContainer.children);
+        origSlides.forEach(function(slide) {
+          var clone = slide.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          /* Re-trigger autoplay on cloned videos */
+          var videos = clone.querySelectorAll('video');
+          videos.forEach(function(v) {
+            v.setAttribute('autoplay', '');
+            v.setAttribute('muted', '');
+            v.setAttribute('loop', '');
+            v.setAttribute('playsinline', '');
+            v.muted = true;
+            v.play().catch(function(){});
+          });
+          slidesContainer.appendChild(clone);
+        });
+
+        /* Inject animation CSS into shadow DOM */
+        var styleEl = document.createElement('style');
+        var speed = {{ section.settings.scroll_speed }};
+        styleEl.textContent = '' +
+          '.slides {' +
+          '  animation: moast-marquee ' + speed + 's linear infinite !important;' +
+          '  width: max-content !important;' +
+          '}' +
+          '.carousel:hover .slides {' +
+          '  animation-play-state: paused !important;' +
+          '}' +
+          '@keyframes moast-marquee {' +
+          '  0% { transform: translateX(0); }' +
+          '  100% { transform: translateX(-50%); }' +
+          '}';
+        shadow.appendChild(styleEl);
+
+        /* Autoplay all videos including originals */
+        shadow.querySelectorAll('video').forEach(function(v) {
+          v.muted = true;
+          v.play().catch(function(){});
+        });
+      }
+
+      if (document.readyState === 'complete') {
+        setTimeout(initMoastAutoScroll, 1000);
+      } else {
+        window.addEventListener('load', function() {
+          setTimeout(initMoastAutoScroll, 1000);
+        });
+      }
+    })();
+  </script>
 </section>
 {% schema %}
 {
