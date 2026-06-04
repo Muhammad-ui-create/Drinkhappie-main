@@ -7,7 +7,7 @@
 {%- if section.settings.enabled -%}
 <div
   id="happie-chatbot"
-  data-worker-url="{{ section.settings.worker_url }}"
+  data-worker-url="{{ section.settings.worker_url | default: 'https://happie-chatbot-production.up.railway.app/chat' }}"
   data-support-email="{{ section.settings.support_email }}"
   data-bot-name="{{ section.settings.bot_name | escape }}"
   data-greeting="{{ section.settings.greeting | escape }}"
