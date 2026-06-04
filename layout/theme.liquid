@@ -672,6 +672,9 @@ box-shadow: inset 0 0 0 var(--input-border-width) rgb(245 245 245);
 {%- endif -%}
 {%- endif -%}
 
+{%- comment -%} Happie custom fix: dark RTE link color on article pages (overrides css-bridge default) {%- endcomment -%}
+{% render 'happie-article-link-fix' %}
+
 </head>
 
   {%- liquid
