@@ -364,6 +364,22 @@
     color: rgb(var(--rte-link-hover-color));
   }
 
+  /*
+  Blog article RTE links (incl. table of contents).
+  The global --rte-link-color is derived from the scheme text color, which is
+  white in the blog-article scheme — making TOC/body links unreadable on the
+  light content card. Scope a readable brand color to article pages only.
+  */
+  .template-article .rte a,
+  .template-article .inline-rte a {
+    color: #962F80;
+  }
+
+  .template-article .rte a:hover,
+  .template-article .inline-rte a:hover {
+    color: #6E2460;
+  }
+
   .inline-heading-rte a {
     text-decoration-line: underline;
     text-decoration-style: var(--rte-link-decoration-style);
