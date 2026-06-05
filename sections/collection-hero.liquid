@@ -145,9 +145,29 @@
       margin-top: -140px;
       padding-top: 140px;
     }
-    
+
     .collection-hero__content {
       padding: 50px 24px 32px;
+    }
+  }
+
+  /* Happie custom: enforce minimum height so background image shows fully */
+  .collection-hero {
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .collection-hero {
+      min-height: 500px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .collection-hero {
+      min-height: 380px;
     }
   }
 </style>
