@@ -447,6 +447,7 @@ box-shadow: inset 0 0 0 var(--input-border-width) rgb(245 245 245);
   "name": "Happie",
   "alternateName": ["Drink Happie", "Happie Beverages"],
   "url": {{ shop.url | json }},
+  "description": "Happie is a Northern California functional beverage brand making hemp-derived Delta-9 THC seltzers and Fungi Fusion adaptogenic mushroom drinks — premium plant-powered alternatives to alcohol, formulated with nano-emulsified cannabinoids and clinical-dose Lion's Mane, Cordyceps, and Reishi.",
   {%- if geo_org_logo_url != blank -%}
   "logo": {
     "@type": "ImageObject",
@@ -466,11 +467,12 @@ box-shadow: inset 0 0 0 var(--input-border-width) rgb(245 245 245);
       "https://drinkhappie.substack.com"
     ]
   },
+  {%- comment -%} 2026-06-05: aligned Org sameAs handles to actual footer-linked social accounts. Source-of-truth: settings_data.json social_*_link. {%- endcomment -%}
   "sameAs": [
-    "https://www.instagram.com/drinkhappie/",
+    "https://www.instagram.com/live_happie/",
     "https://www.instagram.com/happiefusion/",
-    "https://www.facebook.com/profile.php?id=61559160498498",
-    "https://www.tiktok.com/@drinkhappie1",
+    "https://www.facebook.com/happiecbdseltzer/",
+    "https://www.tiktok.com/@happievibes1",
     "https://x.com/drinkhappie",
     "https://www.linkedin.com/company/livehappie/"
   ],
@@ -665,6 +667,7 @@ box-shadow: inset 0 0 0 var(--input-border-width) rgb(245 245 245);
   ],
   "sameAs": [
     "https://www.linkedin.com/in/peteolander/",
+    "https://drinkhappie.substack.com",
     {{ shop.url | json }}
   ]
 }
