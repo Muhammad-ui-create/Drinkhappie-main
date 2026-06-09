@@ -86,7 +86,7 @@
           {{ article.content | replace: 'href="https://drinkhappie.com/" title="Happie Beverages"', 'href="https://drinkhappie.com/pages/about-us" title="About Happie Beverages"' | replace: 'href="/" title="Happie Beverages"', 'href="/pages/about-us" title="About Happie Beverages"' }}
         </data-island>
 
-        {%- comment -%}UNCONDITIONAL-TEST{%- endcomment -%}
+        {%- if article.handle == 'lions-mane-benefits' -%}
           <script>
             document.addEventListener('DOMContentLoaded', function() {
               var rte = document.querySelector('[x-data="RTE"]');
@@ -108,7 +108,7 @@
               anchorPara.parentNode.insertBefore(wrapper, anchorPara.nextSibling);
             });
           </script>
-        {%- comment -%}END-TEST{%- endcomment -%}
+        {%- endif -%}
 
         {%- if show_share_links or show_tags -%}
           <div class="mt-10 space-y-2.5">
