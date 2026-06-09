@@ -86,6 +86,30 @@
           {{ article.content | replace: 'href="https://drinkhappie.com/" title="Happie Beverages"', 'href="https://drinkhappie.com/pages/about-us" title="About Happie Beverages"' | replace: 'href="/" title="Happie Beverages"', 'href="/pages/about-us" title="About Happie Beverages"' }}
         </data-island>
 
+        {%- if article.handle == 'lions-mane-benefits' -%}
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              var rte = document.querySelector('[x-data="RTE"]');
+              if (!rte) return;
+              var paras = rte.querySelectorAll('p');
+              var anchorPara;
+              for (var i = 0; i < paras.length; i++) {
+                if (paras[i].textContent.indexOf('That gap') > -1) { anchorPara = paras[i]; break; }
+              }
+              if (!anchorPara && paras.length >= 4) anchorPara = paras[3];
+              if (!anchorPara) return;
+              var wrapper = document.createElement('p');
+              wrapper.style.cssText = 'text-align:center;margin:1.5rem 0;';
+              var img = document.createElement('img');
+              img.src = 'https://cdn.shopify.com/s/files/1/0640/2431/3942/files/Image_1_body.png?v=1781042932';
+              img.alt = 'Lion’s mane mushroom — the functional ingredient in Fungi Fusion';
+              img.style.cssText = 'max-width:100%;height:auto;display:inline-block;border-radius:8px;';
+              wrapper.appendChild(img);
+              anchorPara.parentNode.insertBefore(wrapper, anchorPara.nextSibling);
+            });
+          </script>
+        {%- endif -%}
+
         {%- if show_share_links or show_tags -%}
           <div class="mt-10 space-y-2.5">
             {%- if show_tags %}
