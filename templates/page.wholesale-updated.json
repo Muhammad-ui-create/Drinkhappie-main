@@ -9,30 +9,25 @@
  */
 {
   "sections": {
-    "wholesale_updated": {
-      "type": "wholesale-updated",
+    "airgoods_wholesale_widget_NBqrGE": {
+      "type": "airgoods-wholesale-widget",
+      "name": "Airgoods Wholesale Widget",
       "settings": {
-        "background_color": "#ffe6cb",
+        "widget_url": "https://stack-backend.onrender.com/widget/embed/e6ecc601-5849-4b86-a845-8432d4e84251",
+        "iframe_height": 600,
+        "max_width": 1100,
+        "heading": "Are You a Retailer?",
+        "subheading": "<p>Stock Happie THC seltzers and Fungi Fusion mushroom drinks in your store. We've partnered with Airgoods to make wholesale buying easy: buy now, pay later, free shipping on your first 3 months, and $50 credit toward your first order.</p>",
+        "disclaimer": "<p>Promotional offers apply to new Airgoods buyers only.</p>",
+        "background_color": "#FFF2E4",
+        "text_color": "#1A1A1A",
+        "heading_color": "#962F80",
         "padding_top": 80,
-        "padding_bottom": 96,
-        "brand_logo_max_width": 180,
-        "eyebrow": "Wholesale",
-        "headline": "<p>Your <em>happie place</em> to stock up.</p>",
-        "body_text": "Interested in carrying Happie at your store? We’ve partnered with Air Goods to make wholesale ordering simple, fast, and transparent.",
-        "headline_color": "#1a1a1a",
-        "body_color": "#444444",
-        "partner_card_bg": "#ffffff",
-        "partner_eyebrow": "Wholesale Orders Fulfilled By",
-        "partner_logo": "shopify://shop_images/airgoods_logo.cde55f86.svg",
-        "partner_name": "Air Goods",
-        "partner_logo_max_width": 160,
-        "partner_body": "Air Goods handles all our wholesale fulfillment — making it easy for retailers, gyms, and cafés to stock Happie with no hassle.",
-        "cta_text": "Place a Wholesale Order",
-        "cta_url": "https://airgoods.com/u/happie"
+        "padding_bottom": 80
       }
     }
   },
   "order": [
-    "wholesale_updated"
+    "airgoods_wholesale_widget_NBqrGE"
   ]
 }
