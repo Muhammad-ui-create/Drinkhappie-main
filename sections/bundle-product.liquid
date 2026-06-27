@@ -107,7 +107,7 @@
         <div class="bpdp__strength">
           {%- for v in product.variants -%}
             <input class="bpdp__str-radio" type="radio" name="id" id="bpdp-v-{{ v.id }}" value="{{ v.id }}" {% if v == product.selected_or_first_available_variant %}checked{% endif %}{% unless v.available %} disabled{% endunless %}>
-            <label class="bpdp__str-card" for="bpdp-v-{{ v.id }}">
+            <label class="bpdp__str-card {% if forloop.first %}bpdp__str-card--light{% else %}bpdp__str-card--dark{% endif %}" for="bpdp-v-{{ v.id }}">
               {%- if forloop.first -%}<span class="bpdp__pop">Most Popular</span>{%- endif -%}
               <span class="bpdp__mg">{{ v.title }}</span>
               <span class="bpdp__sdesc">{% if forloop.first %}A light social lift. Great for first-timers.{% else %}A deeper unwind. For seasoned sippers.{% endif %}</span>
@@ -236,11 +236,18 @@
   .bpdp__q{font-size:12.5px;color:#3D2F52;padding-left:6px;}
   .bpdp__strength{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
   .bpdp__str-radio{position:absolute;opacity:0;width:0;height:0;pointer-events:none;}
-  .bpdp__str-card{display:block;border:2px solid #E7DEC9;background:#fff;border-radius:18px;padding:16px;position:relative;cursor:pointer;transition:all .2s cubic-bezier(.22,1,.36,1);}
-  .bpdp__str-radio:checked + .bpdp__str-card{border-color:#1D9E75;background:#E4F4EE;}
-  .bpdp__str-radio:focus-visible + .bpdp__str-card{outline:2px solid #1D9E75;outline-offset:2px;}
+  .bpdp__str-card{display:block;border:2px solid rgba(255,255,255,.55);border-radius:18px;padding:16px;position:relative;cursor:pointer;transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;}
+  .bpdp__str-card--light{background:linear-gradient(-45deg,#FBE7F3,#DDF3EF,#EAF6C9,#FFE9D6,#F3E0F0,#DDF3EF);background-size:400% 400%;animation:bpdpFlow 9s ease-in-out infinite;color:#1A1426;}
+  .bpdp__str-card--dark{background:linear-gradient(-45deg,#8E2D78,#2E7D8A,#9B1872,#3D2F52,#C4248F,#5B2A6B);background-size:400% 400%;animation:bpdpFlow 9s ease-in-out infinite;}
+  .bpdp__str-card--dark .bpdp__mg{color:#fff;}
+  .bpdp__str-card--dark .bpdp__sdesc{color:rgba(255,255,255,.92);}
+  .bpdp__str-card:hover{transform:translateY(-2px);}
+  .bpdp__str-radio:checked + .bpdp__str-card{border-color:#1A1426;box-shadow:0 0 0 3px rgba(26,20,38,.2),0 10px 22px rgba(0,0,0,.16);}
+  .bpdp__str-radio:focus-visible + .bpdp__str-card{outline:2px solid #1A1426;outline-offset:2px;}
   .bpdp__mg{display:block;font-size:22px;font-weight:800;letter-spacing:-.02em;}
   .bpdp__sdesc{display:block;font-size:12px;color:#3D2F52;margin-top:3px;line-height:1.4;}
+  @keyframes bpdpFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  @media (prefers-reduced-motion: reduce){.bpdp__str-card--light,.bpdp__str-card--dark{animation:none;}}
   .bpdp__pop{position:absolute;top:-9px;left:14px;background:#1D9E75;color:#fff;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:999px;}
   .bpdp__price{display:flex;align-items:baseline;gap:12px;margin:22px 0 4px;flex-wrap:wrap;}
   .bpdp__now{font-size:34px;font-weight:800;letter-spacing:-.02em;}
