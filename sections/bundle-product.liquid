@@ -309,12 +309,35 @@
 
 <script>
   (function(){
+    /* Gallery thumbnail swap */
     var thumbs=document.querySelectorAll('.bpdp__thumb'),main=document.getElementById('bpdpMain');
     thumbs.forEach(function(t){t.addEventListener('click',function(){
       thumbs.forEach(function(x){x.classList.remove('is-active');});
       t.classList.add('is-active');
       if(main){main.src=t.getAttribute('data-img');}
     });});
+
+    /* AJAX add-to-cart that opens the theme's cart drawer (matches main-product) */
+    var form=document.querySelector('.bpdp__form');
+    if(form){
+      form.addEventListener('submit',function(e){
+        e.preventDefault();
+        var btn=form.querySelector('.bpdp__atc'); var orig=btn?btn.innerHTML:'';
+        if(btn){btn.disabled=true;btn.innerHTML='Adding…';}
+        var fd=new FormData(form);
+        var isModal=window.theme&&window.theme.settings&&window.theme.settings.cartType==='modal';
+        if(isModal){fd.append('sections','cart-items,cart-footer,cart-item-count');fd.append('sections_url',window.location.pathname);}
+        fetch('/cart/add.js',{method:'POST',body:fd,headers:{'X-Requested-With':'XMLHttpRequest'}})
+          .then(function(r){return r.json();})
+          .then(function(data){
+            if(btn){btn.disabled=false;btn.innerHTML=orig;}
+            if(data.status){alert(data.description||data.message||'Could not add to cart');return;}
+            document.body.dispatchEvent(new CustomEvent('shapes:cart:afteradditem',{bubbles:true,detail:{response:data}}));
+          })
+          .catch(function(err){if(btn){btn.disabled=false;btn.innerHTML=orig;}console.error('Add to cart error:',err);
+            /* fallback: hard navigate so the add still completes */ form.submit();});
+      });
+    }
   })();
 </script>
 
