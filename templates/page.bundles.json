@@ -14,7 +14,9 @@
       "settings": {
         "eyebrow": "Bundle & Save 5%",
         "heading": "Happie Bundles",
-        "subheading": "Curated multi-packs of our best-selling THC seltzers — mix your favorite flavors and save 5% on every bundle."
+        "subheading": "Curated multi-packs of our best-selling THC seltzers — mix your favorite flavors and save 5% on every bundle.",
+        "bundle_link_base": "/products/",
+        "bundle_link_suffix": ""
       }
     }
   },
