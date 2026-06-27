@@ -230,6 +230,34 @@
         </a>
         {%- endif -%}
 
+        {%- comment -%} Bundles CTA Banner — same card design as merch, brand teal/purple {%- endcomment -%}
+        {%- liquid
+          assign bundles_url = section.settings.shop_mega_bundles_url | default: '/pages/bundles'
+          assign bundles_label = section.settings.shop_mega_bundles_label | default: 'Bundle & Save'
+          assign bundles_title = section.settings.shop_mega_bundles_title | default: 'Happie Bundles'
+          assign bundles_cta = section.settings.shop_mega_bundles_cta | default: 'Shop Bundles'
+          assign bundles_image = section.settings.shop_mega_bundles_image
+        -%}
+        {%- unless section.settings.shop_mega_show_bundles == false -%}
+        <a href="{{ bundles_url }}" class="shop-mega-menu__merch-banner shop-mega-menu__merch-banner--bundles">
+          <div class="shop-mega-menu__merch-text">
+            <span class="shop-mega-menu__merch-label">{{ bundles_label }}</span>
+            <h5 class="shop-mega-menu__merch-title">{{ bundles_title }}</h5>
+            <span class="shop-mega-menu__merch-cta">
+              {{ bundles_cta }}
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+          <div class="shop-mega-menu__merch-image-wrap">
+            {%- if bundles_image != blank -%}
+              <img src="{{ bundles_image | image_url: width: 300 }}" alt="{{ bundles_title | escape }}" width="150" height="150" loading="lazy" class="shop-mega-menu__merch-img">
+            {%- else -%}
+              <img src="{{ 'bundle-cheery-cherry-8pack.webp' | asset_url }}" alt="{{ bundles_title | escape }}" width="150" height="150" loading="lazy" class="shop-mega-menu__merch-img">
+            {%- endif -%}
+          </div>
+        </a>
+        {%- endunless -%}
+
       </div>
     </div>
   </div>
@@ -557,6 +585,28 @@
     align-items: center;
     justify-content: center;
     color: #1A1A1A;
+  }
+
+  /* ── Bundles CTA Banner (sibling of merch, brand teal/purple) ── */
+  .shop-mega-menu__merch-banner--bundles {
+    background: #E4F4F6;
+    margin-top: 12px;
+  }
+  .shop-mega-menu__merch-banner--bundles::before {
+    background: rgba(150, 47, 128, 0.07);
+  }
+  .shop-mega-menu__merch-banner--bundles:hover {
+    box-shadow: 0 6px 24px rgba(80, 178, 189, 0.22);
+  }
+  .shop-mega-menu__merch-banner--bundles .shop-mega-menu__merch-label {
+    background: #50B2BD;
+    color: #fff;
+  }
+  .shop-mega-menu__merch-banner--bundles .shop-mega-menu__merch-cta {
+    background: #962F80;
+  }
+  .shop-mega-menu__merch-banner--bundles:hover .shop-mega-menu__merch-cta {
+    background: #7a2568;
   }
 
   /* Hide on mobile - handled by sidebar nav */
