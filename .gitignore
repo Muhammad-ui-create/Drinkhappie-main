@@ -1,0 +1,5 @@
+
+# Stray generated/source images — not theme assets
+assets/hf_*.png
+assets/* Image *.png
+assets/* image *.png
