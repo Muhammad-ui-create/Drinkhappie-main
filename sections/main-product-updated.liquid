@@ -1677,6 +1677,16 @@
 
             <!-- Accordion Tabs Block -->
           {% when 'accordion' %}
+            {%- liquid
+              # Detect Fungi Fusion products so empty accordion tabs fall back to real content
+              assign bp_is_fungi = false
+              assign _tsuf = template.suffix | downcase
+              assign _bping = product.metafields.custom.active_ingredient.value | default: product.metafields.custom.active_ingredient | downcase
+              assign _bptags = product.tags | join: ',' | downcase
+              if _tsuf contains 'fungi' or product.title contains 'Fungi Fusion' or _bping contains 'lion' or _bping contains 'cordyceps' or _bping contains 'reishi' or _bptags contains 'fungi' or _bptags contains 'mushroom'
+                assign bp_is_fungi = true
+              endif
+            -%}
             <div class="accordion-tabs" {{ block.shopify_attributes }}>
               {% if block.settings.accordion_title_1 != blank %}
                 <div class="accordion-item">
@@ -1685,7 +1695,7 @@
                     <div class="accordion-icon">+</div>
                   </div>
                   <div class="accordion-content">
-                    {{ block.settings.accordion_content_1 }}
+                    {% if block.settings.accordion_content_1 != blank %}{{ block.settings.accordion_content_1 }}{% elsif bp_is_fungi %}<ul><li><strong>Lion&rsquo;s Mane (900mg)</strong> — supports focus, memory &amp; cognitive clarity</li><li><strong>Cordyceps (700mg)</strong> — clean, natural energy &amp; stamina, no caffeine and no crash</li><li><strong>Reishi (400mg)</strong> — calm, balance &amp; everyday immune support</li><li><strong>Aquamin&reg; ocean minerals</strong> — calcium &amp; magnesium for real hydration</li><li><strong>Organic agave &amp; real fruit</strong> — lightly sweetened, never syrupy</li></ul><p><strong>Zero THC · Zero caffeine · Zero sugar · Vegan · Gluten-free · Non-GMO</strong></p>{% endif %}
                   </div>
                 </div>
               {% endif %}
@@ -1697,7 +1707,7 @@
                     <div class="accordion-icon">+</div>
                   </div>
                   <div class="accordion-content">
-                    {{ block.settings.accordion_content_2 }}
+                    {% if block.settings.accordion_content_2 != blank %}{{ block.settings.accordion_content_2 }}{% elsif bp_is_fungi %}<p>Fungi Fusion blends three functional mushrooms into a crisp, fruit-flavored sparkling drink. <strong>Lion&rsquo;s Mane</strong> supports focus and mental clarity, <strong>Cordyceps</strong> delivers clean energy without caffeine, and <strong>Reishi</strong> promotes calm and balance — a smoother, jitter-free alternative to coffee and energy drinks, with real nootropic benefits.</p>{% endif %}
                   </div>
                 </div>
               {% endif %}
@@ -1709,7 +1719,7 @@
                     <div class="accordion-icon">+</div>
                   </div>
                   <div class="accordion-content">
-                    {{ block.settings.accordion_content_3 }}
+                    {% if block.settings.accordion_content_3 != blank %}{{ block.settings.accordion_content_3 }}{% elsif bp_is_fungi %}<p>Every batch is third-party lab tested for purity and potency. Fungi Fusion contains <strong>zero THC and zero caffeine</strong> — made with real fruit flavors and functional mushroom extracts. Vegan, gluten-free, non-GMO, and shipped nationwide.</p>{% endif %}
                   </div>
                 </div>
               {% endif %}
