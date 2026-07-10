@@ -103,6 +103,7 @@
         },
         "appstle_widget": {
           "type": "appstle_widget",
+          "disabled": true,
           "settings": {}
         },
         "add_to_cart": {
