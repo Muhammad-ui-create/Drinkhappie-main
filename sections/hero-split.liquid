@@ -35,11 +35,21 @@
     -%}
     <div class="hero-split__video-wrapper{% if disable_video_on_mobile %} hero-split__video-wrapper--hide-mobile{% endif %}" data-video-lazy="true">
       {%- if video_fallback_image != blank -%}
+        <link rel="preload" as="image"
+          href="{{ video_fallback_image | image_url: width: 1200 }}"
+          imagesrcset="{{ video_fallback_image | image_url: width: 828 }} 828w, {{ video_fallback_image | image_url: width: 1200 }} 1200w, {{ video_fallback_image | image_url: width: 1920 }} 1920w"
+          imagesizes="100vw"
+          fetchpriority="high">
         <img
           src="{{ video_fallback_image | image_url: width: 1920 }}"
+          srcset="{{ video_fallback_image | image_url: width: 828 }} 828w, {{ video_fallback_image | image_url: width: 1200 }} 1200w, {{ video_fallback_image | image_url: width: 1920 }} 1920w"
+          sizes="100vw"
           alt="{{ section.settings.heading | default: shop.name | escape }}"
           class="hero-split__fallback-image"
           loading="eager"
+          fetchpriority="high"
+          width="{{ video_fallback_image.width | default: 1920 }}"
+          height="{{ video_fallback_image.height | default: 1080 }}"
         >
       {%- endif -%}
       {%- if background_video != blank -%}
@@ -179,10 +189,13 @@
         {%- if hero_image != blank -%}
           <img
             src="{{ hero_image | image_url: width: 1200 }}"
+            srcset="{{ hero_image | image_url: width: 480 }} 480w, {{ hero_image | image_url: width: 800 }} 800w, {{ hero_image | image_url: width: 1200 }} 1200w"
+            sizes="(max-width: 768px) 100vw, 50vw"
             alt="{{ hero_image.alt | escape }}"
             width="{{ hero_image.width }}"
             height="{{ hero_image.height }}"
             loading="eager"
+            fetchpriority="high"
             class="hero-split__image"
           >
         {%- else -%}
