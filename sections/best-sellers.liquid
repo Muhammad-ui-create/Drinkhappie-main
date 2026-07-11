@@ -968,19 +968,19 @@
       display: block;
       position: relative;
       overflow: hidden;
-      padding: 0 16px;
-      margin: 0 -16px;
+      padding: 0;
+      margin: 0;
     }
     
     #best-sellers-{{ section.id }} .best-sellers__carousel-track {
       display: flex;
       transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
-      padding-left: 16px;
+      padding-left: 20px; /* aligns card edge with section text padding */
     }
     
     #best-sellers-{{ section.id }} .best-sellers__carousel-slide {
-      flex: 0 0 75%;
-      padding-right: 16px;
+      flex: 0 0 78%;
+      padding-right: 14px;
       box-sizing: border-box;
     }
     
