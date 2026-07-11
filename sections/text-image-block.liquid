@@ -21,24 +21,24 @@
           {%- when 'wave' -%}
             <path d="M0,120 L0,120 Q360,0 720,60 T1440,60 L1440,120 Z" fill="{{ section.settings.top_wave_color }}">
               {%- if section.settings.top_wave_animate -%}
-                <animate attributeName="d" dur="{{ section.settings.wave_animation_speed }}s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1" values="M0,120 L0,120 Q360,0 720,60 T1440,60 L1440,120 Z;M0,120 L0,120 Q360,30 720,80 T1440,40 L1440,120 Z;M0,120 L0,120 Q360,90 720,20 T1440,90 L1440,120 Z;M0,120 L0,120 Q360,10 720,70 T1440,50 L1440,120 Z;M0,120 L0,120 Q360,0 720,60 T1440,60 L1440,120 Z"/>
+                <animate attributeName="d" dur="{{ section.settings.wave_animation_speed }}s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1" values="M0,120 L0,120 Q360,0 720,60 T1440,60 L1440,120 Z;M0,120 L0,120 Q360,10 720,52 T1440,52 L1440,120 Z;M0,120 L0,120 Q360,4 720,68 T1440,66 L1440,120 Z;M0,120 L0,120 Q360,8 720,56 T1440,54 L1440,120 Z;M0,120 L0,120 Q360,0 720,60 T1440,60 L1440,120 Z"/>
               {%- endif -%}
             </path>
           {%- when 'double-ripple' -%}
             <path d="M0,120 L0,120 Q360,20 720,50 T1440,50 L1440,120 Z" fill="{{ section.settings.top_wave_color }}">
               {%- if section.settings.top_wave_animate -%}
-                <animate attributeName="d" dur="{{ section.settings.wave_animation_speed }}s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1" values="M0,120 L0,120 Q360,20 720,50 T1440,50 L1440,120 Z;M0,120 L0,120 Q360,40 720,70 T1440,35 L1440,120 Z;M0,120 L0,120 Q360,10 720,40 T1440,70 L1440,120 Z;M0,120 L0,120 Q360,50 720,30 T1440,55 L1440,120 Z;M0,120 L0,120 Q360,20 720,50 T1440,50 L1440,120 Z"/>
+                <animate attributeName="d" dur="{{ section.settings.wave_animation_speed }}s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1" values="M0,120 L0,120 Q360,20 720,50 T1440,50 L1440,120 Z;M0,120 L0,120 Q360,28 720,56 T1440,44 L1440,120 Z;M0,120 L0,120 Q360,14 720,44 T1440,58 L1440,120 Z;M0,120 L0,120 Q360,24 720,52 T1440,46 L1440,120 Z;M0,120 L0,120 Q360,20 720,50 T1440,50 L1440,120 Z"/>
               {%- endif -%}
             </path>
             <path d="M0,120 L0,120 Q540,30 1080,35 T1440,30 L1440,120 Z" fill="{{ section.settings.top_wave_color }}" opacity="0.6">
               {%- if section.settings.top_wave_animate -%}
-                <animate attributeName="d" dur="{{ section.settings.wave_animation_speed | times: 1.2 }}s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1" values="M0,120 L0,120 Q540,30 1080,35 T1440,30 L1440,120 Z;M0,120 L0,120 Q540,45 1080,50 T1440,25 L1440,120 Z;M0,120 L0,120 Q540,20 1080,25 T1440,45 L1440,120 Z;M0,120 L0,120 Q540,40 1080,30 T1440,35 L1440,120 Z;M0,120 L0,120 Q540,30 1080,35 T1440,30 L1440,120 Z"/>
+                <animate attributeName="d" dur="{{ section.settings.wave_animation_speed | times: 1.2 }}s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1" values="M0,120 L0,120 Q540,30 1080,35 T1440,30 L1440,120 Z;M0,120 L0,120 Q540,37 1080,42 T1440,26 L1440,120 Z;M0,120 L0,120 Q540,25 1080,29 T1440,38 L1440,120 Z;M0,120 L0,120 Q540,34 1080,32 T1440,32 L1440,120 Z;M0,120 L0,120 Q540,30 1080,35 T1440,30 L1440,120 Z"/>
               {%- endif -%}
             </path>
           {%- else -%}
             <path d="M0,120 L0,120 Q360,0 720,60 T1440,60 L1440,120 Z" fill="{{ section.settings.top_wave_color }}">
               {%- if section.settings.top_wave_animate -%}
-                <animate attributeName="d" dur="{{ section.settings.wave_animation_speed }}s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1" values="M0,120 L0,120 Q360,0 720,60 T1440,60 L1440,120 Z;M0,120 L0,120 Q360,30 720,80 T1440,40 L1440,120 Z;M0,120 L0,120 Q360,90 720,20 T1440,90 L1440,120 Z;M0,120 L0,120 Q360,10 720,70 T1440,50 L1440,120 Z;M0,120 L0,120 Q360,0 720,60 T1440,60 L1440,120 Z"/>
+                <animate attributeName="d" dur="{{ section.settings.wave_animation_speed }}s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1; 0.4 0 0.6 1" values="M0,120 L0,120 Q360,0 720,60 T1440,60 L1440,120 Z;M0,120 L0,120 Q360,10 720,52 T1440,52 L1440,120 Z;M0,120 L0,120 Q360,4 720,68 T1440,66 L1440,120 Z;M0,120 L0,120 Q360,8 720,56 T1440,54 L1440,120 Z;M0,120 L0,120 Q360,0 720,60 T1440,60 L1440,120 Z"/>
               {%- endif -%}
             </path>
         {%- endcase -%}
