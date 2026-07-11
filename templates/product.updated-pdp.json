@@ -142,6 +142,10 @@
             "button_text": "VIEW COA & Lab Tests",
             "coa_url": "shopify://pages/coas"
           }
+        },
+        "judge_me_reviews_preview_badge_mDHjAh": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
         }
       },
       "block_order": [
@@ -161,7 +165,8 @@
         "shipping_info",
         "long_description",
         "accordion",
-        "coa_button"
+        "coa_button",
+        "judge_me_reviews_preview_badge_mDHjAh"
       ],
       "settings": {
         "background_color": "#ffe6cb",
@@ -442,6 +447,31 @@
         "invert_bottom_wave": false
       }
     },
+    "1783743445c6a9cace": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_kt3QCM": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "real_data",
+            "max_width": 1200,
+            "show_shop_reviews": true,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_kt3QCM"
+      ],
+      "settings": {
+        "apply_vertical_spacing": true,
+        "apply_horizontal_spacing": true,
+        "display_on_card": false,
+        "content_width_desktop": "lg:w-full",
+        "color_scheme": "",
+        "use_gradient_background": false
+      }
+    },
     "faq_accordion_EBYNyN": {
       "type": "faq-accordion",
       "blocks": {
@@ -590,31 +620,6 @@
         "bottom_wave_style": "wave",
         "bottom_wave_color": "#ffe6cb",
         "bottom_wave_animate": true
-      }
-    },
-    "1783743445c6a9cace": {
-      "type": "apps",
-      "blocks": {
-        "judge_me_reviews_review_widget_kt3QCM": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "real_data",
-            "max_width": 1200,
-            "show_shop_reviews": true,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_kt3QCM"
-      ],
-      "settings": {
-        "apply_vertical_spacing": true,
-        "apply_horizontal_spacing": true,
-        "display_on_card": false,
-        "content_width_desktop": "lg:w-full",
-        "color_scheme": "",
-        "use_gradient_background": false
       }
     }
   },
