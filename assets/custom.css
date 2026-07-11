@@ -1815,3 +1815,7 @@ body.template-blog .card__surface p,
 body.template-blog .card__surface a:not(.push-btn):not(.push-btn__surface):not(.button) {
   color: #584450;
 }
+
+/* Judge.me review widget: fill the section width (app CSS caps it at 1200px,
+   which looks undersized on wide screens). Carousel recalculates cards to fit. */
+.jdgm-widget.jdgm-review-widget { max-width: 100% !important; }
