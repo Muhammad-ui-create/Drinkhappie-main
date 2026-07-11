@@ -217,15 +217,26 @@
     text-transform: uppercase !important;
     letter-spacing: 0.5px;
     cursor: pointer;
-    transition: all 0.3s ease !important;
+    /* color/shadow only — animating `all` (incl. transform) moved the button
+       under the pointer and ate the first click on touch devices */
+    transition: background-color 0.15s ease, box-shadow 0.15s ease !important;
     box-shadow: 0 4px 15px rgba(80, 178, 189, 0.4);
   }
 
-  [data-cart-footer] input[name="checkout"]:hover,
-  [data-cart-footer] .push-btn__surface:hover {
-    background: #3d9aa3 !important;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(80, 178, 189, 0.5);
+  /* hover styling only for real mouse pointers — never on touch, and no movement */
+  @media (hover: hover) and (pointer: fine) {
+    [data-cart-footer] input[name="checkout"]:hover,
+    [data-cart-footer] .push-btn__surface:hover {
+      background: #3d9aa3 !important;
+      box-shadow: 0 6px 20px rgba(80, 178, 189, 0.5);
+    }
+  }
+
+  /* kill the theme's push-btn translate on the drawer checkout — the button
+     must never move away from the pointer mid-click */
+  [data-cart-footer] .push-btn:hover .push-btn__surface,
+  [data-cart-footer] .push-btn .push-btn__surface {
+    transform: none !important;
   }
 
   /* Empty Cart State */
@@ -308,3 +319,20 @@
     </template>
   </div>
 </data-island>
+
+<script>
+  // Drawer checkout: navigate on first pointer press. The form-submit path could
+  // lose the first click while the push-btn animation moved the button; cart
+  // state is already synced via AJAX, so direct navigation is equivalent.
+  (function () {
+    var go = function (e) {
+      var btn = e.target && e.target.closest && e.target.closest('[data-cart-footer] input[name="checkout"]');
+      if (!btn) return;
+      if (!btn.closest('#right-drawer-slot, [x-data*="ModalCart"]')) return; // drawer only — cart page keeps form submit
+      e.preventDefault();
+      window.location.href = '/checkout';
+    };
+    document.addEventListener('pointerdown', go, true);
+    document.addEventListener('click', go, true); // fallback for non-pointer browsers
+  })();
+</script>
