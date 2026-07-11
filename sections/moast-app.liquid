@@ -238,8 +238,18 @@
   <script>
     (function() {
       var attempts = 0;
-      var maxAttempts = 40;
+      var maxAttempts = 60;
       var alreadyApplied = false;
+
+      /* A slide is "hydrated" once Moast has attached a playable video source
+         (or a poster/img for image slides). Cloning before hydration froze
+         permanent gray skeleton cards into the marquee. */
+      function slideHydrated(slide) {
+        var v = slide.querySelector('video');
+        if (v && (v.currentSrc || v.getAttribute('src') || v.querySelector('source[src]'))) return true;
+        if (!v && slide.querySelector('img[src]')) return true;
+        return false;
+      }
 
       function initMoastAutoScroll() {
         if (alreadyApplied) return;
@@ -266,6 +276,21 @@
           return;
         }
 
+        /* Wait for content hydration (not just layout). Give Moast up to
+           ~half the attempt budget; then proceed with whatever hydrated and
+           let the repair loop below fill in stragglers. */
+        var slidesArr = Array.from(slidesContainer.children);
+        var hydratedCount = slidesArr.filter(slideHydrated).length;
+        if (hydratedCount < slidesArr.length && attempts < 30) {
+          setTimeout(initMoastAutoScroll, 500);
+          return;
+        }
+        if (hydratedCount === 0) {
+          /* Nothing hydrated at all — leave Moast's native carousel alone. */
+          setTimeout(initMoastAutoScroll, 500);
+          return;
+        }
+
         alreadyApplied = true;
 
         var carousel = shadow.querySelector('.carousel');
@@ -278,22 +303,46 @@
         carousel.style.webkitMaskImage = 'linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%)';
         carousel.style.maskImage = 'linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%)';
 
-        /* Clone all slides for seamless loop */
+        /* Clone all slides for seamless loop. Copy live video sources
+           explicitly — clones aren't managed by Moast's lazy-loader. */
         var origSlides = Array.from(slidesContainer.children);
+        var cloneMap = [];
+        function syncVideo(fromSlide, toSlide) {
+          var src = fromSlide.querySelector('video');
+          var dst = toSlide.querySelector('video');
+          if (!src || !dst) return false;
+          var url = src.currentSrc || src.getAttribute('src');
+          if (!url) return false;
+          if (dst.getAttribute('src') !== url) dst.setAttribute('src', url);
+          if (src.poster && dst.poster !== src.poster) dst.poster = src.poster;
+          dst.setAttribute('autoplay', '');
+          dst.setAttribute('muted', '');
+          dst.setAttribute('loop', '');
+          dst.setAttribute('playsinline', '');
+          dst.preload = 'metadata';
+          dst.muted = true;
+          dst.play().catch(function(){});
+          return true;
+        }
         origSlides.forEach(function(slide) {
           var clone = slide.cloneNode(true);
           clone.setAttribute('aria-hidden', 'true');
-          var videos = clone.querySelectorAll('video');
-          videos.forEach(function(v) {
-            v.setAttribute('autoplay', '');
-            v.setAttribute('muted', '');
-            v.setAttribute('loop', '');
-            v.setAttribute('playsinline', '');
-            v.muted = true;
-            v.play().catch(function(){});
-          });
           slidesContainer.appendChild(clone);
+          syncVideo(slide, clone);
+          cloneMap.push([slide, clone]);
         });
+
+        /* Repair loop: as Moast hydrates stragglers, mirror their sources
+           into the clones and keep everything playing. */
+        var repairs = 0;
+        var repairTimer = setInterval(function() {
+          repairs++;
+          cloneMap.forEach(function(pair) { syncVideo(pair[0], pair[1]); });
+          shadow.querySelectorAll('video').forEach(function(v) {
+            if (v.paused && (v.currentSrc || v.getAttribute('src'))) { v.muted = true; v.play().catch(function(){}); }
+          });
+          if (repairs >= 30) clearInterval(repairTimer);
+        }, 1000);
 
         /* Inject animation CSS into shadow DOM */
         var styleEl = document.createElement('style');
