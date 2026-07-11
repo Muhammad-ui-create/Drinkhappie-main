@@ -51,7 +51,7 @@
   <div class="cstm-container p-relative" style="position: relative; z-index: 10; padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px;">
     <div class="common-heading-wrap text-center">
       {% if section.settings.heading_icon != blank %}
-        {{ section.settings.heading_icon | image_url: width: 3000 | image_tag: alt: 'icon' }}
+        {{ section.settings.heading_icon | image_url: width: 400 | image_tag: alt: 'icon', loading: 'lazy' }}
       {% endif %}
       {% if section.settings.heading != blank %}
         <h2>{{ section.settings.heading }}</h2>
@@ -62,7 +62,7 @@
         <div class="cstm-col-20">
           <div class="sm-box-wrapper">
             {% if block.settings.item_icon != blank %}
-              {{ block.settings.item_icon | image_url: width: 3000 | image_tag: alt: 'icon' }}
+              {{ block.settings.item_icon | image_url: width: 400 | image_tag: alt: 'icon', loading: 'lazy' }}
             {% endif %}
             {% if block.settings.item_heading != blank %}
               <h4>{{ block.settings.item_heading }}</h4>

@@ -108,12 +108,12 @@
   <div class="cstm-container-fluid" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; position: relative; z-index: 10;">
     <div class="common-heading-wrap text-center">
       {% if section.settings.heading_icon != blank %}
-        {{ section.settings.heading_icon | image_url: width: 3000 | image_tag: alt: 'icon' }}
+        {{ section.settings.heading_icon | image_url: width: 400 | image_tag: alt: 'icon', loading: 'lazy' }}
       {% endif %}
       <p class="text-white">
         {% if section.settings.rating_image != blank %}
           <span class="start-icon">
-            {{ section.settings.rating_image | image_url: width: 3000 | image_tag: alt: 'icon' }}
+            {{ section.settings.rating_image | image_url: width: 400 | image_tag: alt: 'icon', loading: 'lazy' }}
           </span>
         {% endif %}
         {% if section.settings.rating_text != blank %}{{ section.settings.rating_text }}{% endif %}

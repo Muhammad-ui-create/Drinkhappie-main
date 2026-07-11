@@ -71,7 +71,7 @@
               <th></th>
               <th>
                 {% if section.settings.own_brand != blank %}
-                  {{ section.settings.own_brand | image_url: width: 3000 | image_tag: alt: 'icon' }}
+                  {{ section.settings.own_brand | image_url: width: 400 | image_tag: alt: 'icon', loading: 'lazy' }}
                 {% endif %}
               </th>
               <th>

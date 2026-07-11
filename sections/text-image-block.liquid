@@ -50,7 +50,7 @@
     <div class="common-heading-wrap text-center">
       {% if section.settings.heading_icon != blank %}
         {% comment %} <img src="images/cloud.svg" alt="icon"> {% endcomment %}
-        {{ section.settings.heading_icon | image_url: width: 3000 | image_tag: alt: 'icon' }}
+        {{ section.settings.heading_icon | image_url: width: 400 | image_tag: alt: 'icon', loading: 'lazy' }}
       {% endif %}
       {% if section.settings.heading != blank %}
         <h2 class="text-white">{{ section.settings.heading }}</h2>
@@ -76,7 +76,7 @@
       <div class="cstm-col-6">
         {% if section.settings.image != blank %}
           <div class="right-img-wrapper img-box">
-            {{ section.settings.image | image_url: width: 3000 | image_tag: alt: 'img' }}
+            {{ section.settings.image | image_url: width: 1600 | image_tag: alt: 'img', loading: 'lazy', widths: '480, 800, 1200, 1600', sizes: '100vw' }}
           </div>
         {% endif %}
       </div>
