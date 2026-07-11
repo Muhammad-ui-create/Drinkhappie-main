@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "header_information_MCXcYm": {
@@ -226,7 +217,7 @@
         "top_wave_style": "wave",
         "top_wave_color": "#50b2bd",
         "top_wave_animate": true,
-        "invert_top_wave": true,
+        "invert_top_wave": false,
         "show_bottom_wave": false,
         "bottom_wave_style": "wave",
         "bottom_wave_color": "#50b2bd",
