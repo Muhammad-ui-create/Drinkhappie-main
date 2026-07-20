@@ -855,6 +855,48 @@
     box-shadow: 0 6px 24px rgba(80, 178, 189, 0.4);
   }
 
+  /* Quantity-tier savings (variety pack only) */
+  .pdp-qty-tiers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    align-items: center;
+    margin: 4px 0 20px;
+    padding: 12px 16px;
+    background: var(--happie-cream);
+    border: 1.5px dashed var(--happie-teal);
+    border-radius: 14px;
+  }
+
+  .pdp-qty-tiers__row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 15px;
+  }
+
+  .pdp-qty-tiers__qty {
+    font-weight: 700;
+    color: var(--happie-black);
+  }
+
+  .pdp-qty-tiers__arrow {
+    color: var(--happie-teal);
+    font-weight: 700;
+  }
+
+  .pdp-qty-tiers__save {
+    font-weight: 800;
+    color: var(--happie-orange);
+  }
+
+  .pdp-qty-tiers__note {
+    flex-basis: 100%;
+    font-size: 12px;
+    color: var(--happie-dark);
+    opacity: 0.65;
+  }
+
   /* PDP offer line above title (variety pack only) */
   .pdp-offer-line {
     display: inline-block;
@@ -1557,6 +1599,27 @@
             <div class="product-price" {{ block.shopify_attributes }}>
               <span id="dynamic-price">{{ product.selected_or_first_available_variant.price | money }}</span>
             </div>
+
+            {% if product.handle == 'happie-social-4-pack' %}
+              {%- liquid
+                assign _vp_unit = product.selected_or_first_available_variant.price
+                assign _vp_save2 = _vp_unit | times: 0.5
+                assign _vp_save4 = _vp_unit | times: 1.0
+              -%}
+              <div class="pdp-qty-tiers">
+                <div class="pdp-qty-tiers__row">
+                  <span class="pdp-qty-tiers__qty">Add 2</span>
+                  <span class="pdp-qty-tiers__arrow">&rarr;</span>
+                  <span class="pdp-qty-tiers__save">Save {{ _vp_save2 | money }}</span>
+                </div>
+                <div class="pdp-qty-tiers__row">
+                  <span class="pdp-qty-tiers__qty">Add 4</span>
+                  <span class="pdp-qty-tiers__arrow">&rarr;</span>
+                  <span class="pdp-qty-tiers__save">Save {{ _vp_save4 | money }}</span>
+                </div>
+                <div class="pdp-qty-tiers__note">Buy One, Get One 50% Off &mdash; discount applies automatically at checkout</div>
+              </div>
+            {% endif %}
 
             <!-- Description Block -->
           {% when 'description' %}
