@@ -42,9 +42,16 @@
 .happie-product-section .main-product-image { max-width: 100%; }
 .happie-product-section .product-images-container {top: 120px;}
 .happie-product-section .thumbnail-grid { max-width: 100%; }
-.raeting-box {margin-bottom: 15px; display: flex; justify-content: space-between; gap: 15px;}
-.raeting-box .product-rating, 
+.raeting-box {margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap;}
+.raeting-box .product-rating,
 .raeting-box .top-seller-badge { margin-bottom: 0; }
+.raeting-box .top-seller-badge { flex-shrink: 0; }
+.raeting-box .top-seller-badge span { white-space: nowrap; }
+@media (max-width: 480px) {
+  .raeting-box { gap: 10px; }
+  .raeting-box .top-seller-badge { height: 26px; padding: 0 14px; }
+  .raeting-box .top-seller-badge span { font-size: 13px; letter-spacing: -0.6px; }
+}
 .happie-product-section .size-selector .size-option .save-badge { left: 50%; transform: translateX(-50%); }
 .happie-product-section .accordion-tabs { margin-bottom: 20px; }
 .shipping-info { margin-bottom: 25px; }
