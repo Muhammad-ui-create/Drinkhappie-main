@@ -855,6 +855,48 @@
     box-shadow: 0 6px 24px rgba(80, 178, 189, 0.4);
   }
 
+  /* PDP offer line above title (variety pack only) */
+  .pdp-offer-line {
+    display: inline-block;
+    background: linear-gradient(90deg, var(--happie-teal), var(--happie-orange));
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    padding: 8px 18px;
+    border-radius: 50px;
+    margin-bottom: 12px;
+  }
+
+  /* Variety pack: keep Subscribe & Save highlighted with an animated brand gradient */
+  @keyframes happie-gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .variety-pack-page .subscribe-save-button {
+    background: linear-gradient(90deg, var(--happie-teal), var(--happie-orange), var(--happie-teal));
+    background-size: 200% 100%;
+    animation: happie-gradient-shift 4s ease-in-out infinite;
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(80, 178, 189, 0.35);
+  }
+
+  .variety-pack-page .subscribe-save-button:hover {
+    animation-duration: 1.5s;
+    filter: brightness(1.08);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(255, 159, 49, 0.4);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .variety-pack-page .subscribe-save-button {
+      animation: none;
+    }
+  }
+
   .subscribe-save-button:disabled {
     opacity: 0.6;
     cursor: not-allowed;
@@ -1354,7 +1396,7 @@
     </ol>
   </nav>
 
-  <div class="happie-pdp-grid">
+  <div class="happie-pdp-grid{% if product.handle == 'happie-social-4-pack' %} variety-pack-page{% endif %}">
     <!-- LEFT SIDE: Product Images -->
     <div class="product-images-container">
       {% for block in section.blocks %}
@@ -1445,6 +1487,11 @@
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
                 Low stock &mdash; only <strong>&nbsp;{{ _ls_qty }}&nbsp;</strong> packs left. Order soon
               </div>
+            {% elsif product.handle == 'happie-social-4-pack' %}
+              <div class="low-stock-badge" data-selling-fast>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+                Selling fast &mdash; a customer favorite
+              </div>
             {% endif %}
             {%- liquid
               # Real review data (Shopify reviews.* metafields, written by Judge.me).
@@ -1494,6 +1541,9 @@
             <!-- Product Title Block -->
           {% when 'product_title' %}
             <div {{ block.shopify_attributes }}>
+              {% if product.handle == 'happie-social-4-pack' %}
+                <div class="pdp-offer-line">🎉 Buy One, Get One 50% Off — Automatically Applied at Checkout</div>
+              {% endif %}
               <h1 class="product-title">{{ product.title }}</h1>
               {% if product.metafields.custom.subheading != blank %}
                 <h2 class="product-subtitle">{{ product.metafields.custom.subheading }}</h2>
