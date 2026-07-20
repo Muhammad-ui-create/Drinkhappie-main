@@ -208,6 +208,15 @@
             document.body.addEventListener('shapes:cart:afteradditem', function () {
               setTimeout(initAllUpsells, 300);
             });
+
+            // The cart drawer swaps section HTML via innerHTML (data-island web component),
+            // which never re-runs inline <script> tags. A persistent observer set up on
+            // this first (real) execution keeps catching every future cart-footer re-render.
+            if (!window.__hbUpsellObserverInstalled) {
+              window.__hbUpsellObserverInstalled = true;
+              var hbObserver = new MutationObserver(function () { initAllUpsells(); });
+              hbObserver.observe(document.body, { childList: true, subtree: true });
+            }
           })();
         </script>
       {%- endif -%}
