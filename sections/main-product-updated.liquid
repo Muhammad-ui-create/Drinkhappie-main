@@ -1602,9 +1602,12 @@
 
             {% if product.handle == 'happie-social-4-pack' %}
               {%- liquid
+                # Integer-cent floor division matches the BXGY discount engine exactly
+                # (verified live: $19.99 unit -> $9.99 per discounted unit, not $10.00).
                 assign _vp_unit = product.selected_or_first_available_variant.price
-                assign _vp_save2 = _vp_unit | times: 0.5
-                assign _vp_save4 = _vp_unit | times: 1.0
+                assign _vp_half = _vp_unit | divided_by: 2
+                assign _vp_save2 = _vp_half
+                assign _vp_save4 = _vp_half | times: 2
               -%}
               <div class="pdp-qty-tiers">
                 <div class="pdp-qty-tiers__row">
