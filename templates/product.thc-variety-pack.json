@@ -564,10 +564,10 @@
       "name": "Product Collection",
       "settings": {
         "use_happie_cards": true,
-        "title": "Find Your happie",
+        "title": "Shop All Happie THC Flavors & Bundles",
         "subheading": "",
         "collection": "thc",
-        "no_products": 8,
+        "no_products": 18,
         "show_view_all": true,
         "enable_quick_buy": true,
         "display_on_card": false,
