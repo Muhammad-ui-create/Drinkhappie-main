@@ -245,7 +245,7 @@
       ],
       "settings": {
         "logo": "shopify://shop_images/happie-cloud.png",
-        "rich_text": "Happie Fungi Fusion is where ancient plant wisdom meets modern refreshment. Each sparkling can blends adaptogenic mushrooms and ocean minerals with bold, juicy flavors—delivering clean energy, focus, and calm, all with next-level bioavailability and a taste you’ll crave.",
+        "rich_text": "Happie Fungi Fusion is a sparkling mushroom drink built for flavor first. Each can pairs Lion’s Mane, Cordyceps, and Red Reishi with magnesium and calcium from ocean minerals — bold, juicy, and easy to drink. Tastes like a seltzer, not a shake.",
         "mobile_text_scale": 4,
         "desktop_text_scale": 9,
         "display_on_card": false,
@@ -264,7 +264,7 @@
           "type": "column",
           "settings": {
             "title": "Lion’s Mane Mushroom",
-            "subheading": "<strong>900mg/can </strong>Lion’s Mane is well-known for supporting mental clarity, focus, and overall cognitive function. Celebrated for its ability to boost brain health, this mushroom helps you stay sharp whether you’re working, studying, or deep in a creative flow."
+            "subheading": "<strong>Lion’s Mane</strong> is a culinary mushroom with a mild, savoury character, prized in kitchens long before it reached a can. It’s one of three mushrooms we brew into every Fungi Fusion."
           }
         },
         "column_hhQpH8": {
@@ -338,7 +338,7 @@
           "type": "highlight",
           "settings": {
             "title": "Functional Benefits You Can Feel",
-            "text": "Lion’s Mane for mental clarity, Cordyceps for clean, sustained energy, and Reishi for calm and resilience—each dual-extracted for 3–5x better bioavailability and maximum impact.",
+            "text": "Lion’s Mane, Cordyceps, and Red Reishi — three mushrooms, dual-extracted from the fruiting body, plus magnesium and calcium from ocean minerals.",
             "cta_link": "",
             "cta_text": "",
             "override_section_color_scheme": false,

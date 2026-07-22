@@ -119,7 +119,7 @@
           "type": "long_description",
           "disabled": true,
           "settings": {
-            "long_description": "{{ product.description }}<p><strong>Mango Mimosa</strong> is a vibrant, feel-good drink packed with juicy mango flavor and real wellness benefits. Each can blends 900mg Lion’s Mane, 700mg Cordyceps, and 400mg Reishi—powerful mushrooms known to support focus, energy, and calm, all without caffeine or sugar spikes.You’ll feel clear-headed and uplifted about 15–30 minutes after your first sip. The clean energy lasts for hours, with no crash or grogginess the next day.<br/>Lightly sweetened with organic agave and bursting with tropical taste, Mango Mimosa is also infused with Aquamin® ocean minerals for extra hydration and recovery.Vegan, non-GMO, and free from fillers or artificial junk—just pure, plant-powered clarity in every can.<br/><br/></p>"
+            "long_description": "{{ product.description }}"
           }
         },
         "accordion": {
@@ -467,7 +467,7 @@
           "type": "faq_item",
           "settings": {
             "question": "Will this help with focus or energy?",
-            "answer": "Yes! Lion’s Mane and Cordyceps mushrooms are known for supporting mental clarity and natural energy, without caffeine or sugar spikes."
+            "answer": "Every can is made with Lion’s Mane, Cordyceps, and Red Reishi mushrooms, plus magnesium and calcium from ocean minerals. No caffeine, no alcohol, no artificial sweeteners."
           }
         },
         "faq_item_MEGHBe": {
@@ -481,7 +481,7 @@
           "type": "faq_item",
           "settings": {
             "question": "Why mushrooms, and what do they actually do?",
-            "answer": "Lion’s Mane supports focus and brain health, Cordyceps boosts natural energy, and Reishi helps with calm and recovery. All are dual-extracted for real, noticeable benefits."
+            "answer": "Lion’s Mane, Cordyceps, and Red Reishi — all dual-extracted from the fruiting body. They’re what the drink is made with, not why you drink it: that part is the flavour."
           }
         },
         "faq_item_J3AzqW": {

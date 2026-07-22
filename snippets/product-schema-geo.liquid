@@ -97,7 +97,7 @@
     "name": {{ brand_name | json }}
   },
   "category": "Functional Beverages",
-  "keywords": {%- if is_fungi_fusion -%}"functional mushroom drink, adaptogenic beverage, Lion's Mane drink, Cordyceps drink, Reishi drink, nootropic beverage, mushroom seltzer, caffeine-free energy drink, focus drink, mushroom coffee alternative, natural energy drink, adaptogen soda"{%- else -%}"THC seltzer, Delta-9 THC drink, hemp-derived THC beverage, cannabis seltzer, THC sparkling water, weed drink, hemp seltzer, alcohol alternative, zero-proof cocktail, sober curious drink, THC infused drink, low calorie THC drink, nano-emulsified THC, CBD drink, social tonic, microdose THC"{%- endif -%},
+  "keywords": {%- if is_fungi_fusion -%}"functional mushroom drink, Lion's Mane drink, Cordyceps drink, Reishi drink, mushroom seltzer, sparkling mushroom beverage, caffeine-free sparkling drink, non-alcoholic drink, alcohol alternative"{%- else -%}"THC seltzer, Delta-9 THC drink, hemp-derived THC beverage, cannabis seltzer, THC sparkling water, weed drink, hemp seltzer, alcohol alternative, zero-proof cocktail, sober curious drink, THC infused drink, low calorie THC drink, nano-emulsified THC, CBD drink, social tonic, microdose THC"{%- endif -%},
   {%- if schema_has_aggregate -%}
   "aggregateRating": {
     "@type": "AggregateRating",
@@ -119,18 +119,18 @@
     {%- if is_fungi_fusion -%}
     {
       "@type": "PropertyValue",
-      "name": "Lion's Mane (Hericium erinaceus)",
-      "value": "900mg per can"
+      "name": "Mushroom",
+      "value": "Lion's Mane (Hericium erinaceus)"
     },
     {
       "@type": "PropertyValue",
-      "name": "Cordyceps (Cordyceps militaris)",
-      "value": "700mg per can"
+      "name": "Mushroom",
+      "value": "Cordyceps (Cordyceps militaris)"
     },
     {
       "@type": "PropertyValue",
-      "name": "Reishi (Ganoderma lucidum)",
-      "value": "400mg per can"
+      "name": "Mushroom",
+      "value": "Red Reishi (Ganoderma lucidum)"
     },
     {%- else -%}
     {
