@@ -75,7 +75,7 @@
         "card_2_benefit_GNanKw": {
           "type": "card_2_benefit",
           "settings": {
-            "benefit_text": "Zero THC, zero CBD, zero caffeine"
+            "benefit_text": "No alcohol, no caffeine"
           }
         },
         "card_2_benefit_p6UeqW": {
@@ -108,7 +108,7 @@
         "header_icon": "shopify://shop_images/happie-cloud.png",
         "icon_size": 104,
         "title": "Choose Your Vibe",
-        "subtitle": "Two product lines, one mission — plant-powered happiness for every moment. Premium THC seltzers and adaptogenic mushroom drinks.",
+        "subtitle": "Two product lines, one mission — plant-powered happiness for every moment. Premium THC seltzers and sparkling mushroom drinks.",
         "card_1_badge": "MOST POPULAR",
         "card_1_image": "shopify://shop_images/Happie_Thc_collection.jpg",
         "card_1_title": "THC Infused Seltzers",
@@ -118,7 +118,7 @@
         "card_2_badge": "ZERO THC",
         "card_2_image": "shopify://shop_images/Fungie_Fusion_Collections.jpg",
         "card_2_title": "Fungi Fusion",
-        "card_2_subtitle": "Functional mushrooms + adaptogens",
+        "card_2_subtitle": "Sparkling mushroom drinks",
         "card_2_cta_text": "Shop Fungi Fusion",
         "card_2_cta_url": "shopify://collections/fungi-fusion",
         "trust_1_text": "Lab tested for purity",
