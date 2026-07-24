@@ -159,7 +159,7 @@
         "coa_button"
       ],
       "settings": {
-        "background_color": "#ffe6cb",
+        "background_color": "#ffffff",
         "padding_top": 4,
         "padding_bottom": 25
       }
@@ -214,12 +214,12 @@
         "wave_animation_speed": 8,
         "show_top_wave": false,
         "top_wave_style": "wave",
-        "top_wave_color": "#ffe6cb",
+        "top_wave_color": "#ffffff",
         "top_wave_animate": true,
         "invert_top_wave": false,
         "show_bottom_wave": false,
         "bottom_wave_style": "wave",
-        "bottom_wave_color": "#ffe6cb",
+        "bottom_wave_color": "#ffffff",
         "bottom_wave_animate": true,
         "invert_bottom_wave": false
       }
@@ -280,12 +280,12 @@
         "wave_animation_speed": 8,
         "show_top_wave": false,
         "top_wave_style": "wave",
-        "top_wave_color": "#ffe6cb",
+        "top_wave_color": "#ffffff",
         "top_wave_animate": true,
         "invert_top_wave": false,
         "show_bottom_wave": false,
         "bottom_wave_style": "wave",
-        "bottom_wave_color": "#ffe6cb",
+        "bottom_wave_color": "#ffffff",
         "bottom_wave_animate": true,
         "invert_bottom_wave": false
       }
@@ -304,7 +304,7 @@
             "product_cards": "none",
             "autoplay_mode": "all",
             "autoscroll_duration": 0,
-            "slide_size": "250",
+            "slide_size": 250,
             "aspect_ratio": "vertical",
             "border": 0,
             "border_color": "linear-gradient(to right, #833ab4, #fd1d1d, #fcb045)",
@@ -343,12 +343,12 @@
         "wave_animation_speed": 8,
         "show_top_wave": false,
         "top_wave_style": "wave",
-        "top_wave_color": "#ffe6cb",
+        "top_wave_color": "#ffffff",
         "top_wave_animate": true,
         "invert_top_wave": false,
         "show_bottom_wave": false,
         "bottom_wave_style": "wave",
-        "bottom_wave_color": "#ffe6cb",
+        "bottom_wave_color": "#ffffff",
         "bottom_wave_animate": true,
         "invert_bottom_wave": false
       }
@@ -427,12 +427,12 @@
         "wave_animation_speed": 8,
         "show_top_wave": false,
         "top_wave_style": "wave",
-        "top_wave_color": "#ffe6cb",
+        "top_wave_color": "#ffffff",
         "top_wave_animate": true,
         "invert_top_wave": false,
         "show_bottom_wave": false,
         "bottom_wave_style": "wave",
-        "bottom_wave_color": "#ffe6cb",
+        "bottom_wave_color": "#ffffff",
         "bottom_wave_animate": true,
         "invert_bottom_wave": false
       }
@@ -500,12 +500,12 @@
         "wave_animation_speed": 8,
         "show_top_wave": false,
         "top_wave_style": "wave",
-        "top_wave_color": "#ffe6cb",
+        "top_wave_color": "#ffffff",
         "top_wave_animate": true,
         "invert_top_wave": false,
         "show_bottom_wave": false,
         "bottom_wave_style": "wave",
-        "bottom_wave_color": "#ffe6cb",
+        "bottom_wave_color": "#ffffff",
         "bottom_wave_animate": true,
         "invert_bottom_wave": false
       }
@@ -579,11 +579,11 @@
         "wave_animation_speed": 8,
         "show_top_wave": false,
         "top_wave_style": "wave",
-        "top_wave_color": "#ffe6cb",
+        "top_wave_color": "#ffffff",
         "top_wave_animate": true,
         "show_bottom_wave": false,
         "bottom_wave_style": "wave",
-        "bottom_wave_color": "#ffe6cb",
+        "bottom_wave_color": "#ffffff",
         "bottom_wave_animate": true
       }
     }

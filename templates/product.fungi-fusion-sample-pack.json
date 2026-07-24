@@ -161,7 +161,7 @@
         "coa_button"
       ],
       "settings": {
-        "background_color": "#ffe6cb"
+        "background_color": "#ffffff"
       }
     },
     "text_image_block_bYnbUx": {
@@ -276,7 +276,7 @@
             "product_cards": "none",
             "autoplay_mode": "all",
             "autoscroll_duration": 0,
-            "slide_size": "250",
+            "slide_size": 250,
             "border": 0,
             "border_color": "linear-gradient(to right, #833ab4, #fd1d1d, #fcb045)",
             "slide_rounding": "20",
