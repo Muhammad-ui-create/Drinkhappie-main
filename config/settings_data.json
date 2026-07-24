@@ -190,7 +190,7 @@
         "settings": {
           "text": "#000000",
           "text_contrast": "#ffffff",
-          "background": "#ffe6cb",
+          "background": "#ffffff",
           "gradient": "",
           "accent_1": "#ffcb08",
           "accent_1_contrast": "#000000",
@@ -206,7 +206,7 @@
           "text_contrast": "#fffefc",
           "background": "#ffffff",
           "gradient": "",
-          "accent_1": "#ffe6cb",
+          "accent_1": "#ffffff",
           "accent_1_contrast": "#ffffff",
           "accent_2": "rgba(0,0,0,0)",
           "accent_2_contrast": "#eeece7",
@@ -248,7 +248,7 @@
           "text_contrast": "#000000",
           "background": "#000000",
           "gradient": "",
-          "accent_1": "#ffe6cb",
+          "accent_1": "#ffffff",
           "accent_1_contrast": "#000000",
           "accent_2": "#000000",
           "accent_2_contrast": "#ffffff",
@@ -267,7 +267,7 @@
           "accent_2": "#ffffff",
           "accent_2_contrast": "#000000",
           "card_text": "#000000",
-          "card": "#ffe6cb"
+          "card": "#ffffff"
         }
       },
       "scheme-4b2ebea0-b230-45ef-a163-d2110d2f932e": {
@@ -330,7 +330,7 @@
         "settings": {
           "text": "#000000",
           "text_contrast": "#ffffff",
-          "background": "#ffe6cb",
+          "background": "#ffffff",
           "gradient": "",
           "accent_1": "#ffcb08",
           "accent_1_contrast": "#000000",
@@ -344,7 +344,7 @@
         "settings": {
           "text": "#000000",
           "text_contrast": "#ffffff",
-          "background": "#fadcbc",
+          "background": "#ffffff",
           "gradient": "",
           "accent_1": "#ffcb08",
           "accent_1_contrast": "#000000",
@@ -1310,33 +1310,33 @@
             "accent_2": "#0c221a",
             "accent_2_contrast": "#ffffff",
             "card_text": "#4d9e76",
-            "card": "#fffef4"
+            "card": "#ffffff"
           }
         },
         "scheme3": {
           "settings": {
-            "text": "#fffef4",
+            "text": "#ffffff",
             "text_contrast": "#4d9e76",
             "background": "#4d9e76",
             "gradient": "",
             "accent_1": "#ffffff",
             "accent_1_contrast": "#4d9e76",
             "accent_2": "#0c221a",
-            "accent_2_contrast": "#fffef4",
+            "accent_2_contrast": "#ffffff",
             "card_text": "#4d9e76",
             "card": "#ffffff"
           }
         },
         "scheme4": {
           "settings": {
-            "text": "#fffef4",
+            "text": "#ffffff",
             "text_contrast": "#8b635c",
             "background": "#8b635c",
             "gradient": "",
             "accent_1": "#d0c1b7",
             "accent_1_contrast": "#8b635c",
             "accent_2": "#2b1d1d",
-            "accent_2_contrast": "#fffef4",
+            "accent_2_contrast": "#ffffff",
             "card_text": "#8b635c",
             "card": "#ffffff"
           }

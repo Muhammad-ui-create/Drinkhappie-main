@@ -246,7 +246,7 @@ ul.grid > li:nth-child(4) .product-description {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #fdebdc;
+    background-color: #ffffff;
     border-radius: 1.5rem;
     z-index: -1;
   }
@@ -403,7 +403,7 @@ ul.grid > li {
 }
 
 #shopify-section-template--17806552858710__comparison-table {
-  background-color: #FFE6CB;
+  background-color: #ffffff;
 
   section {
     border-top-left-radius: 50vw;
@@ -970,7 +970,7 @@ footer .push-btn__surface {
 }
 
 #shopify-section-template--17806552858710__blog-posts .card__surface, .product-content .card__surface, .card__surface {
-  background-color: #FADCBC;
+  background-color: #ffffff;
   padding: 40px 25px;
 }
 
@@ -1549,14 +1549,14 @@ html { scroll-behavior: smooth; }
 
 /* Target PageFly pages - extend background behind navigation */
 body:has(.__pf) {
-  background-color: #FFE6CB;
+  background-color: #ffffff;
 }
 
 /* Ensure the main content area also has the cream background */
 .__pf,
 #__pf,
 [id^="shopify-section-pf-"] {
-  background-color: #FFE6CB;
+  background-color: #ffffff;
 }
 
 /* Make header background transparent on PageFly pages so page bg shows through */
@@ -1584,7 +1584,7 @@ body:has(.__pf) [id*="announcement-bar"] {
 
 /* Target default page template */
 body.template-page {
-  background-color: #FFE6CB !important;
+  background-color: #ffffff !important;
 }
 
 /* Make header group background transparent on default pages */
@@ -1663,7 +1663,7 @@ body.template-product-thc-variety-pack,
 body.template-product-fungi-pdp-updated,
 body.template-product-10mg-thc-pdp,
 body.updated-pdp {
-  background-color: #FFE6CB !important;
+  background-color: #ffffff !important;
 }
 
 /* Make header transparent on these product pages */
@@ -1696,7 +1696,7 @@ body.updated-pdp .site-header {
 
 /* Target all collection pages */
 body.template-collection {
-  background-color: #FFE6CB !important;
+  background-color: #ffffff !important;
 }
 
 /* Make header transparent on collection pages */
@@ -1760,7 +1760,7 @@ body.template-collection .collection-hero {
 
 /* Target default product template - sets cream background on body */
 body.template-product {
-  background-color: #FFE6CB !important;
+  background-color: #ffffff !important;
 }
 
 /* Make header group transparent so body background shows through */
