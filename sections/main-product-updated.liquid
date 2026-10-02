@@ -829,6 +829,14 @@
     padding: 1px 7px;
     border-radius: 6px;
   }
+  /* struck-through original price shown next to the discounted price in the spooky button */
+  #cart-price .atc-was {
+    font-size: .72em;
+    font-weight: 700;
+    opacity: .72;
+    text-decoration: line-through;
+    margin-left: 7px;
+  }
 
   .add-to-cart-button:disabled {
     opacity: 0.6;
@@ -2674,12 +2682,20 @@
     function hbUpdateSpookyNote(priceCents, sizeStr) {
       var btn = document.getElementById('add-to-cart-btn');
       var line = document.getElementById('atc-spooky-line');
+      var cartPrice = document.getElementById('cart-price');
       if (!btn || !line) return;
+      var fmt = function (cents) {
+        return (window.Shopify && Shopify.formatMoney) ? Shopify.formatMoney(cents) : '$' + (cents / 100).toFixed(2);
+      };
       var is24 = sizeStr && String(sizeStr).indexOf('24') !== -1;
       if (is24 && priceCents) {
         var save = Math.round(priceCents * 0.30);
         var after = priceCents - save;
-        line.innerHTML = '🎃 <span class="atc-code">SPOOKY30</span> at checkout &mdash; 30% off, save $' + (save/100).toFixed(2) + ' (just $' + (after/100).toFixed(2) + ')';
+        // Flip the big button price to the discounted total, keeping the full price struck through
+        if (cartPrice) {
+          cartPrice.innerHTML = fmt(after) + ' <span class="atc-was">' + fmt(priceCents) + '</span>';
+        }
+        line.innerHTML = '🎃 <span class="atc-code">SPOOKY30</span> at checkout &mdash; 30% off, save ' + fmt(save);
         line.style.display = 'block';
         btn.classList.add('add-to-cart-button--spooky');
       } else {
