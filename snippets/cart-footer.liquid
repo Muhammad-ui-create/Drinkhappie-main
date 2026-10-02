@@ -100,7 +100,7 @@
       {%- comment -%} Bundle upsell (drawer only): auto-swiping carousel of bundles with savings vs compare-at price. Hidden when already in cart. {%- endcomment -%}
       {%- if template != 'cart' -%}
         {%- liquid
-          assign hb_handles = 'cherry-citrus-kickoff,berry-vineyard-duo,cherry-lime-chiller,citrus-grove-pack,orchard-twist,sweet-sour-party-stack' | split: ','
+          assign hb_handles = 'citrus-grove-pack' | split: ','
           assign hb_slide_count = 0
         -%}
         {%- capture hb_slides_html -%}
@@ -138,6 +138,7 @@
                         <span class="hb-cart-upsell__save">Save {{ hb_save_pct }}%</span>
                       {%- endif -%}
                     </div>
+                    <div class="hb-cart-upsell__promo">🎃 Apply code <strong>SPOOKY30</strong> for <strong>30% off</strong></div>
                   </div>
                   <button type="button" class="hb-cart-upsell__add" data-upsell-variant="{{ hb_v.id }}">Add</button>
                 </div>
@@ -147,7 +148,7 @@
         {%- endcapture -%}
         {%- if hb_slide_count > 0 -%}
           <div class="hb-cart-upsell" data-hb-upsell>
-            <div class="hb-cart-upsell__label">🎁 You might also like &mdash; bundle &amp; save</div>
+            <div class="hb-cart-upsell__label">🎃 Spooky Season deal &mdash; add a bundle &amp; save</div>
             <div class="hb-cart-upsell__viewport">
               <div class="hb-cart-upsell__track" data-hb-track>
                 {{ hb_slides_html }}
@@ -232,6 +233,8 @@
       <style>
         .hb-cart-upsell{margin-top:10px;border:1.5px dashed #C9A0BD;border-radius:12px;padding:8px 11px;background:#FDF8FB;}
         .hb-cart-upsell__label{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#962F80;margin-bottom:5px;}
+        .hb-cart-upsell__promo{margin-top:3px;font-size:11px;font-weight:600;color:#7a1fa2;}
+        .hb-cart-upsell__promo strong{color:#ff7518;}
         .hb-cart-upsell__viewport{overflow:hidden;}
         .hb-cart-upsell__track{display:flex;transition:transform .5s ease;}
         .hb-cart-upsell__slide{flex:0 0 100%;min-width:0;}
