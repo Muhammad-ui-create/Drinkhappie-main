@@ -12,9 +12,9 @@
     "bundles_grid": {
       "type": "bundles-grid",
       "settings": {
-        "eyebrow": "Bundle & Save 5%",
+        "eyebrow": "🎃 Spooky Season — 30% Off",
         "heading": "Happie Bundles",
-        "subheading": "Curated multi-packs of our best-selling THC seltzers — mix your favorite flavors and save 5% on every bundle.",
+        "subheading": "Curated multi-packs of our best-selling THC seltzers — mix your favorite flavors and take 30% off every bundle with code SPOOKY30.",
         "bundle_link_base": "/products/",
         "bundle_link_suffix": ""
       }
