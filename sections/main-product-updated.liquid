@@ -518,6 +518,32 @@
     border: 4px solid var(--happie-teal);
   }
 
+  /* Spooky Season — 24-pack button (THC only) */
+  .size-option--spooky {
+    position: relative;
+    border-color: #ff7518;
+    background: linear-gradient(135deg, var(--happie-cream) 55%, #FFE2C4);
+    overflow: visible;
+  }
+  .size-option--spooky.active {
+    background: var(--happie-orange);
+    border: 4px solid #7a1fa2;
+  }
+  .size-option--spooky::after {
+    content: "30% OFF";
+    position: absolute;
+    top: -10px;
+    right: -7px;
+    background: #7a1fa2;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .04em;
+    padding: 2px 7px;
+    border-radius: 999px;
+    box-shadow: 0 3px 8px rgba(122,31,162,.4);
+  }
+
   .size-option-linked {
     flex: 1;
     min-width: 140px;
@@ -1532,6 +1558,13 @@
 <!-- Old wave removed - use new wave controls in Image Text Block section below -->
 
 {%- liquid
+  # Spooky Season: THC-only flag so the 24-pack Halloween promo never shows on Fungi PDPs.
+  assign hb_is_fungi = false
+  assign _htsuf = template.suffix | downcase
+  assign _htags = product.tags | join: ',' | downcase
+  if _htsuf contains 'fungi' or product.title contains 'Fungi Fusion' or _htags contains 'fungi' or _htags contains 'mushroom'
+    assign hb_is_fungi = true
+  endif
   # Flavor-themed hero mesh: pick 4 deep color stops from the product's vibe.
   # NOTE: check 'grapefruit' before 'grape' (grapefruit contains grape).
   assign _h = product.handle | downcase
@@ -1930,12 +1963,14 @@
                 <div class="size-label">Quantity</div>
                 <div class="size-selector">
                   {% for value in size_option.values %}
+                    {%- assign hb_sp24 = false -%}
+                    {%- if value contains '24' and hb_is_fungi != true -%}{%- assign hb_sp24 = true -%}{%- endif -%}
                     <button
-                      class="size-option {% if size_option.selected_value == value %}active{% endif %}"
+                      class="size-option {% if hb_sp24 %}size-option--spooky {% endif %}{% if size_option.selected_value == value %}active{% endif %}"
                       type="button"
                       data-size-value="{{ value }}"
                     >
-                      {{ value }}
+                      {% if hb_sp24 %}🎃 {% endif %}{{ value }}{% if hb_sp24 %} 🦇{% endif %}
                     </button>
                   {% endfor %}
                   {%- assign linked_pack = product.metafields.custom.linked_pack.value -%}
@@ -2054,6 +2089,9 @@
                 >
               </button>
             </form>
+            {%- unless hb_is_fungi -%}
+              <div id="spooky-atc-note" style="display:none;margin-top:8px;text-align:center;font-size:12.5px;font-weight:700;color:#7a1fa2;background:#F6ECFB;border:1.5px dashed #c99fde;border-radius:10px;padding:8px 10px;line-height:1.4;"></div>
+            {%- endunless -%}
 
             {% if product.selling_plan_groups.size > 0 %}
               {% assign first_plan = product.selling_plan_groups.first.selling_plans.first %}
@@ -2607,6 +2645,21 @@
       };
     }
     
+    // Spooky Season: show 30%-off savings on the ATC area when a 24-pack is selected (THC only)
+    function hbUpdateSpookyNote(priceCents, sizeStr) {
+      var note = document.getElementById('spooky-atc-note');
+      if (!note) return;
+      var is24 = sizeStr && String(sizeStr).indexOf('24') !== -1;
+      if (is24 && priceCents) {
+        var save = Math.round(priceCents * 0.30);
+        var after = priceCents - save;
+        note.innerHTML = '🎃 Code <strong>SPOOKY30</strong> at checkout &mdash; <strong>30% off</strong>, you save $' + (save/100).toFixed(2) + ' (just $' + (after/100).toFixed(2) + ')';
+        note.style.display = 'block';
+      } else {
+        note.style.display = 'none';
+      }
+    }
+
     // Function to update variant and trigger price update
     function updateSelectedVariant() {
       const selected = getSelectedOptions();
@@ -2624,6 +2677,7 @@
         if (cartPrice) cartPrice.textContent = priceFormatted;
         if (onetimePrice) onetimePrice.textContent = priceFormatted;
         if (dynamicPrice) dynamicPrice.textContent = priceFormatted;
+        hbUpdateSpookyNote(variant.price, selected.size);
 
         // Update Subscribe & Save button price
         var subSaveBtn = document.getElementById('subscribe-save-btn');
@@ -2657,6 +2711,8 @@
     
     // Size/Quantity selection
     const sizeOptions = document.querySelectorAll('.size-option');
+    // Spooky note: set on initial load (default-selected size)
+    (function(){ try { var _s = getSelectedOptions(); var _v = findVariantByOptions(_s.size, _s.strength); if (_v) hbUpdateSpookyNote(_v.price, _s.size); } catch (e) {} })();
     if (sizeOptions.length) {
       sizeOptions.forEach(function (option) {
         option.addEventListener('click', function () {
