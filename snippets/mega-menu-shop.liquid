@@ -436,6 +436,26 @@
     object-fit: cover;
     transition: transform 0.4s ease;
   }
+
+  /* Header link styles add padding to these cards — strip it so the photo runs edge to edge */
+  .shop-mega-menu .shop-mega-menu__cards a.shop-mega-menu__card {
+    padding: 0 !important;
+  }
+
+  .shop-mega-menu .shop-mega-menu__card .shop-mega-menu__card-image {
+    width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .shop-mega-menu .shop-mega-menu__card .shop-mega-menu__card-image img {
+    display: block;
+    max-width: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0;
+  }
   
   .shop-mega-menu__card:hover .shop-mega-menu__card-image img {
     transform: scale(1.05);
