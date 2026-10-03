@@ -34,6 +34,19 @@
       {%- render 'scrolling-text', class: 'py-1 lg:py-2' %}
     {%- endif -%}
   </section>
+  {%- comment -%} Brand purple bar (overrides the color scheme) {%- endcomment -%}
+  <style>
+    #AnnouncementBar,
+    #AnnouncementBar:hover {
+      background: linear-gradient(90deg, #4a1466 0%, #7a1fa2 50%, #962F80 100%) !important;
+      color: #fff !important;
+      font-weight: 600;
+    }
+    #AnnouncementBar a,
+    #AnnouncementBar a:hover {
+      color: #fff !important;
+    }
+  </style>
 {%- endif -%}
 
 {% schema %}

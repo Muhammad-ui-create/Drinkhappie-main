@@ -15,15 +15,15 @@
       "type": "announcement-bar",
       "settings": {
         "home_page_only": false,
-        "display": "static",
-        "text": "🎃 Spooky Season: 30% OFF all 24-packs & bundles, applied automatically at checkout",
+        "display": "scrolling_text",
+        "text": "🎃 Spooky Season: 30% OFF all 24-packs &amp; bundles, applied automatically at checkout &nbsp;•&nbsp; Subscribe &amp; Save 20% on every delivery &nbsp;•&nbsp; Free shipping on orders $50+ &nbsp;•&nbsp; Ships in 1 business day &nbsp;•&nbsp; 30-Day Money-Back Guarantee",
         "link": "/pages/bundles",
         "color_scheme": "scheme-4b2ebea0-b230-45ef-a163-d2110d2f932e",
         "use_gradient_background": false,
         "repeat_text": true,
-        "shape_between_text": "circle",
+        "shape_between_text": "star",
         "animate_shape_between_text": true,
-        "speed": 120,
+        "speed": 80,
         "direction": ""
       }
     },
