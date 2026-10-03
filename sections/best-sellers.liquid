@@ -83,7 +83,12 @@
           >
             {{ collection_2_label | default: collection_2.title | default: 'Fungi Fusion' }}
           </button>
+          {%- comment -%} Spooky Season: link tab to the Halloween bundles page (30% auto discount) {%- endcomment -%}
+          <a class="best-sellers__tab best-sellers__tab--bundles" href="/pages/bundles">
+            &#127875; Halloween Bundles <span class="best-sellers__tab-deal">30% OFF</span>
+          </a>
         </div>
+        <p class="best-sellers__promo-note">&#127875; Spooky Season: <strong>30% off every bundle and 24-pack</strong>, applied automatically at checkout.</p>
       {%- endif -%}
     </div>
 
@@ -517,6 +522,46 @@
   #best-sellers-{{ section.id }} .best-sellers__tab:hover:not(.best-sellers__tab--active) {
     background: rgba(0, 0, 0, 0.08);
     color: var(--bs-text-color);
+  }
+
+  /* Spooky Season — Halloween Bundles link tab */
+  #best-sellers-{{ section.id }} .best-sellers__tab--bundles {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #fff;
+    background: linear-gradient(135deg, #ff7518 0%, #7a1fa2 100%);
+    box-shadow: 0 4px 14px rgba(122, 31, 162, 0.35);
+    white-space: nowrap;
+  }
+
+  #best-sellers-{{ section.id }} .best-sellers__tab.best-sellers__tab--bundles:hover {
+    background: linear-gradient(135deg, #ff8a33 0%, #8a2bb3 100%);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  #best-sellers-{{ section.id }} .best-sellers__tab-deal {
+    background: #fff;
+    color: #7a1fa2;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .04em;
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+
+  #best-sellers-{{ section.id }} .best-sellers__promo-note {
+    margin: 14px auto 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #7a1fa2;
+  }
+
+  #best-sellers-{{ section.id }} .best-sellers__promo-note strong {
+    color: #c2410c;
   }
 
   /* Products Wrapper */
@@ -957,6 +1002,23 @@
       flex: 1;
       padding: 12px 18px;
       font-size: 14px;
+    }
+
+    /* three items don't fit one row on phones: bundles link takes its own full-width row */
+    #best-sellers-{{ section.id }} .best-sellers__tabs {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 auto;
+      border-radius: 26px;
+    }
+
+    #best-sellers-{{ section.id }} .best-sellers__tab--bundles {
+      flex: 1 0 100%;
+    }
+
+    #best-sellers-{{ section.id }} .best-sellers__promo-note {
+      font-size: 13px;
+      padding: 0 12px;
     }
 
     /* Hide desktop grid, show carousel on mobile */
