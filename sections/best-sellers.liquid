@@ -12,12 +12,22 @@
   assign show_shop_all = section.settings.show_shop_all
   assign shop_all_text = section.settings.shop_all_text
   assign shop_all_url = section.settings.shop_all_url
+
+  # Spooky Season bundles tab — same line-up and prices as sections/bundles-grid.liquid (keep in sync)
+  assign hb_b_handle = 'berry-vineyard-duo,cherry-citrus-kickoff,cherry-lime-chiller,citrus-grove-pack,orchard-twist,sweet-sour-party-stack' | split: ','
+  assign hb_b_name   = 'Berry Vineyard Duo,Cherry Citrus Kickoff,Cherry Lime Chiller,Citrus Grove Pack,Orchard Twist,Sweet & Sour Party Stack' | split: ','
+  assign hb_b_cans   = '24,16,20,24,36,48' | split: ','
+  assign hb_b_now    = '113.98,62.68,88.33,113.98,170.98,227.98' | split: ','
+  assign hb_default_tab = 'collection1'
+  if collection_2 != blank
+    assign hb_default_tab = 'bundles'
+  endif
 -%}
 
 <section
   id="best-sellers-{{ section.id }}"
   class="best-sellers"
-  x-data="{ activeTab: 'collection1' }"
+  x-data="{ activeTab: '{{ hb_default_tab }}' }"
 >
   <!-- Top Wave Divider - Points OUTWARD (up into section above) -->
   {%- if section.settings.show_top_curve -%}
@@ -69,7 +79,15 @@
       <!-- Tab Switcher -->
       {%- if collection_2 != blank -%}
         <div class="best-sellers__tabs">
-          <button 
+          {%- comment -%} Spooky Season: Halloween bundles tab (30% auto discount) — remove after Oct 31 {%- endcomment -%}
+          <button
+            class="best-sellers__tab best-sellers__tab--bundles"
+            :class="{ 'best-sellers__tab--bundles-active': activeTab === 'bundles' }"
+            @click="activeTab = 'bundles'"
+          >
+            &#127875; Halloween Bundles <span class="best-sellers__tab-deal">30% OFF</span>
+          </button>
+          <button
             class="best-sellers__tab"
             :class="{ 'best-sellers__tab--active': activeTab === 'collection1' }"
             @click="activeTab = 'collection1'"
@@ -83,19 +101,136 @@
           >
             {{ collection_2_label | default: collection_2.title | default: 'Fungi Fusion' }}
           </button>
-          {%- comment -%} Spooky Season: link tab to the Halloween bundles page (30% auto discount) {%- endcomment -%}
-          <a class="best-sellers__tab best-sellers__tab--bundles" href="/pages/bundles">
-            &#127875; Halloween Bundles <span class="best-sellers__tab-deal">30% OFF</span>
-          </a>
         </div>
         <p class="best-sellers__promo-note">&#127875; Spooky Season: <strong>30% off every bundle and 24-pack</strong>, applied automatically at checkout.</p>
       {%- endif -%}
     </div>
 
+    <!-- Halloween Bundles carousel (Spooky Season) -->
+    {%- if collection_2 != blank -%}
+      <div
+        class="best-sellers__products-wrapper"
+        x-show="activeTab === 'bundles'"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+      >
+        <div class="best-sellers__carousel" x-data="{
+          currentSlide: 0,
+          totalSlides: {{ hb_b_handle.size }},
+          touchStartX: 0,
+          touchStartY: 0,
+          isSwiping: false,
+          isMobile: window.innerWidth < 768,
+          isTablet: window.innerWidth >= 768 && window.innerWidth < 1024,
+          get slideWidth() {
+            if (this.isMobile) return 80;
+            if (this.isTablet) return 30;
+            return 20;
+          },
+          get visibleSlides() {
+            if (this.isMobile) return 1;
+            if (this.isTablet) return 3;
+            return 4;
+          },
+          get maxSlide() { return Math.max(0, this.totalSlides - this.visibleSlides); },
+          nextSlide() {
+            if (this.currentSlide >= this.maxSlide) {
+              this.currentSlide = 0;
+            } else {
+              this.currentSlide++;
+            }
+          }
+        }" x-init="window.addEventListener('resize', () => { isMobile = window.innerWidth < 768; isTablet = window.innerWidth >= 768 && window.innerWidth < 1024; })">
+
+          <button
+            class="best-sellers__carousel-nav best-sellers__carousel-nav--next"
+            @click="nextSlide()"
+            aria-label="Next bundles"
+            x-show="maxSlide > 0"
+            x-transition
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </button>
+
+          <div class="best-sellers__carousel-track"
+               :style="'transform: translateX(-' + (currentSlide * slideWidth) + '%)'"
+               @touchstart="touchStartX = $event.touches[0].clientX; touchStartY = $event.touches[0].clientY; isSwiping = false"
+               @touchmove="
+                 const diffX = Math.abs($event.touches[0].clientX - touchStartX);
+                 const diffY = Math.abs($event.touches[0].clientY - touchStartY);
+                 if (diffX > diffY && diffX > 10) { isSwiping = true; $event.preventDefault(); }
+               "
+               @touchend="
+                 if (!isSwiping) return;
+                 const diff = touchStartX - $event.changedTouches[0].clientX;
+                 if (diff > 40) {
+                   currentSlide = currentSlide >= maxSlide ? 0 : currentSlide + 1;
+                 } else if (diff < -40) {
+                   currentSlide = currentSlide <= 0 ? maxSlide : currentSlide - 1;
+                 }
+               "
+          >
+            {%- for handle in hb_b_handle -%}
+              {%- liquid
+                assign i = forloop.index0
+                assign hb_img = 'bundle-' | append: handle | append: '.webp'
+                assign hb_now_cents = hb_b_now[i] | times: 100 | round
+                assign hb_sale_cents = hb_now_cents | times: 0.7 | round
+                assign hb_save_cents = hb_now_cents | minus: hb_sale_cents
+              -%}
+              <div class="best-sellers__carousel-slide">
+                <div class="best-sellers__card best-sellers__card--bundle">
+                  <a href="/products/{{ handle }}" class="best-sellers__card-link">
+                    <div class="best-sellers__card-image">
+                      <span class="best-sellers__badge best-sellers__badge--spooky">&#127875; 30% OFF</span>
+                      <img
+                        src="{{ hb_img | asset_url }}"
+                        alt="{{ hb_b_name[i] | escape }} bundle"
+                        width="560"
+                        height="700"
+                        loading="lazy"
+                        class="best-sellers__product-image best-sellers__product-image--bundle"
+                      >
+                    </div>
+                    <div class="best-sellers__card-content">
+                      <h3 class="best-sellers__product-title">{{ hb_b_name[i] }}</h3>
+                      <p class="best-sellers__product-tagline">{{ hb_b_cans[i] }} cans &middot; save {{ hb_save_cents | money }}</p>
+                      <div class="best-sellers__price-row">
+                        <span class="best-sellers__price-label">30% off, applied automatically</span>
+                        <span class="best-sellers__price">{{ hb_sale_cents | money }} <s class="best-sellers__price-was">{{ hb_now_cents | money }}</s></span>
+                      </div>
+                    </div>
+                  </a>
+                  <div class="best-sellers__card-actions">
+                    <a href="/products/{{ handle }}" class="best-sellers__shop-now-btn best-sellers__shop-now-btn--spooky">SHOP BUNDLE</a>
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          <div class="best-sellers__carousel-dots">
+            <template x-for="(dot, index) in (maxSlide + 1)" :key="index">
+              <button
+                class="best-sellers__carousel-dot"
+                :class="{ 'best-sellers__carousel-dot--active': currentSlide === index }"
+                @click="currentSlide = index"
+                :aria-label="'Go to slide ' + (index + 1)"
+              ></button>
+            </template>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+
     <!-- Products Grid/Carousel - Collection 1 -->
-    <div 
+    <div
       class="best-sellers__products-wrapper"
       x-show="activeTab === 'collection1'"
+      {% if collection_2 != blank %}x-cloak{% endif %}
       x-transition:enter="transition ease-out duration-200"
       x-transition:enter-start="opacity-0"
       x-transition:enter-end="opacity-100"
@@ -347,7 +482,7 @@
         <a 
           href="{{ shop_all_url | default: collection_1.url }}" 
           class="best-sellers__shop-all-btn"
-          x-bind:href="activeTab === 'collection1' ? '{{ collection_1.url | default: shop_all_url }}' : '{{ collection_2.url | default: shop_all_url }}'"
+          x-bind:href="activeTab === 'bundles' ? '/pages/bundles' : (activeTab === 'collection1' ? '{{ collection_1.url | default: shop_all_url }}' : '{{ collection_2.url | default: shop_all_url }}')"
         >
           {{ shop_all_text | default: 'Shop All' }}
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -535,6 +670,43 @@
     background: linear-gradient(135deg, #ff7518 0%, #7a1fa2 100%);
     box-shadow: 0 4px 14px rgba(122, 31, 162, 0.35);
     white-space: nowrap;
+    opacity: .82;
+  }
+
+  #best-sellers-{{ section.id }} .best-sellers__tab--bundles-active {
+    opacity: 1;
+    box-shadow: 0 0 0 3px #fff, 0 6px 18px rgba(122, 31, 162, 0.45);
+  }
+
+  /* Bundle cards */
+  #best-sellers-{{ section.id }} .best-sellers__card--bundle .best-sellers__card-image {
+    background: linear-gradient(150deg, #ffffff 0%, #FBE7F3 100%);
+  }
+
+  #best-sellers-{{ section.id }} .best-sellers__product-image--bundle {
+    object-fit: contain;
+    padding: 14px;
+  }
+
+  #best-sellers-{{ section.id }} .best-sellers__badge--spooky {
+    background: #7a1fa2;
+    z-index: 3;
+  }
+
+  #best-sellers-{{ section.id }} .best-sellers__price-was {
+    font-size: .62em;
+    font-weight: 600;
+    color: #999;
+    margin-left: 4px;
+  }
+
+  #best-sellers-{{ section.id }} .best-sellers__shop-now-btn--spooky {
+    background: linear-gradient(135deg, #ff7518 0%, #7a1fa2 100%);
+  }
+
+  #best-sellers-{{ section.id }} .best-sellers__shop-now-btn--spooky:hover {
+    background: linear-gradient(135deg, #ff8a33 0%, #8a2bb3 100%);
+    box-shadow: 0 12px 32px rgba(122, 31, 162, 0.4);
   }
 
   #best-sellers-{{ section.id }} .best-sellers__tab.best-sellers__tab--bundles:hover {
