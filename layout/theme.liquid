@@ -48,7 +48,7 @@
     {{ clean_page_title }} | Happie®
   {%- elsif template.name == 'collection' %}
     {%- if collection.handle == 'thc-drinks' or collection.handle == 'thc' or collection.handle == 'frontpage' %}
-      Buy THC Seltzers Online | Delta-9 Hemp Drinks 5mg & 10mg | Happie®
+      THC Drinks: 5mg & 10mg Delta-9 Seltzers | Happie®
     {%- elsif collection.handle == 'fungi' or collection.handle == 'fungi-fusion' %}
       Fungi Fusion Mushroom Drinks | Lion's Mane, Cordyceps & Reishi | Happie®
     {%- elsif collection.handle == 'social' %}
@@ -59,7 +59,7 @@
       {{ collection.title }} | Happie®
     {%- endif %}
   {%- elsif template.name == 'article' %}
-    {{ article.title }} | THC & Mushroom Drink Blog | Happie®
+    {{ article.metafields.global.title_tag | default: article.title }} | Happie®
   {%- elsif template.name == 'blog' %}
     {%- if current_page > 1 %}
       {{ blog.title }} — Page {{ current_page }} | Happie® Blog
@@ -111,9 +111,9 @@
   <meta name="description" content="{{ product.title }} by Happie® — {{ product.description | strip_html | truncate: 80 }} Premium hemp-derived THC drink, nano-emulsified for fast onset. Low calorie, vegan, gluten-free. Shop online with free shipping.">
 {%- elsif template.name == 'collection' %}
   {%- if collection.handle == 'thc-drinks' or collection.handle == 'thc' or collection.handle == 'frontpage' %}
-    <meta name="description" content="Buy the best Delta-9 THC seltzers online. Happie hemp-derived THC drinks in 5mg & 10mg — 7 fruit flavors, nano-emulsified fast-acting formula. Zero alcohol, zero hangover, 30 calories. Free shipping on $50+.">
+    <meta name="description" content="Shop Happie® THC drinks in 5mg & 10mg. Fast-acting Delta-9 seltzers with zero alcohol, zero hangover and 30 calories. Free shipping on $50+.">
   {%- elsif collection.handle == 'fungi' or collection.handle == 'fungi-fusion' %}
-    <meta name="description" content="Fungi Fusion functional mushroom drinks — Lion's Mane 900mg, Cordyceps 700mg & Reishi 400mg per can. Zero THC, zero caffeine, low calorie. Best mushroom beverage for focus, energy & calm. Ocean minerals for hydration. Ships nationwide.">
+    <meta name="description" content="Fungi Fusion sparkling mushroom drinks — made with Lion's Mane, Cordyceps and Red Reishi plus magnesium and calcium from ocean minerals. Caffeine-free, alcohol-free, 40 calories, no artificial sweeteners. Ships nationwide.">
   {%- elsif collection.handle == 'social' %}
     <meta name="description" content="Happie Social THC Seltzers — 5mg and 10mg hemp-derived Delta-9 THC drinks perfect for parties, social gatherings & relaxation. The best alcohol alternative. Zero hangover, low calorie, vegan.">
   {%- elsif collection.description != blank %}
@@ -452,7 +452,7 @@ box-shadow: inset 0 0 0 var(--input-border-width) rgb(245 245 245);
   "name": "Happie",
   "alternateName": ["Drink Happie", "Happie Beverages"],
   "url": {{ shop.url | json }},
-  "description": "Happie is a Northern California functional beverage brand making hemp-derived Delta-9 THC seltzers and Fungi Fusion adaptogenic mushroom drinks — premium plant-powered alternatives to alcohol, formulated with nano-emulsified cannabinoids and clinical-dose Lion's Mane, Cordyceps, and Reishi.",
+  "description": "Happie is a Northern California beverage brand making hemp-derived Delta-9 THC seltzers and Fungi Fusion sparkling mushroom drinks — premium plant-powered alternatives to alcohol, made with Lion's Mane, Cordyceps, and Reishi.",
   {%- if geo_org_logo_url != blank -%}
   "logo": {
     "@type": "ImageObject",
@@ -499,8 +499,8 @@ box-shadow: inset 0 0 0 var(--input-border-width) rgb(245 245 245);
     "Nano-Emulsified THC",
     "CBD Drinks",
     "THC Sparkling Water",
-    "Adaptogenic Beverages",
-    "Nootropic Drinks",
+    "Sparkling Mushroom Drinks",
+    "Non-Alcoholic Beverages",
     "Sober Curious Beverages",
     "Mindful Drinking",
     "Plant-Based Wellness",
@@ -659,7 +659,7 @@ box-shadow: inset 0 0 0 var(--input-border-width) rgb(245 245 245);
   },
   "knowsAbout": [
     "Functional Mushroom Beverages",
-    "Adaptogenic Herbs",
+    "Culinary Mushrooms",
     "Hemp-Derived THC Beverages",
     "Delta-9 THC Products",
     "Beverage Formulation",
