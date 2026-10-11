@@ -411,6 +411,35 @@
     margin-bottom: 20px;
   }
 
+  /* Spooky Season — 24-pack: sale price, struck-through full price, savings badge */
+  .product-price--spooky {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+  }
+  .product-price--spooky #spooky-price {
+    font-size: 30px;
+    font-weight: 800;
+    color: #c2410c;
+  }
+  .product-price--spooky #dynamic-price {
+    font-size: 19px;
+    font-weight: 500;
+    color: #8a8a8a;
+    text-decoration: line-through;
+  }
+  .product-price--spooky #spooky-save {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0;
+    color: #fff;
+    background: #7a1fa2;
+    padding: 4px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
   /* DESCRIPTION */
   .product-description {
     font-size: 20px;
@@ -1857,7 +1886,9 @@
             <!-- Price Block -->
           {% when 'price' %}
             <div class="product-price" {{ block.shopify_attributes }}>
+              {%- unless hb_is_fungi -%}<span id="spooky-price" style="display:none;"></span>{%- endunless -%}
               <span id="dynamic-price">{{ product.selected_or_first_available_variant.price | money }}</span>
+              {%- unless hb_is_fungi -%}<span id="spooky-save" style="display:none;"></span>{%- endunless -%}
             </div>
 
             {% if product.handle == 'happie-social-4-pack' %}
@@ -2733,6 +2764,23 @@
         line.style.display = 'none';
         btn.classList.remove('add-to-cart-button--spooky');
       }
+      // Same treatment on the price under the title: sale price, full price struck through, savings badge
+      var topSale = document.getElementById('spooky-price');
+      var topSave = document.getElementById('spooky-save');
+      var topWrap = topSale ? topSale.closest('.product-price') : null;
+      if (topSale && topSave && topWrap) {
+        if (is24 && priceCents) {
+          topSale.textContent = fmt(priceCents - Math.round(priceCents * 0.30));
+          topSave.innerHTML = '🎃 30% OFF &middot; Save ' + fmt(Math.round(priceCents * 0.30));
+          topSale.style.display = '';
+          topSave.style.display = '';
+          topWrap.classList.add('product-price--spooky');
+        } else {
+          topSale.style.display = 'none';
+          topSave.style.display = 'none';
+          topWrap.classList.remove('product-price--spooky');
+        }
+      }
     }
 
     // Function to update variant and trigger price update
@@ -2809,6 +2857,7 @@
               if (cartPrice) cartPrice.textContent = priceFormatted;
               if (onetimePrice) onetimePrice.textContent = priceFormatted;
               if (dynamicPrice) dynamicPrice.textContent = priceFormatted;
+              hbUpdateSpookyNote(variant.price, this.getAttribute('data-size-value') || this.textContent);
 
               // Update Subscribe & Save price
               var subSaveBtn = document.getElementById('subscribe-save-btn');
