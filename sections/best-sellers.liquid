@@ -14,10 +14,10 @@
   assign shop_all_url = section.settings.shop_all_url
 
   # Spooky Season bundles tab — same line-up and prices as sections/bundles-grid.liquid (keep in sync)
-  assign hb_b_handle = 'berry-vineyard-duo,cherry-citrus-kickoff,cherry-lime-chiller,citrus-grove-pack,orchard-twist,sweet-sour-party-stack' | split: ','
-  assign hb_b_name   = 'Berry Vineyard Duo,Cherry Citrus Kickoff,Cherry Lime Chiller,Citrus Grove Pack,Orchard Twist,Sweet & Sour Party Stack' | split: ','
-  assign hb_b_cans   = '24,16,20,24,36,48' | split: ','
-  assign hb_b_now    = '113.98,62.68,88.33,113.98,170.98,227.98' | split: ','
+  assign hb_b_handle = 'berry-vineyard-duo,cherry-citrus-kickoff,cherry-lime-chiller,citrus-grove-pack,orchard-twist,sweet-sour-party-stack,cherry-lime-party-stack' | split: ','
+  assign hb_b_name   = 'Berry Vineyard Duo,Cherry Citrus Kickoff,Cherry Lime Chiller,Citrus Grove Pack,Orchard Twist,Sweet & Sour Party Stack,Cherry Lime Party Stack' | split: ','
+  assign hb_b_cans   = '24,16,20,24,36,48,48' | split: ','
+  assign hb_b_now    = '113.98,62.68,88.33,113.98,170.98,227.98,228.55' | split: ','
   assign hb_default_tab = 'collection1'
   if collection_2 != blank
     assign hb_default_tab = 'bundles'
@@ -176,7 +176,10 @@
             {%- for handle in hb_b_handle -%}
               {%- liquid
                 assign i = forloop.index0
-                assign hb_img = 'bundle-' | append: handle | append: '.webp'
+                assign hb_img = 'bundle-' | append: handle | append: '.webp' | asset_url
+                if handle == 'cherry-lime-party-stack' and all_products[handle].featured_image
+                  assign hb_img = all_products[handle].featured_image | image_url: width: 700
+                endif
                 assign hb_now_cents = hb_b_now[i] | times: 100 | round
                 assign hb_sale_cents = hb_now_cents | times: 0.7 | round
                 assign hb_save_cents = hb_now_cents | minus: hb_sale_cents
@@ -187,7 +190,7 @@
                     <div class="best-sellers__card-image">
                       <span class="best-sellers__badge best-sellers__badge--spooky">&#127875; 30% OFF</span>
                       <img
-                        src="{{ hb_img | asset_url }}"
+                        src="{{ hb_img }}"
                         alt="{{ hb_b_name[i] | escape }} bundle"
                         width="560"
                         height="700"
