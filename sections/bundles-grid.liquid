@@ -49,8 +49,11 @@
             <h3 class="happie-bundle-card__name">{{ b_name[i] }}</h3>
             <p class="happie-bundle-card__tag">{{ b_tag[i] }}</p>
             <div class="happie-bundle-card__priceline">
-              <span class="happie-bundle-card__now">${{ b_now[i] }}</span>
-              <span class="happie-bundle-card__was">${{ b_was[i] }}</span>
+              {%- comment -%} Spooky Season: show the price the cart actually charges (30% auto discount on the bundle price) {%- endcomment -%}
+              {%- assign b_now_cents = b_now[i] | times: 100 | round -%}
+              {%- assign b_sale_cents = b_now_cents | times: 0.7 | round -%}
+              <span class="happie-bundle-card__now">{{ b_sale_cents | money }}</span>
+              <span class="happie-bundle-card__was">{{ b_now_cents | money }}</span>
               <span class="happie-bundle-card__save">&#127875; Save ${{ b_save30[i] }} &mdash; 30% off auto-applied</span>
             </div>
             <span class="happie-bundle-card__cta">Shop bundle
