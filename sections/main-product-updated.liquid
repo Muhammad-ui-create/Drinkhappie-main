@@ -506,6 +506,49 @@
     border: 4px solid var(--happie-teal);
   }
 
+  /* Named flavor chips under the thumbnails */
+  .flavor-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: -6px 0 22px;
+  }
+  .flavor-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 2px solid var(--chip);
+    background: #fff;
+    color: var(--chip);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
+  }
+  .flavor-chip__dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--chip);
+    flex-shrink: 0;
+  }
+  .flavor-chip:hover {
+    transform: translateY(-1px);
+  }
+  .flavor-chip--active,
+  .flavor-chip:hover {
+    background: var(--chip);
+    color: #fff;
+  }
+  .flavor-chip--active .flavor-chip__dot,
+  .flavor-chip:hover .flavor-chip__dot {
+    background: #fff;
+  }
+
   /* SIZE SELECTOR */
   .size-section {
     margin-bottom: 30px;
@@ -2012,6 +2055,44 @@
                   {% endif %}
                 {% endif %}
               </div>
+
+              {%- comment -%} Named flavor chips (THC only) — each links to that flavor's product page {%- endcomment -%}
+              {%- unless hb_is_fungi -%}
+                <div class="flavor-chips" aria-label="Shop other flavors">
+                  {%- for i in (1..4) -%}
+                    {%- liquid
+                      assign fc_key = 'flavor_product_' | append: i
+                      assign fc_handle = block.settings[fc_key]
+                      if fc_handle == blank
+                        continue
+                      endif
+                      assign fc = all_products[fc_handle]
+                      if fc.id == blank
+                        continue
+                      endif
+                      assign fc_h = fc.handle | downcase
+                      assign fc_color = '#962F80'
+                      if fc_h contains 'cherry'
+                        assign fc_color = '#d33a3a'
+                      elsif fc_h contains 'grapefruit'
+                        assign fc_color = '#e8765f'
+                      elsif fc_h contains 'grape'
+                        assign fc_color = '#7a2e86'
+                      elsif fc_h contains 'sublime' or fc_h contains 'lime'
+                        assign fc_color = '#6aa52f'
+                      endif
+                    -%}
+                    <a
+                      href="{{ fc.url }}"
+                      class="flavor-chip{% if fc.handle == product.handle %} flavor-chip--active{% endif %}"
+                      style="--chip: {{ fc_color }};"
+                      {% if fc.handle == product.handle %}aria-current="page"{% endif %}
+                    >
+                      <span class="flavor-chip__dot"></span>{{ fc.title }}
+                    </a>
+                  {%- endfor -%}
+                </div>
+              {%- endunless -%}
             </div>
 
             <!-- THC Strength Selector Block -->
