@@ -45,6 +45,18 @@
   if cap > pr
     assign save = cap | minus: pr
   endif
+
+  # Spooky Season: 30% automatic discount on every bundle, taken off in the cart.
+  # Show the price the cart actually charges, with the listed price struck through.
+  assign sale = pr | times: 0.7 | round
+  assign spooky_save = pr | minus: sale
+  if per != blank
+    assign per_cans = per | split: ' cans' | first | plus: 0
+    if per_cans > 0
+      assign per_each_money = sale | divided_by: per_cans | money
+      assign per = per_cans | append: ' cans · ' | append: per_each_money | append: ' per can'
+    endif
+  endif
 -%}
 
 {%- capture includes_html -%}
@@ -77,7 +89,7 @@
     <div class="bpdp__gallery">
       <div class="bpdp__gmain" style="background:{{ grad }};">
         <div class="bpdp__gbadge">{{ badge }}</div>
-        {%- if save > 0 -%}<div class="bpdp__gsave">Save {{ save | money }}</div>{%- endif -%}
+        <div class="bpdp__gsave">&#127875; 30% OFF · Save {{ spooky_save | money }}</div>
         <img id="bpdpMain" src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.title | escape }}">
       </div>
       {%- if product.images.size > 1 -%}
@@ -116,16 +128,15 @@
         </div>
 
         <div class="bpdp__price">
-          <span class="bpdp__now">{{ pr | money }}</span>
-          {%- if save > 0 -%}
-            <span class="bpdp__was">{{ cap | money }}</span>
-            <span class="bpdp__savetag">You save {{ save | money }}</span>
-          {%- endif -%}
+          <span class="bpdp__now">{{ sale | money }}</span>
+          <span class="bpdp__was">{{ pr | money }}</span>
+          <span class="bpdp__savetag">&#127875; You save {{ spooky_save | money }}</span>
         </div>
+        <div class="bpdp__per">30% off applied automatically in your cart · no code needed</div>
         {%- if per != blank -%}<div class="bpdp__per">{{ per }}</div>{%- endif -%}
 
         <button type="submit" name="add" class="bpdp__atc"{% unless product.available %} disabled{% endunless %}>
-          {%- if product.available -%}Add Bundle to Cart <span class="bpdp__atc-price">{{ pr | money }}</span>{%- else -%}Sold Out{%- endif -%}
+          {%- if product.available -%}Add Bundle to Cart <span class="bpdp__atc-price">{{ sale | money }}</span>{%- else -%}Sold Out{%- endif -%}
         </button>
         <div class="bpdp__atc-note">21+ only · Ships to 40+ states · 30-day happiness guarantee</div>
       {%- endform -%}
@@ -182,7 +193,7 @@
 {%- liquid
   assign ex_handles = 'berry-vineyard-duo,cherry-citrus-kickoff,cherry-lime-chiller,citrus-grove-pack,orchard-twist,sweet-sour-party-stack' | split: ','
   assign ex_names = 'Berry Vineyard Duo,Cherry Citrus Kickoff,Cherry Lime Chiller,Citrus Grove Pack,Orchard Twist,Sweet & Sour Party Stack' | split: ','
-  assign ex_tags = '24 cans · save $6.00,16 cans · save $3.30,20 cans · save $4.65,24 cans · save $6.00,36 cans · save $9.00,48 cans · save $12.00' | split: ','
+  assign ex_tags = '24 cans · save $34.19,16 cans · save $18.80,20 cans · save $26.50,24 cans · save $34.19,36 cans · save $51.29,48 cans · save $68.39' | split: ','
   assign ex_now = '$113.98,$62.68,$88.33,$113.98,$170.98,$227.98' | split: ','
   assign ex_was = '$119.98,$65.98,$92.98,$119.98,$179.98,$239.98' | split: ','
 -%}
@@ -199,7 +210,9 @@
           <div class="bpdp-explore__txt">
             <div class="bpdp-explore__tag">{{ ex_tags[i] }}</div>
             <div class="bpdp-explore__name">{{ ex_names[i] }}</div>
-            <div class="bpdp-explore__price">{{ ex_now[i] }} <s>{{ ex_was[i] }}</s></div>
+            {%- assign ex_cents = ex_now[i] | remove: '$' | times: 100 | round -%}
+            {%- assign ex_sale = ex_cents | times: 0.7 | round -%}
+            <div class="bpdp-explore__price">{{ ex_sale | money }} <s>{{ ex_cents | money }}</s></div>
           </div>
         </a>
       {%- endif -%}
