@@ -1,0 +1,34 @@
+{%- comment -%}
+  Organization JSON-LD — Happie® / Drink Happie
+  Include ONCE, sitewide, from layout/theme.liquid (inside <head>).
+  Usage in theme.liquid:  {%- render 'schema-organization' -%}
+  Outputs only on the homepage to avoid duplication.
+  NOTE: No aggregateRating here (per SEO decision — ratings must be first-party).
+{%- endcomment -%}
+{%- if request.page_type == 'index' -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Happie",
+  "alternateName": "Drink Happie",
+  "url": "{{ shop.url }}",
+  "logo": "{% if settings.logo %}{{ settings.logo | image_url: width: 600 }}{% else %}{{ shop.url }}/cdn/shop/files/logo-horizontal.svg{% endif %}",
+  "description": "Happie makes premium hemp-derived Delta-9 THC seltzers and caffeine-free functional mushroom drinks (Fungi Fusion), crafted in California.",
+  "email": "support@drinkhappie.com",
+  "sameAs": [
+    "https://www.facebook.com/happiecbdseltzer/",
+    "https://www.instagram.com/drinkhappie/",
+    "https://www.tiktok.com/@happievibes1",
+    "https://www.linkedin.com/company/livehappie/"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer support",
+    "email": "support@drinkhappie.com",
+    "areaServed": "US",
+    "availableLanguage": "English"
+  }
+}
+</script>
+{%- endif -%}

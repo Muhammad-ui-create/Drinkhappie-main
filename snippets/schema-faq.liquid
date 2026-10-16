@@ -1,0 +1,68 @@
+{%- comment -%}
+  FAQPage JSON-LD — Happie®
+  Include ONLY on /pages/faq (and optionally product pages that show a real FAQ accordion).
+  Usage:  {%- render 'schema-faq' -%}
+
+  GOOGLE POLICY: The questions & answers in this schema MUST match the FAQ that is
+  visibly rendered on the page. The Q&As below are pre-filled from Happie brand facts —
+  edit them to mirror the live FAQ accordion word-for-word before deploying. Do not list
+  a question in schema that a visitor cannot see on the page.
+
+  Keep answers compliance-safe: no medical/therapeutic claims, 21+ language on THC.
+{%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How fast do Happie THC seltzers work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Happie uses nano-emulsified hemp-derived Delta-9 THC for a fast onset, typically felt in about 15–30 minutes — much faster than traditional edibles."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much THC is in each can?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Happie THC seltzers come in two strengths: 5mg THC + 5mg CBD, and 10mg THC + 5mg CBD, with a balanced 1:1 ratio. All products are 2018 Farm Bill compliant at less than 0.3% Delta-9 THC by dry weight."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Are Happie drinks legal and where do you ship?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Happie hemp-derived THC beverages are federally legal under the 2018 Farm Bill and ship to 40+ states. State laws vary; see our store locator and state guide for the latest. Must be 21+ to purchase."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is in Fungi Fusion mushroom drinks?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Each can of Fungi Fusion contains 900mg Lion's Mane, 700mg Cordyceps, and 400mg Reishi, plus ocean-derived minerals for hydration. It is caffeine-free, zero THC, vegan, gluten-free, and low calorie."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is every batch lab tested?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Every batch is third-party lab tested, and a COA is available on each product page via the QR code on the can."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you offer free shipping?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — free shipping on qualifying orders. Subscribe & Save members save 20% on every recurring delivery and can pause or cancel anytime."
+      }
+    }
+  ]
+}
+</script>
