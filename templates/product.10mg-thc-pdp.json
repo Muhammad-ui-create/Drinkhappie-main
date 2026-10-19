@@ -118,7 +118,7 @@
         "long_description": {
           "type": "long_description",
           "settings": {
-            "long_description": "<p><strong>Sweet Cherry Bliss</strong> is a refreshing THC seltzer bursting with juicy cherry flavor and smooth, balanced vibes. <br/><br/>Each 12oz can delivers a perfectly dosed <strong>10mg THC + 5mg CBD (2:1)</strong> for relaxed, feel-good moments without the hangover.<br/><br/>Fast-acting nano hemp kicks in within <strong>15–30 minutes</strong>, lightly sweetened with organic agave nectar, and infused with Aquamin® ocean minerals for hydration support.</p>"
+            "long_description": "<p><strong>Sweet Cherry Bliss</strong> is a refreshing THC seltzer bursting with juicy cherry flavor and smooth, balanced vibes. <br/><br/>Each 12oz can delivers a perfectly dosed <strong>10mg THC + 5mg CBD (2:1)</strong> for relaxed, feel-good moments without the hangover.<br/><br/>Nano hemp, lightly sweetened with organic agave nectar, and finished with ocean-sourced trace minerals.</p>"
           }
         },
         "accordion": {
@@ -185,7 +185,7 @@
           "type": "image_content",
           "settings": {
             "content_heading": "🌊 Aquamin S.  Ocean Minerals",
-            "content": "<p>Calcium and magnesium from pristine ocean waters. Real hydration that supports your body, not just sparkling water.</p>"
+            "content": "<p>Ocean-sourced trace minerals. Real ingredients, not just sparkling water.</p>"
           }
         },
         "image_content_xrWKpe": {
