@@ -14,6 +14,12 @@ h1 {
   color: #222222;
 }
 
+/* h1 is white site-wide for hero banners, but .card__surface is forced white below,
+   which made blog article titles (and plain page titles) invisible. Match the card's heading color. */
+.card__surface h1 {
+  color: #584450;
+}
+
 .push-btn__surface {
   font-weight: 700;
   padding: 0.85rem 2rem;
@@ -1306,6 +1312,10 @@ footer .menu li {
     margin: auto;
     max-width: 50% !important;
   }
+  /* ...but not PageFly product-card photos: at 50% they shrank to ~64px inside their rainbow circle */
+  .__pf .pf-slide-main-media img {
+    max-width: 100% !important;
+  }
   .__pf.__pf_28bMazkj .pf-7b70c8ee8224-5_ {
     padding: 50px 20px !important;
   }
@@ -1819,3 +1829,19 @@ body.template-blog .card__surface a:not(.push-btn):not(.push-btn__surface):not(.
 /* Judge.me review widget: fill the section width (app CSS caps it at 1200px,
    which looks undersized on wide screens). Carousel recalculates cards to fit. */
 .jdgm-widget.jdgm-review-widget { max-width: 100% !important; }
+
+/* Feature-text blocks at the smallest mobile scale rendered 16px bold copy with a 16px line-height,
+   so wrapped lines touched/overlapped (e.g. merch product pages). Give them paragraph spacing. */
+@media screen and (max-width: 767px) {
+  .feature-text.text-scale-n0,
+  .feature-text.text-scale-n1 {
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Wave shape-dividers draw their SVG 2px wider than the viewport (left:-2px) to hide seams,
+   which made merch/product pages scroll sideways by 2px on phones. Clip the hosting section horizontally only. */
+.shopify-section:has(.shape-divider) {
+  overflow-x: clip;
+}

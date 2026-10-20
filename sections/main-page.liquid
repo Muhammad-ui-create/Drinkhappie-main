@@ -12,13 +12,21 @@
   endcase
 -%}
 
+{%- if page.content == blank -%}
+  {%- comment -%}
+    No body copy (e.g. FAQ, where the accordion below carries its own heading): the white title card
+    rendered the scheme's white text on a white surface, leaving an invisible ~300px gap on mobile.
+    Keep the H1 for SEO/accessibility but don't draw an empty card.
+  {%- endcomment -%}
+  <h1 class="sr-only">{{ page.title }}</h1>
+{%- else -%}
 <section
   class="relative overflow-hidden bg-scheme-background text-scheme-text {% if section.settings.use_gradient_background %}bg-scheme-gradient{% endif %} "
   data-color-scheme="{{ section.settings.color_scheme }}"
 >
   <div class="section-content px-section py-section-vertical-spacing {% if section.settings.display_on_card %}{{ card_max_width }}{% else %}{{ max_width }}{% endif %} mx-auto">
     <div class="{% if section.settings.display_on_card %}text-scheme-text card{% endif %}">
-      <div class="{% if section.settings.display_on_card %}card__surface p-5 lg:p-10{% endif %}">
+      <div class="{% if section.settings.display_on_card %}card__surface main-page__card p-5 lg:p-10{% endif %}">
         <h1 class="font-heading heading-feature heading-style break-words text-center {{ settings.heading_drop_shadow_style }}">
           {{ page.title }}
         </h1>
@@ -41,6 +49,12 @@
     endfor
   -%}
 </section>
+{%- endif -%}
+
+<style>
+  /* custom.css forces .card__surface to a white background; keep page copy readable on it */
+  .main-page__card { color: #1A1426; }
+</style>
 
 {%- liquid
   assign stickers = section.blocks | where: 'type', 'sticker'

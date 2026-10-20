@@ -7,6 +7,12 @@
 {%- endcomment -%}
 
 {%- liquid
+  # merch (shirts, caps, mugs, stickers) is neither a seltzer nor a mushroom drink: show no drink card
+  assign hb_coll_handles = product.collections | map: 'handle' | join: ','
+  assign is_merch = false
+  if hb_coll_handles contains 'merch'
+    assign is_merch = true
+  endif
   assign is_fungi = false
   assign pt_lc = product.title | downcase
   if pt_lc contains 'fungi' or pt_lc contains 'mushroom'
@@ -20,6 +26,7 @@
   endfor
 -%}
 
+{%- unless is_merch -%}
 <div class="hb-glance">
   <div class="hb-glance__card">
     <span class="hb-glance__eyebrow">{% if is_fungi %}Functional Mushroom Drink{% else %}Hemp-Derived THC Seltzer{% endif %}</span>
@@ -70,6 +77,7 @@
     </div>
   </div>
 </div>
+{%- endunless -%}
 
 <style>
   .hb-glance{padding:10px 20px 46px;}

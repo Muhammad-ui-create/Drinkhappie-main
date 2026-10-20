@@ -1683,6 +1683,21 @@
     }
   }
 
+  /* phones: 4 x 70px swatches + gaps overflowed the 303px card by 1px, dropping the last swatch to its own row */
+  @media (max-width: 575px) {
+    .happie-product-section .flavor-selector {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .happie-product-section .flavor-selector .flavor-option {
+      width: auto;
+      height: auto;
+      aspect-ratio: 1 / 1;
+    }
+  }
+
   @media (max-width: 480px) {
     .product-title {
       font-size: 32px;

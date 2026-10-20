@@ -1196,6 +1196,16 @@
       flex: 1 0 100%;
     }
 
+    /* keep the active bundles pill inside the track (white ring was spilling past the edges) */
+    #best-sellers-{{ section.id }} .best-sellers__tab--bundles-active {
+      box-shadow: 0 4px 12px rgba(122, 31, 162, 0.35);
+    }
+
+    /* inactive tabs were pale text on lilac: raise contrast */
+    #best-sellers-{{ section.id }} .best-sellers__tab:not(.best-sellers__tab--active):not(.best-sellers__tab--bundles) {
+      color: #5B2A6B;
+    }
+
     #best-sellers-{{ section.id }} .best-sellers__promo-note {
       font-size: 13px;
       padding: 0 12px;

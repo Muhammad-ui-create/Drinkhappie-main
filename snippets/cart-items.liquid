@@ -207,7 +207,7 @@
                           {%- for discount_allocation in item.line_level_discount_allocations -%}
                             <li class="order-discount__item">
                               <span class="hb-line-discount-badge">
-                                {{- discount_allocation.discount_application.title }}
+                                {{- discount_allocation.discount_application.title | remove: ' (auto)' }}
                                 {% if discount_allocation.amount > 0 -%}
                                   (-{{ discount_allocation.amount | money }})
                                 {%- endif -%}
@@ -309,6 +309,14 @@
   {{ cart.total_price | money_with_currency }}
 </p>
 <style>
+  /* a theme-wide li card style wrapped the discount tag in a padded white box, squeezing it to 4 lines */
+  .order-discount__item {
+    background: none !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
   .hb-line-discount-badge {
     display: inline-block;
     max-width: 100%;
