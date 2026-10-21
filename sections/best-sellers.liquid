@@ -905,8 +905,22 @@
     display: none;
   }
   
+  /* was right:-24px, which the products-wrapper's overflow-x:clip cut off; sit it inside,
+     over the product photo, in brand purple so it reads as a control */
   #best-sellers-{{ section.id }} .best-sellers__carousel-nav--next {
-    right: -24px;
+    right: 12px;
+    top: 24%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    background: #962F80;
+    color: #FFFFFF;
+    border-color: #962F80;
+    box-shadow: 0 6px 18px rgba(150, 47, 128, 0.35);
+  }
+
+  #best-sellers-{{ section.id }} .best-sellers__carousel-nav--next:hover {
+    filter: brightness(1.1);
   }
   
   #best-sellers-{{ section.id }} .best-sellers__carousel-nav svg {
