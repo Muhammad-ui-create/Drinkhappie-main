@@ -1,0 +1,171 @@
+{%- comment -%}
+  Happie 21+ age gate with optional email capture (replaces the Age Checker app, 2026-10-22).
+  Step 1: required 21+ confirmation. Step 2: OPTIONAL email for 15% off (WELCOME15) — creates a
+  Shopify customer subscribed to email marketing (single opt-in), which triggers the Shopify Messaging
+  welcome series. Tagged age-verified-21 + age-gate-popup. Shown once per browser (365 days).
+{%- endcomment -%}
+
+{%- liquid
+  assign hp_ag_skip_email = false
+  if customer and customer.accepts_marketing
+    assign hp_ag_skip_email = true
+  endif
+-%}
+
+<style>
+  /* safety net: never show the old Age Checker app overlay alongside this gate */
+  #agp__noPeekScreen, #agp__root, [id^="agp__"], [class^="agp__"], [class*=" agp__"] { display: none !important; }
+
+  html.hp-ag-open, html.hp-ag-open body { overflow: hidden !important; }
+  .hp-ag { display: none; position: fixed; inset: 0; z-index: 2147483000; font-family: 'Poppins', system-ui, sans-serif; color: #1A1426; }
+  html.hp-ag-open .hp-ag { display: flex; align-items: center; justify-content: center; padding: 16px; }
+  .hp-ag__bg { position: absolute; inset: 0; background: #3d4246 url('{{ 'age-gate-bg.webp' | asset_url }}') center / cover no-repeat; }
+  .hp-ag__bg::after { content: ''; position: absolute; inset: 0; background: rgba(20, 14, 30, .55); backdrop-filter: blur(3px); }
+  .hp-ag__card { position: relative; display: grid; grid-template-columns: 1fr 1fr; width: 100%; max-width: 760px; background: #fff; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,.35); }
+  .hp-ag__body { padding: 34px 32px 28px; display: flex; flex-direction: column; justify-content: center; text-align: center; min-height: 460px; }
+  .hp-ag__media { background: #f6d7dc url('{{ 'age-gate-cans.webp' | asset_url }}') center / cover no-repeat; min-height: 460px; }
+  .hp-ag__logo { width: 92px; height: 92px; margin: 0 auto 14px; display: block; }
+  .hp-ag__eyebrow { display: inline-block; margin: 0 auto 10px; background: #F9E4F1; color: #962F80; font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; }
+  .hp-ag h2 { font-size: 26px; line-height: 1.15; font-weight: 800; letter-spacing: -.02em; margin: 0 0 10px; color: #1A1426; }
+  .hp-ag p { font-size: 14px; line-height: 1.5; color: #4A3F57; margin: 0 0 18px; }
+  .hp-ag__row { display: flex; gap: 10px; }
+  .hp-ag__btn { flex: 1; appearance: none; border: 0; cursor: pointer; border-radius: 999px; padding: 14px 18px; font: 700 15px/1 'Poppins', system-ui, sans-serif; background: #962F80; color: #fff; transition: filter .2s, transform .2s; }
+  .hp-ag__btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .hp-ag__btn--ghost { background: #fff; color: #1A1426; box-shadow: inset 0 0 0 2px #E2D8EA; }
+  .hp-ag__input { width: 100%; box-sizing: border-box; border: 2px solid #E2D8EA; border-radius: 999px; padding: 13px 18px; font: 500 15px 'Poppins', system-ui, sans-serif; color: #1A1426; margin-bottom: 10px; outline: none; }
+  .hp-ag__input:focus { border-color: #962F80; }
+  .hp-ag__skip { appearance: none; background: none; border: 0; cursor: pointer; margin-top: 12px; font: 500 13px 'Poppins', system-ui, sans-serif; color: #6B5E80; text-decoration: underline; }
+  .hp-ag__fine { font-size: 11px !important; line-height: 1.45 !important; color: #8A7F98 !important; margin: 12px 0 0 !important; }
+  .hp-ag__fine a { color: inherit; }
+  .hp-ag__err { display: none; color: #C0392B; font-size: 12.5px; margin: -4px 0 8px; }
+  .hp-ag__code { display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 2px dashed #962F80; border-radius: 14px; padding: 12px 16px; margin: 4px 0 16px; font-weight: 800; font-size: 22px; letter-spacing: .08em; color: #962F80; }
+  .hp-ag__copy { appearance: none; border: 0; cursor: pointer; background: #F9E4F1; color: #962F80; font: 700 12px 'Poppins', system-ui, sans-serif; padding: 8px 12px; border-radius: 999px; letter-spacing: 0; }
+  .hp-ag__step { display: none; }
+  .hp-ag__step.is-active { display: block; }
+  @media (max-width: 640px) {
+    .hp-ag__card { grid-template-columns: 1fr; max-width: 420px; border-radius: 20px; }
+    .hp-ag__media { order: -1; min-height: 0; height: 150px; background-position: center 35%; }
+    .hp-ag__body { min-height: 0; padding: 22px 20px 20px; }
+    .hp-ag__logo { width: 64px; height: 64px; margin-bottom: 10px; }
+    .hp-ag h2 { font-size: 22px; }
+    .hp-ag p { font-size: 13.5px; margin-bottom: 14px; }
+  }
+</style>
+
+<div class="hp-ag" id="hpAgeGate" role="dialog" aria-modal="true" aria-labelledby="hpAgTitle">
+  <div class="hp-ag__bg"></div>
+  <div class="hp-ag__card">
+    <div class="hp-ag__body">
+      <img class="hp-ag__logo" src="{{ 'age-gate-logo.png' | asset_url }}" alt="Happie" width="92" height="92">
+
+      <div class="hp-ag__step is-active" data-step="age">
+        <h2 id="hpAgTitle">Are you 21 or older?</h2>
+        <p>This website contains cannabis beverage content and is intended for adults of legal drinking and cannabis consumption age only.</p>
+        <div class="hp-ag__row">
+          <button type="button" class="hp-ag__btn" data-hp-ag="yes">Yes, I'm 21+</button>
+          <button type="button" class="hp-ag__btn hp-ag__btn--ghost" data-hp-ag="no">No</button>
+        </div>
+        <p class="hp-ag__fine">By entering this site you agree to the <a href="/policies/terms-of-service">Terms of Use</a> and <a href="/policies/privacy-policy">Privacy Policy</a>.</p>
+      </div>
+
+      <div class="hp-ag__step" data-step="email">
+        <span class="hp-ag__eyebrow">Welcome in 🎉</span>
+        <h2>Want 15% off your first order?</h2>
+        <p>Join the Happie list for new flavors, drops and members-only offers.</p>
+        {%- form 'customer', id: 'hpAgeGateForm', novalidate: 'novalidate' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter,age-verified-21,age-gate-popup">
+          <label for="hpAgEmail" class="sr-only visually-hidden">Email address</label>
+          <input class="hp-ag__input" id="hpAgEmail" type="email" name="contact[email]" placeholder="Your email address" autocomplete="email" autocapitalize="off" autocorrect="off" inputmode="email">
+          <div class="hp-ag__err" id="hpAgErr">Please enter a valid email address.</div>
+          <button type="submit" class="hp-ag__btn" style="width:100%">Get my 15% off</button>
+        {%- endform -%}
+        <button type="button" class="hp-ag__skip" data-hp-ag="skip">No thanks, just let me in</button>
+        <p class="hp-ag__fine">By signing up you agree to receive marketing emails from Happie. Unsubscribe anytime. See our <a href="/policies/privacy-policy">Privacy Policy</a>. Email is optional.</p>
+      </div>
+
+      <div class="hp-ag__step" data-step="done">
+        <span class="hp-ag__eyebrow">You're on the list</span>
+        <h2>Here's your 15% off</h2>
+        <p>Use this code at checkout. We've also sent it to your inbox.</p>
+        <div class="hp-ag__code"><span id="hpAgCode">WELCOME15</span><button type="button" class="hp-ag__copy" data-hp-ag="copy">Copy</button></div>
+        <button type="button" class="hp-ag__btn" style="width:100%" data-hp-ag="enter">Start shopping</button>
+      </div>
+
+      <div class="hp-ag__step" data-step="under">
+        <h2>Sorry, you must be 21+</h2>
+        <p>Happie products are only available to adults of legal drinking and cannabis consumption age.</p>
+        <button type="button" class="hp-ag__btn hp-ag__btn--ghost" style="width:100%" data-hp-ag="back">I made a mistake</button>
+      </div>
+    </div>
+    <div class="hp-ag__media" aria-hidden="true"></div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var KEY = 'hpAge21';
+    var DAYS = 365;
+    var skipEmail = {{ hp_ag_skip_email | json }};
+    var root = document.getElementById('hpAgeGate');
+    if (!root) return;
+
+    function getOk() {
+      try { if (localStorage.getItem(KEY) === '1') return true; } catch (e) {}
+      return document.cookie.indexOf(KEY + '=1') !== -1;
+    }
+    function setOk() {
+      try { localStorage.setItem(KEY, '1'); } catch (e) {}
+      document.cookie = KEY + '=1; path=/; max-age=' + (DAYS * 86400) + '; SameSite=Lax';
+    }
+    // policy pages stay readable without the gate
+    var exempt = /^\/(policies|pages\/(privacy|terms))/.test(location.pathname);
+    if (getOk() || exempt) { root.parentNode.removeChild(root); return; }
+
+    var html = document.documentElement;
+    html.classList.add('hp-ag-open');
+
+    function show(step) {
+      var steps = root.querySelectorAll('.hp-ag__step');
+      for (var i = 0; i < steps.length; i++) steps[i].classList.toggle('is-active', steps[i].getAttribute('data-step') === step);
+      var f = root.querySelector('[data-step="' + step + '"] input, [data-step="' + step + '"] button');
+      if (f) try { f.focus({ preventScroll: true }); } catch (e) {}
+    }
+    function close() {
+      html.classList.remove('hp-ag-open');
+      setTimeout(function () { if (root.parentNode) root.parentNode.removeChild(root); }, 50);
+    }
+
+    root.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-hp-ag]');
+      if (!b) return;
+      var a = b.getAttribute('data-hp-ag');
+      if (a === 'yes') { setOk(); if (skipEmail) close(); else show('email'); }
+      else if (a === 'no') show('under');
+      else if (a === 'back') show('age');
+      else if (a === 'skip' || a === 'enter') close();
+      else if (a === 'copy') {
+        var code = document.getElementById('hpAgCode').textContent;
+        try { navigator.clipboard.writeText(code); b.textContent = 'Copied!'; } catch (err) {}
+      }
+    });
+
+    var form = document.getElementById('hpAgeGateForm');
+    if (form) form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = document.getElementById('hpAgEmail');
+      var err = document.getElementById('hpAgErr');
+      var v = (input.value || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) { err.style.display = 'block'; input.focus(); return; }
+      err.style.display = 'none';
+      var btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.textContent = 'Signing you up…';
+      fetch(form.action, { method: 'POST', body: new FormData(form), credentials: 'same-origin' })
+        .then(function (res) {
+          // Shopify may require a bot challenge on customer forms: fall back to a normal submit
+          if (res.url && res.url.indexOf('/challenge') !== -1) { form.submit(); return; }
+          show('done');
+        })
+        .catch(function () { form.submit(); });
+    });
+  })();
+</script>

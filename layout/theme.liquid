@@ -696,6 +696,7 @@ box-shadow: inset 0 0 0 var(--input-border-width) rgb(245 245 245);
     endif
   -%}
   <body data-color-scheme="scheme1" class="{{ body_classes | strip }}">
+    {%- render 'happie-age-gate' -%}
     {%- if settings.show_on_sale_badge -%}
       {%- render 'static-sticker-defs', shape: settings.on_sale_badge_shape, id: 'on-sale' -%}
     {%- endif -%}
