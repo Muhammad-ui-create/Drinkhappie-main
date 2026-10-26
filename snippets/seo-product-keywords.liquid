@@ -13,6 +13,15 @@
   if hb_coll_handles contains 'merch'
     assign is_merch = true
   endif
+  # dose shown in the THC card: 10mg-only products say 10mg; products with a 5/10 toggle start at 5mg
+  # and the PDP script swaps the text to 10mg when 10MG is selected
+  assign hb_dose = '5mg THC + 5mg CBD'
+  assign hb_ratio = '1:1'
+  assign hb_title_lc = product.title | downcase
+  if hb_title_lc contains '10mg' or product.handle contains 'happier' or product.handle == 'grateful-grape-happie'
+    assign hb_dose = '10mg THC + 5mg CBD'
+    assign hb_ratio = '2:1'
+  endif
   assign is_fungi = false
   assign pt_lc = product.title | downcase
   if pt_lc contains 'fungi' or pt_lc contains 'mushroom'
@@ -44,7 +53,7 @@
         <li>📦 Ships nationwide</li>
       {%- else -%}
         <li>⚡ Fast-acting: 15&ndash;30 min</li>
-        <li>⚖️ Balanced 1:1 THC:CBD</li>
+        <li>⚖️ {{ hb_dose }} ({{ hb_ratio }})</li>
         <li>🔥 Only 30 calories</li>
         <li>🌵 Organic agave, real fruit</li>
         <li>🌊 Ocean minerals</li>
@@ -64,7 +73,7 @@
     {%- else -%}
       <p class="hb-glance__copy">
         <strong>{{ product.title }}</strong> is a premium hemp-derived Delta-9 THC seltzer by Happie&reg;.
-        Nano-emulsified for fast-acting effects in 15&ndash;30 minutes with a balanced 1:1 THC-to-CBD ratio.
+        Nano-emulsified for fast-acting effects in 15&ndash;30 minutes with {{ hb_dose }} per can ({{ hb_ratio }} THC-to-CBD).
         Only 30 calories per can &mdash; the best low-calorie THC drink available. Sweetened with organic agave
         nectar, infused with ocean minerals, and made with real fruit flavor. Zero alcohol, zero hangover.
         Vegan, gluten-free, lab tested. 2018 Farm Bill compliant.
