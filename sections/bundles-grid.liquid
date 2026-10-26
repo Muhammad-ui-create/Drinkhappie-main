@@ -35,6 +35,38 @@
       {%- if subheading != blank -%}<p class="happie-bundles__sub">{{ subheading }}</p>{%- endif -%}
     </div>
 
+    {%- comment -%} Single-flavor 24-packs: one button per flavor, opens the PDP with the 24 Pack / 5MG variant selected {%- endcomment -%}
+    {%- if section.settings.show_24_packs -%}
+      {%- assign f_handle = 'cheery-cherry,groovy-grapefruit,grateful-grape,sublime' | split: ',' -%}
+      {%- assign f_color  = '#D7263D,#EE6C5E,#8E2C8C,#5E9E12' | split: ',' -%}
+      <div class="happie-24s">
+        <p class="happie-24s__label">{{ section.settings.packs_label }}</p>
+        <div class="happie-24s__row">
+          {%- for h in f_handle -%}
+            {%- assign p = all_products[h] -%}
+            {%- if p == empty or p == nil -%}{%- continue -%}{%- endif -%}
+            {%- assign v24 = nil -%}
+            {%- for v in p.variants -%}
+              {%- if v.title contains '24' and v.title contains '5MG' -%}{%- assign v24 = v -%}{%- break -%}{%- endif -%}
+            {%- endfor -%}
+            {%- unless v24 -%}
+              {%- for v in p.variants -%}{%- if v.title contains '24' -%}{%- assign v24 = v -%}{%- break -%}{%- endif -%}{%- endfor -%}
+            {%- endunless -%}
+            {%- if v24 == nil -%}{%- continue -%}{%- endif -%}
+            {%- assign sale = v24.price | times: 0.7 | round -%}
+            <a class="happie-24s__btn" style="--c:{{ f_color[forloop.index0] }}" href="{{ p.url }}?variant={{ v24.id }}">
+              {%- if p.featured_image -%}<img src="{{ p.featured_image | image_url: width: 120 }}" alt="" width="40" height="40" loading="lazy">{%- endif -%}
+              <span class="happie-24s__txt">
+                <span class="happie-24s__name">{{ p.title }} 24-Pack</span>
+                <span class="happie-24s__price">{{ sale | money }} <s>{{ v24.price | money }}</s></span>
+              </span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
     <div class="happie-bundles__grid">
       {%- for handle in b_handle -%}
         {%- assign i = forloop.index0 -%}
@@ -94,7 +126,19 @@
   .happie-bundle-card__save{font-size:12px;font-weight:800;color:#c2410c;background:#FFEAD6;padding:4px 10px;border-radius:999px;}
   .happie-bundle-card__cta{display:inline-flex;align-items:center;gap:7px;align-self:flex-start;background:#50B2BD;color:#fff;font-size:14px;font-weight:700;padding:11px 20px;border-radius:999px;transition:background-color .2s ease,gap .2s ease;}
   .happie-bundle-card:hover .happie-bundle-card__cta{background:#3f9aa4;gap:11px;}
-  @media(max-width:600px){.happie-bundles__grid{grid-template-columns:1fr;}.happie-bundles__inner{padding:0 16px;}}
+  .happie-24s{max-width:1000px;margin:-14px auto 40px;text-align:center;}
+  .happie-24s__label{font-size:15px;font-weight:700;color:#1a1a1a;margin:0 0 14px;}
+  .happie-24s__row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
+  .happie-24s__btn{display:flex;align-items:center;gap:10px;text-align:left;background:var(--c);color:#fff;text-decoration:none;border-radius:999px;padding:7px 16px 7px 7px;box-shadow:0 6px 18px rgba(0,0,0,.12);transition:transform .2s ease,box-shadow .2s ease,filter .2s ease;}
+  .happie-24s__btn:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(0,0,0,.18);filter:brightness(1.06);}
+  .happie-24s__btn img{width:40px;height:40px;border-radius:50%;object-fit:cover;background:#fff;flex:none;}
+  .happie-24s__txt{display:flex;flex-direction:column;line-height:1.2;flex:1;min-width:0;}
+  .happie-24s__name{font-size:13.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .happie-24s__price{font-size:12.5px;font-weight:700;opacity:.95;}
+  .happie-24s__price s{opacity:.7;font-weight:500;margin-left:3px;}
+  .happie-24s__btn svg{flex:none;}
+  @media(max-width:900px){.happie-24s__row{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  @media(max-width:600px){.happie-bundles__grid{grid-template-columns:1fr;}.happie-bundles__inner{padding:0 16px;}.happie-24s{margin:-10px auto 32px;}.happie-24s__row{grid-template-columns:1fr;gap:10px;}.happie-24s__label{font-size:14px;}}
 </style>
 
 {% schema %}
@@ -105,6 +149,9 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow pill", "default": "Bundle & Save 5%" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Happie Bundles" },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Curated multi-packs of our best-selling THC seltzers — mix your favorite flavors and save 5% on every bundle." },
+    { "type": "header", "content": "Single-flavor 24-packs" },
+    { "type": "checkbox", "id": "show_24_packs", "label": "Show 24-pack flavor buttons", "default": true },
+    { "type": "text", "id": "packs_label", "label": "24-pack row label", "default": "Just want one flavor? Grab a 24-pack — also 30% off" },
     { "type": "header", "content": "Card links" },
     { "type": "text", "id": "bundle_link_base", "label": "Bundle link base URL", "info": "Each card links to this base + the bundle handle (+ suffix). Point at the live bundle pages once published.", "default": "/products/" },
     { "type": "text", "id": "bundle_link_suffix", "label": "Link suffix" },
