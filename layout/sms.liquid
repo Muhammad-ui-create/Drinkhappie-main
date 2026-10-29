@@ -1,0 +1,66 @@
+{%- comment -%}
+  Minimal layout for the SMS compliance pages (/pages/sms-privacy, /pages/sms-terms).
+  Carriers reviewing the Twilio A2P 10DLC registration must not see product or THC content,
+  so this layout leaves out everything the main theme layout adds on every page:
+  header/menus, announcement bar, footer, age gate, cart drawer, chat widget and popups.
+{%- endcomment -%}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{{ page_title }} | Happie Beverages, Inc.</title>
+    {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
+    <link rel="canonical" href="{{ canonical_url }}">
+    {%- if settings.favicon != blank -%}<link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">{%- endif -%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    {{ content_for_header }}
+    <style>
+      :root { --plum: #962F80; --ink: #1A1426; --body: #3F3550; --muted: #7A6F88; --line: #ECE4F0; --bg: #FBF7FC; }
+      *, *::before, *::after { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; }
+      body { background: var(--bg); color: var(--body); font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; }
+      .sms-shell { min-height: 100vh; display: flex; flex-direction: column; }
+      .sms-top { background: #fff; border-bottom: 1px solid var(--line); }
+      .sms-top__inner { max-width: 760px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; gap: 12px; }
+      .sms-top__logo { width: 40px; height: 40px; display: block; }
+      .sms-top__name { font-weight: 700; font-size: 16px; color: var(--ink); letter-spacing: -.01em; }
+      .sms-main { flex: 1; width: 100%; }
+      .sms-foot { border-top: 1px solid var(--line); background: #fff; }
+      .sms-foot__inner { max-width: 760px; margin: 0 auto; padding: 22px 24px; display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; font-size: 13px; color: var(--muted); }
+      .sms-foot a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+      .sms-foot a:hover { color: var(--plum); }
+      .sms-foot__links { display: flex; gap: 18px; flex-wrap: wrap; }
+      /* The Age Checker app embed is still on in the theme and can inject its "cannabis" age overlay into any layout. Keep it off these pages. */
+      #agp__noPeekScreen, #agp__root, [id^="agp__"], [class^="agp__"], [class*=" agp__"] { display: none !important; }
+      html, body { overflow: auto !important; }
+    </style>
+  </head>
+  <body>
+    <div class="sms-shell">
+      <header class="sms-top">
+        <div class="sms-top__inner">
+          <img class="sms-top__logo" src="{{ 'age-gate-logo.png' | asset_url }}" alt="Happie" width="40" height="40">
+          <span class="sms-top__name">Happie Beverages, Inc.</span>
+        </div>
+      </header>
+
+      <main class="sms-main" role="main">
+        {{ content_for_layout }}
+      </main>
+
+      <footer class="sms-foot">
+        <div class="sms-foot__inner">
+          <span>&copy; {{ 'now' | date: '%Y' }} Happie Beverages, Inc.</span>
+          <nav class="sms-foot__links" aria-label="Text messaging policies">
+            <a href="/pages/sms-privacy">Privacy Policy – Text Messaging</a>
+            <a href="/pages/sms-terms">Terms &amp; Conditions – Text Messaging</a>
+          </nav>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

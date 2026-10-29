@@ -1,7 +1,8 @@
 {
+  "layout": "sms",
   "sections": {
     "main": {
-      "type": "main-page",
+      "type": "sms-policy",
       "settings": {}
     }
   },
