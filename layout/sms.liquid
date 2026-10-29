@@ -1,6 +1,6 @@
 {%- comment -%}
   Minimal layout for the SMS compliance pages (/pages/sms-privacy, /pages/sms-terms).
-  Carriers reviewing the Twilio A2P 10DLC registration must not see product or THC content,
+  Carriers reviewing the Twilio A2P 10DLC registration must not see product content,
   so this layout leaves out everything the main theme layout adds on every page:
   header/menus, announcement bar, footer, age gate, cart drawer, chat widget and popups.
 {%- endcomment -%}
@@ -34,7 +34,7 @@
       .sms-foot a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
       .sms-foot a:hover { color: var(--plum); }
       .sms-foot__links { display: flex; gap: 18px; flex-wrap: wrap; }
-      /* The Age Checker app embed is still on in the theme and can inject its "cannabis" age overlay into any layout. Keep it off these pages. */
+      {%- comment -%} The Age Checker app embed is still on in the theme and can inject its age overlay into any layout. Keep it off these pages. {%- endcomment -%}
       #agp__noPeekScreen, #agp__root, [id^="agp__"], [class^="agp__"], [class*=" agp__"] { display: none !important; }
       html, body { overflow: auto !important; }
     </style>
