@@ -1,0 +1,12 @@
+{
+  "layout": "sms",
+  "sections": {
+    "main": {
+      "type": "sms-policy",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
