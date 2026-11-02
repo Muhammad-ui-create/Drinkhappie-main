@@ -96,7 +96,7 @@
     <div class="bpdp__gallery">
       <div class="bpdp__gmain" style="background:{{ grad }};">
         <div class="bpdp__gbadge">{{ badge }}</div>
-        <div class="bpdp__gsave">&#127875; 30% OFF · Save {{ spooky_save | money }}</div>
+        <div class="bpdp__gsave">30% OFF · Save {{ spooky_save | money }}</div>
         <img id="bpdpMain" src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.title | escape }}">
       </div>
       {%- if product.images.size > 1 -%}
@@ -137,7 +137,7 @@
         <div class="bpdp__price">
           <span class="bpdp__now">{{ sale | money }}</span>
           <span class="bpdp__was">{{ pr | money }}</span>
-          <span class="bpdp__savetag">&#127875; You save {{ spooky_save | money }}</span>
+          <span class="bpdp__savetag">You save {{ spooky_save | money }}</span>
         </div>
         <div class="bpdp__per">30% off applied automatically in your cart · no code needed</div>
         {%- if per != blank -%}<div class="bpdp__per">{{ per }}</div>{%- endif -%}

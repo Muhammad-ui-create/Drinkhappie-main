@@ -91,7 +91,7 @@
               {%- assign b_sale_cents = b_now_cents | times: 0.7 | round -%}
               <span class="happie-bundle-card__now">{{ b_sale_cents | money }}</span>
               <span class="happie-bundle-card__was">{{ b_now_cents | money }}</span>
-              <span class="happie-bundle-card__save">&#127875; Save ${{ b_save30[i] }} &mdash; 30% off auto-applied</span>
+              <span class="happie-bundle-card__save">Save ${{ b_save30[i] }} &mdash; 30% off auto-applied</span>
             </div>
             <span class="happie-bundle-card__cta">Shop bundle
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -123,7 +123,7 @@
   .happie-bundle-card__priceline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
   .happie-bundle-card__now{font-size:20px;font-weight:800;color:#962F80;}
   .happie-bundle-card__was{font-size:14px;color:#aaa;text-decoration:line-through;}
-  .happie-bundle-card__save{font-size:12px;font-weight:800;color:#c2410c;background:#FFEAD6;padding:4px 10px;border-radius:999px;}
+  .happie-bundle-card__save{font-size:12px;font-weight:800;color:#962F80;background:#F9E4F1;padding:4px 10px;border-radius:999px;}
   .happie-bundle-card__cta{display:inline-flex;align-items:center;gap:7px;align-self:flex-start;background:#50B2BD;color:#fff;font-size:14px;font-weight:700;padding:11px 20px;border-radius:999px;transition:background-color .2s ease,gap .2s ease;}
   .happie-bundle-card:hover .happie-bundle-card__cta{background:#3f9aa4;gap:11px;}
   .happie-24s{max-width:1000px;margin:-14px auto 40px;text-align:center;}
