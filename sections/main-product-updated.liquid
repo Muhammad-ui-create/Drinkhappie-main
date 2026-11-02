@@ -421,7 +421,7 @@
   .product-price--spooky #spooky-price {
     font-size: 30px;
     font-weight: 800;
-    color: #c2410c;
+    color: #962F80;
   }
   .product-price--spooky #dynamic-price {
     font-size: 19px;
@@ -434,7 +434,7 @@
     font-weight: 800;
     letter-spacing: 0;
     color: #fff;
-    background: #7a1fa2;
+    background: #962F80;
     padding: 4px 12px;
     border-radius: 999px;
     white-space: nowrap;
@@ -594,27 +594,27 @@
   /* Spooky Season — 24-pack button (THC only) */
   .size-option--spooky {
     position: relative;
-    border-color: #ff7518;
-    background: linear-gradient(135deg, var(--happie-cream) 55%, #FFE2C4);
+    border-color: #50B2BD;
+    background: linear-gradient(135deg, var(--happie-cream) 55%, #E3F4F6);
     overflow: visible;
   }
   .size-option--spooky.active {
     background: var(--happie-orange);
-    border: 4px solid #7a1fa2;
+    border: 4px solid #962F80;
   }
   .size-option--spooky::after {
     content: "30% OFF";
     position: absolute;
     top: -10px;
     right: -7px;
-    background: #7a1fa2;
+    background: #962F80;
     color: #fff;
     font-size: 9px;
     font-weight: 800;
     letter-spacing: .04em;
     padding: 2px 7px;
     border-radius: 999px;
-    box-shadow: 0 3px 8px rgba(122,31,162,.4);
+    box-shadow: 0 3px 8px rgba(150,47,128,.4);
   }
 
   .size-option-linked {
@@ -897,8 +897,8 @@
 
   /* Spooky Season — ADD TO CART turns orange + shows the 24-pack discount inside */
   .add-to-cart-button--spooky {
-    background: linear-gradient(135deg, #ff7518 0%, #ff8f3a 55%, #e85d12 100%);
-    color: #1a0526;
+    background: linear-gradient(135deg, #50B2BD 0%, #5fc2cc 55%, #3f9aa4 100%);
+    color: #fff;
     flex-direction: column;
     gap: 2px;
     height: auto;
@@ -906,8 +906,8 @@
     padding: 12px 20px;
   }
   .add-to-cart-button--spooky:hover {
-    background: linear-gradient(135deg, #ff8128 0%, #ffa057 55%, #f3681a 100%);
-    box-shadow: 0 6px 24px rgba(255, 117, 24, 0.45);
+    background: linear-gradient(135deg, #5cbcc6 0%, #72cdd6 55%, #45a3ad 100%);
+    box-shadow: 0 6px 24px rgba(80, 178, 189, 0.45);
   }
   #atc-spooky-line {
     font-size: 13px;
@@ -917,7 +917,7 @@
   }
   #atc-spooky-line .atc-code {
     background: #fff;
-    color: #7a1fa2;
+    color: #962F80;
     padding: 1px 7px;
     border-radius: 6px;
   }
@@ -2188,7 +2188,7 @@
                       type="button"
                       data-size-value="{{ value }}"
                     >
-                      {% if hb_sp24 %}🎃 {% endif %}{{ value }}{% if hb_sp24 %} 🦇{% endif %}
+                      {{ value }}
                     </button>
                   {% endfor %}
                   {%- assign linked_pack = product.metafields.custom.linked_pack.value -%}
@@ -2878,7 +2878,7 @@
         if (cartPrice) {
           cartPrice.innerHTML = fmt(after) + ' <span class="atc-was">' + fmt(priceCents) + '</span>';
         }
-        line.innerHTML = '🎃 <span class="atc-code">30% OFF</span> applied automatically &mdash; save ' + fmt(save);
+        line.innerHTML = '⏰ <span class="atc-code">30% OFF</span> applied automatically &mdash; save ' + fmt(save);
         line.style.display = 'block';
         btn.classList.add('add-to-cart-button--spooky');
       } else {
@@ -2892,7 +2892,7 @@
       if (topSale && topSave && topWrap) {
         if (is24 && priceCents) {
           topSale.textContent = fmt(priceCents - Math.round(priceCents * 0.30));
-          topSave.innerHTML = '🎃 30% OFF &middot; Save ' + fmt(Math.round(priceCents * 0.30));
+          topSave.innerHTML = '30% OFF &middot; Save ' + fmt(Math.round(priceCents * 0.30));
           topSale.style.display = '';
           topSave.style.display = '';
           topWrap.classList.add('product-price--spooky');

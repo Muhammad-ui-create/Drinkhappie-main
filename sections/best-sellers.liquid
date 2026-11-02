@@ -79,13 +79,13 @@
       <!-- Tab Switcher -->
       {%- if collection_2 != blank -%}
         <div class="best-sellers__tabs">
-          {%- comment -%} Spooky Season: Halloween bundles tab (30% auto discount) — remove after Oct 31 {%- endcomment -%}
+          {%- comment -%} Bundles tab (30% auto discount, final days) — remove after Nov 5 {%- endcomment -%}
           <button
             class="best-sellers__tab best-sellers__tab--bundles"
             :class="{ 'best-sellers__tab--bundles-active': activeTab === 'bundles' }"
             @click="activeTab = 'bundles'"
           >
-            &#127875; Halloween Bundles <span class="best-sellers__tab-deal">30% OFF</span>
+            Bundles <span class="best-sellers__tab-deal">30% OFF</span>
           </button>
           <button
             class="best-sellers__tab"
@@ -102,11 +102,11 @@
             {{ collection_2_label | default: collection_2.title | default: 'Fungi Fusion' }}
           </button>
         </div>
-        <p class="best-sellers__promo-note">&#127875; Spooky Season: <strong>30% off every bundle and 24-pack</strong>, applied automatically at checkout.</p>
+        <p class="best-sellers__promo-note">&#9200; Final days: <strong>30% off every bundle and 24-pack</strong>, applied automatically at checkout. Ends Nov 5.</p>
       {%- endif -%}
     </div>
 
-    <!-- Halloween Bundles carousel (Spooky Season) -->
+    <!-- Bundles carousel (30% off promo) -->
     {%- if collection_2 != blank -%}
       <div
         class="best-sellers__products-wrapper"
@@ -188,7 +188,7 @@
                 <div class="best-sellers__card best-sellers__card--bundle">
                   <a href="/products/{{ handle }}" class="best-sellers__card-link">
                     <div class="best-sellers__card-image">
-                      <span class="best-sellers__badge best-sellers__badge--spooky">&#127875; 30% OFF</span>
+                      <span class="best-sellers__badge best-sellers__badge--spooky">30% OFF</span>
                       <img
                         src="{{ hb_img }}"
                         alt="{{ hb_b_name[i] | escape }} bundle"
@@ -670,15 +670,15 @@
     gap: 8px;
     text-decoration: none;
     color: #fff;
-    background: linear-gradient(135deg, #ff7518 0%, #7a1fa2 100%);
-    box-shadow: 0 4px 14px rgba(122, 31, 162, 0.35);
+    background: linear-gradient(135deg, #50B2BD 0%, #962F80 100%);
+    box-shadow: 0 4px 14px rgba(150, 47, 128, 0.35);
     white-space: nowrap;
     opacity: .82;
   }
 
   #best-sellers-{{ section.id }} .best-sellers__tab--bundles-active {
     opacity: 1;
-    box-shadow: 0 0 0 3px #fff, 0 6px 18px rgba(122, 31, 162, 0.45);
+    box-shadow: 0 0 0 3px #fff, 0 6px 18px rgba(150, 47, 128, 0.45);
   }
 
   /* Bundle cards */
@@ -697,7 +697,7 @@
   }
 
   #best-sellers-{{ section.id }} .best-sellers__card--bundle .best-sellers__badge--spooky {
-    background: #7a1fa2;
+    background: #962F80;
     z-index: 3;
   }
 
@@ -709,23 +709,23 @@
   }
 
   #best-sellers-{{ section.id }} .best-sellers__card--bundle .best-sellers__shop-now-btn--spooky {
-    background: linear-gradient(135deg, #ff7518 0%, #7a1fa2 100%);
+    background: linear-gradient(135deg, #50B2BD 0%, #962F80 100%);
   }
 
   #best-sellers-{{ section.id }} .best-sellers__card--bundle .best-sellers__shop-now-btn--spooky:hover {
-    background: linear-gradient(135deg, #ff8a33 0%, #8a2bb3 100%);
-    box-shadow: 0 12px 32px rgba(122, 31, 162, 0.4);
+    background: linear-gradient(135deg, #5fc2cc 0%, #a8388f 100%);
+    box-shadow: 0 12px 32px rgba(150, 47, 128, 0.4);
   }
 
   #best-sellers-{{ section.id }} .best-sellers__tab.best-sellers__tab--bundles:hover {
-    background: linear-gradient(135deg, #ff8a33 0%, #8a2bb3 100%);
+    background: linear-gradient(135deg, #5fc2cc 0%, #a8388f 100%);
     color: #fff;
     transform: translateY(-1px);
   }
 
   #best-sellers-{{ section.id }} .best-sellers__tab-deal {
     background: #fff;
-    color: #7a1fa2;
+    color: #962F80;
     font-size: 11px;
     font-weight: 800;
     letter-spacing: .04em;
@@ -737,11 +737,11 @@
     margin: 14px auto 0;
     font-size: 14px;
     font-weight: 600;
-    color: #7a1fa2;
+    color: #962F80;
   }
 
   #best-sellers-{{ section.id }} .best-sellers__promo-note strong {
-    color: #c2410c;
+    color: #962F80;
   }
 
   /* Products Wrapper */
@@ -1212,7 +1212,7 @@
 
     /* keep the active bundles pill inside the track (white ring was spilling past the edges) */
     #best-sellers-{{ section.id }} .best-sellers__tab--bundles-active {
-      box-shadow: 0 4px 12px rgba(122, 31, 162, 0.35);
+      box-shadow: 0 4px 12px rgba(150, 47, 128, 0.35);
     }
 
     /* inactive tabs were pale text on lilac: raise contrast */
