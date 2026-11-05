@@ -1973,6 +1973,8 @@
               <span id="dynamic-price">{{ product.selected_or_first_available_variant.price | money }}</span>
               {%- unless hb_is_fungi -%}<span id="spooky-save" style="display:none;"></span>{%- endunless -%}
             </div>
+            {%- assign hb_pc_cols = product.collections | map: 'handle' | join: ',' -%}
+            {%- unless hb_is_fungi or hb_pc_cols contains 'merch' -%}{%- render 'promo-countdown' -%}{%- endunless -%}
 
             {% if product.handle == 'happie-social-4-pack' %}
               {%- liquid
