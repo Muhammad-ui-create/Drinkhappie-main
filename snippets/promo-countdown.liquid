@@ -1,0 +1,58 @@
+{%- comment -%}
+  Live countdown to the end of the 30% off 24-packs & bundles sale.
+  Ends Nov 5 2026, 11:59:59 pm Central (= 2026-11-06T05:59:59Z), the same time as both
+  automatic discounts. The timer hides itself when the sale is over, and is not rendered
+  at all on page loads after the end time.
+  Usage: {% render 'promo-countdown' %}  or  {% render 'promo-countdown', align: 'center' %}
+{%- endcomment -%}
+{%- liquid
+  assign pc_end_iso = '2026-11-06T05:59:59Z'
+  assign pc_end_ts = 1793944799
+  assign pc_now_ts = 'now' | date: '%s' | plus: 0
+  assign pc_align = align | default: 'left'
+-%}
+{%- if pc_now_ts < pc_end_ts -%}
+  <div class="hb-countdown hb-countdown--{{ pc_align }}" data-hb-countdown="{{ pc_end_iso }}" role="timer" aria-live="off" hidden>
+    <span class="hb-countdown__label">&#9200; 30% off ends in</span>
+    <span class="hb-countdown__clock">
+      <span class="hb-countdown__unit"><b data-u="h">00</b><i>hrs</i></span>
+      <span class="hb-countdown__sep">:</span>
+      <span class="hb-countdown__unit"><b data-u="m">00</b><i>min</i></span>
+      <span class="hb-countdown__sep">:</span>
+      <span class="hb-countdown__unit"><b data-u="s">00</b><i>sec</i></span>
+    </span>
+  </div>
+  <style>
+    .hb-countdown{display:flex;align-items:center;gap:10px 14px;flex-wrap:wrap;background:linear-gradient(135deg,#962F80 0%,#7d2470 100%);color:#fff;border-radius:16px;padding:10px 16px;margin:12px 0 14px;font-family:'Poppins',system-ui,-apple-system,sans-serif;box-shadow:0 8px 22px rgba(150,47,128,.22);max-width:100%;}
+    .hb-countdown[hidden]{display:none!important;}
+    .hb-countdown--center{justify-content:center;margin-left:auto;margin-right:auto;width:fit-content;}
+    .hb-countdown__label{font-size:14px;font-weight:700;letter-spacing:.01em;}
+    .hb-countdown__clock{display:inline-flex;align-items:center;gap:6px;}
+    .hb-countdown__unit{display:inline-flex;flex-direction:column;align-items:center;background:#fff;color:#962F80;border-radius:10px;padding:4px 9px 3px;min-width:46px;line-height:1;}
+    .hb-countdown__unit b{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;}
+    .hb-countdown__unit i{font-style:normal;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#50B2BD;margin-top:2px;}
+    .hb-countdown__sep{font-size:18px;font-weight:800;opacity:.8;}
+    @media (max-width:600px){.hb-countdown{padding:9px 12px;gap:8px 10px;}.hb-countdown__label{font-size:13px;}.hb-countdown__unit{min-width:40px;padding:4px 7px 3px;}.hb-countdown__unit b{font-size:17px;}}
+  </style>
+  <script>
+    (function () {
+      var els = document.querySelectorAll('[data-hb-countdown]:not([data-hb-init])');
+      els.forEach(function (el) {
+        el.setAttribute('data-hb-init', '1');
+        var end = Date.parse(el.getAttribute('data-hb-countdown'));
+        if (isNaN(end)) return;
+        var h = el.querySelector('[data-u="h"]'), m = el.querySelector('[data-u="m"]'), s = el.querySelector('[data-u="s"]');
+        function pad(n) { return (n < 10 ? '0' : '') + n; }
+        function tick() {
+          var left = Math.floor((end - Date.now()) / 1000);
+          if (left <= 0) { el.parentNode && el.parentNode.removeChild(el); clearInterval(t); return; }
+          h.textContent = pad(Math.floor(left / 3600));
+          m.textContent = pad(Math.floor(left % 3600 / 60));
+          s.textContent = pad(left % 60);
+          el.hidden = false;
+        }
+        var t = setInterval(tick, 1000); tick();
+      });
+    })();
+  </script>
+{%- endif -%}

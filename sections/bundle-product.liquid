@@ -140,6 +140,7 @@
           <span class="bpdp__savetag">You save {{ spooky_save | money }}</span>
         </div>
         <div class="bpdp__per">30% off applied automatically in your cart · no code needed</div>
+        {%- render 'promo-countdown' -%}
         {%- if per != blank -%}<div class="bpdp__per">{{ per }}</div>{%- endif -%}
 
         <button type="submit" name="add" class="bpdp__atc"{% unless product.available %} disabled{% endunless %}>

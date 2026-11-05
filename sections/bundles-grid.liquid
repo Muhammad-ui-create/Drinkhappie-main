@@ -33,6 +33,7 @@
       {%- if eyebrow != blank -%}<span class="happie-bundles__eyebrow">{{ eyebrow }}</span>{%- endif -%}
       <h1 class="happie-bundles__title">{{ heading }}</h1>
       {%- if subheading != blank -%}<p class="happie-bundles__sub">{{ subheading }}</p>{%- endif -%}
+      {%- render 'promo-countdown', align: 'center' -%}
     </div>
 
     {%- comment -%} Single-flavor 24-packs: one button per flavor, opens the PDP with the 24 Pack / 5MG variant selected {%- endcomment -%}
