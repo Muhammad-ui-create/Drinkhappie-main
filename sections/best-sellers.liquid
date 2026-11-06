@@ -79,7 +79,7 @@
       <!-- Tab Switcher -->
       {%- if collection_2 != blank -%}
         <div class="best-sellers__tabs">
-          {%- comment -%} Bundles tab (30% auto discount, final days) — remove after Nov 5 {%- endcomment -%}
+          {%- comment -%} Bundles tab (30% auto discount, Thanksgiving sale) — remove after Dec 1 {%- endcomment -%}
           <button
             class="best-sellers__tab best-sellers__tab--bundles"
             :class="{ 'best-sellers__tab--bundles-active': activeTab === 'bundles' }"
@@ -102,7 +102,7 @@
             {{ collection_2_label | default: collection_2.title | default: 'Fungi Fusion' }}
           </button>
         </div>
-        <p class="best-sellers__promo-note">&#9200; Final days: <strong>30% off every bundle and 24-pack</strong>, applied automatically at checkout. Ends Nov 5.</p>
+        <p class="best-sellers__promo-note">&#129411; Thanksgiving Sale: <strong>30% off every bundle and 24-pack</strong>, applied automatically at checkout. Ends Dec 1.</p>
       {%- endif -%}
     </div>
 
