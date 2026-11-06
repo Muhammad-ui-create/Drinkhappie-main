@@ -12,9 +12,9 @@
     "bundles_grid": {
       "type": "bundles-grid",
       "settings": {
-        "eyebrow": "⏰ Final Days — 30% Off thru Nov 5",
+        "eyebrow": "🦃 Thanksgiving Sale — 30% Off thru Dec 1",
         "heading": "Happie Bundles",
-        "subheading": "Curated multi-packs of our best-selling THC seltzers — mix your favorite flavors and take 30% off every bundle and 24-pack, applied automatically at checkout. Extended through November 5.",
+        "subheading": "Curated multi-packs of our best-selling THC seltzers — mix your favorite flavors and take 30% off every bundle and 24-pack, applied automatically at checkout. Thanksgiving sale runs through December 1.",
         "bundle_link_base": "/products/",
         "bundle_link_suffix": "",
         "padding_top": 120
