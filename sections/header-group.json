@@ -73,7 +73,7 @@
         "shop_mega_card_1_title": "Variety Pack",
         "shop_mega_card_1_subtitle": "Try all flavors",
         "shop_mega_card_1_link": "shopify://products/happie-social-4-pack",
-        "shop_mega_card_2_image": "shopify://shop_images/Fungie_Fusion_Collections.jpg",
+        "shop_mega_card_2_image": "shopify://shop_images/Fungi_Fusion_Collection_V7.png",
         "shop_mega_card_2_title": "Shop Fungi Fusion",
         "shop_mega_card_2_subtitle": "Sparkling mushroom drinks",
         "shop_mega_card_2_link": "shopify://collections/fungi-fusion",
@@ -90,7 +90,7 @@
         "mobile_nav_menu": "mobile-menu",
         "mobile_nav_thc_image": "shopify://shop_images/Happie_Thc_collection.jpg",
         "mobile_nav_thc_link": "shopify://collections/thc-drinks",
-        "mobile_nav_fungi_image": "shopify://shop_images/Fungie_Fusion_Collections.jpg",
+        "mobile_nav_fungi_image": "shopify://shop_images/Fungi_Fusion_Collection_V7.png",
         "mobile_nav_fungi_link": "shopify://collections/fungi-fusion"
       }
     }

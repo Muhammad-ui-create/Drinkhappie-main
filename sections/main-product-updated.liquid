@@ -2025,6 +2025,8 @@
                 Flavor: <span id="selected-flavor">{{ product.title }}</span>
               </div>
               <div class="flavor-selector">
+                {%- comment -%} Fungi Fusion swatches show the can itself (theme assets ff-swatch-<handle>.jpg); other products keep images[1] {%- endcomment -%}
+                {%- assign ff_swatch_handles = 'watermelon,mango-mimosa,blue-razzberry' | split: ',' -%}
                 {% if block.settings.flavor_product_1 != blank %}
                   {% assign flavor_1 = all_products[block.settings.flavor_product_1] %}
                   {% if flavor_1.id != blank %}
@@ -2033,7 +2035,7 @@
                       class="flavor-option {% if flavor_1.handle == product.handle %}active{% endif %}"
                     >
                       <img
-                        src="{% if flavor_1.images[1] != blank %}{{ flavor_1.images[1] | image_url: width: 200 }}{% else %}{{ flavor_1.featured_image | image_url: width: 200 }}{% endif %}"
+                        src="{% if ff_swatch_handles contains flavor_1.handle %}{{ 'ff-swatch-' | append: flavor_1.handle | append: '.jpg' | asset_url }}{% elsif flavor_1.images[1] != blank %}{{ flavor_1.images[1] | image_url: width: 200 }}{% else %}{{ flavor_1.featured_image | image_url: width: 200 }}{% endif %}"
                         alt="{{ flavor_1.title }}"
                         width=""
                         height=""
@@ -2051,7 +2053,7 @@
                       class="flavor-option {% if flavor_2.handle == product.handle %}active{% endif %}"
                     >
                       <img
-                        src="{% if flavor_2.images[1] != blank %}{{ flavor_2.images[1] | image_url: width: 200 }}{% else %}{{ flavor_2.featured_image | image_url: width: 200 }}{% endif %}"
+                        src="{% if ff_swatch_handles contains flavor_2.handle %}{{ 'ff-swatch-' | append: flavor_2.handle | append: '.jpg' | asset_url }}{% elsif flavor_2.images[1] != blank %}{{ flavor_2.images[1] | image_url: width: 200 }}{% else %}{{ flavor_2.featured_image | image_url: width: 200 }}{% endif %}"
                         alt="{{ flavor_2.title }}"
                         width=""
                         height=""
@@ -2069,7 +2071,7 @@
                       class="flavor-option {% if flavor_3.handle == product.handle %}active{% endif %}"
                     >
                       <img
-                        src="{% if flavor_3.images[1] != blank %}{{ flavor_3.images[1] | image_url: width: 200 }}{% else %}{{ flavor_3.featured_image | image_url: width: 200 }}{% endif %}"
+                        src="{% if ff_swatch_handles contains flavor_3.handle %}{{ 'ff-swatch-' | append: flavor_3.handle | append: '.jpg' | asset_url }}{% elsif flavor_3.images[1] != blank %}{{ flavor_3.images[1] | image_url: width: 200 }}{% else %}{{ flavor_3.featured_image | image_url: width: 200 }}{% endif %}"
                         alt="{{ flavor_3.title }}"
                         width=""
                         height=""
@@ -2087,7 +2089,7 @@
                       class="flavor-option {% if flavor_4.handle == product.handle %}active{% endif %}"
                     >
                       <img
-                        src="{% if flavor_4.images[1] != blank %}{{ flavor_4.images[1] | image_url: width: 200 }}{% else %}{{ flavor_4.featured_image | image_url: width: 200 }}{% endif %}"
+                        src="{% if ff_swatch_handles contains flavor_4.handle %}{{ 'ff-swatch-' | append: flavor_4.handle | append: '.jpg' | asset_url }}{% elsif flavor_4.images[1] != blank %}{{ flavor_4.images[1] | image_url: width: 200 }}{% else %}{{ flavor_4.featured_image | image_url: width: 200 }}{% endif %}"
                         alt="{{ flavor_4.title }}"
                         width=""
                         height=""
