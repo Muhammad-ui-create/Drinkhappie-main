@@ -128,7 +128,7 @@
             "accordion_title_1": "🌿 What's Inside?",
             "accordion_content_1": "{{ product.metafields.custom.whats_inside | metafield_tag }}",
             "accordion_title_2": "⚡ How It Works",
-            "accordion_content_2": "<p>Dual-extracted mushrooms pull both the water-soluble and fat-soluble compounds from each mushroom — so you get the full spectrum in every sip.<br/><br/>Every can also includes Aquamin® marine minerals, a magnesium and calcium source derived from the North Atlantic.</p>",
+            "accordion_content_2": "<p>Every can is made with Lion’s Mane, Cordyceps and Red Reishi from the fruiting body.<br/><br/>Every can also includes Aquamin® marine minerals, a magnesium and calcium source derived from the North Atlantic.</p>",
             "accordion_title_3": "✅ Lab Tested & Quality Assured",
             "accordion_content_3": "<p><strong>Third-Party Lab Tested<br/></strong><br/>Every batch of Fungi Fusion is tested for purity, potency, and safety. Certificates of Analysis (COAs) are available for full transparency—just scan the QR code on your can.<br/><br/><strong>Clean, Compliant Ingredients<br/></strong><br/>Made with high-quality mushrooms and minerals, always vegan, non-GMO, and free from fillers or artificial junk.<br/><br/></p>"
           }
@@ -172,15 +172,15 @@
         "image_content_MiXxQC": {
           "type": "image_content",
           "settings": {
-            "content_heading": "⚡ Dual-Extracted Mushrooms",
-            "content": "<p>Packed with Lion’s Mane, Cordyceps, and Reishi for real focus, energy, and calm—no caffeine or crash.<br/><br/></p>"
+            "content_heading": "🍄 Three Mushrooms",
+            "content": "<p>Packed with Lion’s Mane, Cordyceps, and Reishi—no caffeine.<br/><br/></p>"
           }
         },
         "image_content_tD7U86": {
           "type": "image_content",
           "settings": {
             "content_heading": "🍯 No Cane Sugar – Naturally Sweetened",
-            "content": "<p>Sweetened with organic agave. Just 40 calories and no refined sugar. All flavor, zero crash.</p>"
+            "content": "<p>Sweetened with organic agave. Just 40 calories and no refined sugar. All flavor.</p>"
           }
         },
         "image_content_mb3MWj": {
@@ -194,7 +194,7 @@
           "type": "image_content",
           "settings": {
             "content_heading": "🌱 Farm to Can",
-            "content": "<p>Organic North American mushrooms, fully traceable from farm to can. Clean, plant-powered ingredients you can trust.</p>"
+            "content": "<p>Mushrooms fully traceable from farm to can. Clean, plant-powered ingredients you can trust.</p>"
           }
         }
       },
@@ -442,18 +442,11 @@
     "faq_accordion_EBYNyN": {
       "type": "faq-accordion",
       "blocks": {
-        "faq_item_bfjiRA": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Will I feel anything from Fungi Fusion?",
-            "answer": "Yes! Most people notice a gentle boost in focus, energy, and mood about 15–30 minutes after drinking. Effects are smooth and subtle—no jitters or crashes."
-          }
-        },
         "faq_item_wXKV7b": {
           "type": "faq_item",
           "settings": {
             "question": "Is it safe to drink every day?",
-            "answer": "Fungi Fusion is made with clean, vegan, non-GMO ingredients and is safe for daily enjoyment. As with any supplement, listen to your body and consult your doctor if you have health concerns."
+            "answer": "Fungi Fusion is made with clean, vegan, non-GMO ingredients and is safe for daily enjoyment. Listen to your body and consult your doctor if you have health concerns."
           }
         },
         "faq_item_qXnBhQ": {
@@ -461,13 +454,6 @@
           "settings": {
             "question": "Can I mix Fungi Fusion with other drinks or supplements?",
             "answer": "Absolutely. Fungi Fusion pairs well with water, juice, or smoothies. If mixing with other supplements, check with your healthcare provider if you have questions."
-          }
-        },
-        "faq_item_Q88kxj": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Will this help with focus or energy?",
-            "answer": "Every can is made with Lion’s Mane, Cordyceps, and Red Reishi mushrooms, plus magnesium and calcium from ocean minerals. No caffeine, no alcohol, no artificial sweeteners."
           }
         },
         "faq_item_MEGHBe": {
@@ -481,7 +467,7 @@
           "type": "faq_item",
           "settings": {
             "question": "Why mushrooms, and what do they actually do?",
-            "answer": "Lion’s Mane, Cordyceps, and Red Reishi — all dual-extracted from the fruiting body. They’re what the drink is made with, not why you drink it: that part is the flavour."
+            "answer": "Lion’s Mane, Cordyceps, and Red Reishi — all from the fruiting body. They’re what the drink is made with, not why you drink it: that part is the flavour."
           }
         },
         "faq_item_J3AzqW": {
@@ -514,10 +500,8 @@
         }
       },
       "block_order": [
-        "faq_item_bfjiRA",
         "faq_item_wXKV7b",
         "faq_item_qXnBhQ",
-        "faq_item_Q88kxj",
         "faq_item_MEGHBe",
         "faq_item_AE6EiT",
         "faq_item_J3AzqW",
