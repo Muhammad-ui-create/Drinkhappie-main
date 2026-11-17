@@ -6,7 +6,7 @@
 
   if request.page_type == 'product'
     assign og_type = 'product'
-    assign og_description = product.title | append: ' — premium hemp-derived THC seltzer by Happie®. Nano-emulsified for fast onset, 30 calories, vegan. Shop online with free shipping.'
+    assign og_description = product.title | append: ' — premium hemp-derived THC seltzer by Happie®. Nano-emulsified for fast onset, 40 calories, vegan. Shop online with free shipping.'
   elsif request.page_type == 'article'
     assign og_type = 'article'
     assign og_description = article.excerpt_or_content | strip_html | truncate: 155
@@ -15,7 +15,7 @@
     assign og_url = request.origin
   elsif request.page_type == 'collection'
     if collection.handle == 'thc-drinks' or collection.handle == 'thc'
-      assign og_description = 'Shop the best Delta-9 THC seltzers online. 7 flavors, 5mg & 10mg, nano-emulsified. Zero alcohol, 30 calories. Better than Brez, Cann, Wynk.'
+      assign og_description = 'Shop the best Delta-9 THC seltzers online. 7 flavors, 5mg & 10mg, nano-emulsified. Zero alcohol, 40 calories. Better than Brez, Cann, Wynk.'
     elsif collection.handle == 'fungi-fusion' or collection.handle == 'fungi'
       assign og_description = 'Fungi Fusion sparkling mushroom drinks — made with Lion'
     endif
