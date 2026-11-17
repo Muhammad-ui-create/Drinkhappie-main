@@ -208,7 +208,7 @@
                       <p class="best-sellers__product-tagline">{{ hb_b_cans[i] }} cans &middot; 5mg</p>
                       <div class="best-sellers__price-row">
                         <span class="best-sellers__price-label">Buy 1, get 1 free, applied automatically</span>
-                        <span class="best-sellers__price">{{ hb_now_cents | money }}</span>
+                        <span class="best-sellers__price">{{ hb_now_cents | money }} <s class="best-sellers__price-was">{{ hb_now_cents | times: 2 | money }}</s></span>
                       {%- else -%}
                       <p class="best-sellers__product-tagline">{{ hb_b_cans[i] }} cans &middot; save {{ hb_save_cents | money }}</p>
                       <div class="best-sellers__price-row">

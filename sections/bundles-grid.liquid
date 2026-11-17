@@ -92,6 +92,7 @@
               {%- assign b_sale_cents = b_now_cents | times: 0.7 | round -%}
               {%- if b_handle[i] == 'citrus-grove-pack' -%}
               <span class="happie-bundle-card__now">{{ b_now_cents | money }}</span>
+              <span class="happie-bundle-card__was">{{ b_now_cents | times: 2 | money }}</span>
               <span class="happie-bundle-card__save">5mg &mdash; Buy 1, get 1 FREE (48 cans)</span>
               {%- else -%}
               <span class="happie-bundle-card__now">{{ b_sale_cents | money }}</span>
