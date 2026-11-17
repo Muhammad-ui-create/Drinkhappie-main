@@ -143,14 +143,15 @@
         <div class="bpdp__price">
           <span class="bpdp__now">{{ sale | money }}</span>
           {%- if bogo -%}
-          <span class="bpdp__savetag">2nd pack FREE</span>
+          <span class="bpdp__was">{{ pr | times: 2 | money }}</span>
+          <span class="bpdp__savetag">2nd pack FREE · You save {{ pr | money }}</span>
           {%- else -%}
           <span class="bpdp__was">{{ pr | money }}</span>
           <span class="bpdp__savetag">You save {{ spooky_save | money }}</span>
           {%- endif -%}
         </div>
         {%- if bogo -%}
-        <div class="bpdp__per">Buy one, get one free: add 2 packs and the 2nd is free in your cart · 48 cans for {{ pr | money }} · no code needed · ends Dec 11</div>
+        <div class="bpdp__per">Buy one, get one free: add 2 packs and the 2nd is free in your cart · 48 cans for <s>{{ pr | times: 2 | money }}</s> {{ pr | money }} · no code needed · ends Dec 11</div>
         {%- else -%}
         <div class="bpdp__per">30% off applied automatically in your cart · no code needed</div>
         {%- render 'promo-countdown' -%}
@@ -236,7 +237,7 @@
             {%- assign ex_cents = ex_now[i] | remove: '$' | times: 100 | round -%}
             {%- assign ex_sale = ex_cents | times: 0.7 | round -%}
             {%- if eh == 'citrus-grove-pack' -%}
-            <div class="bpdp-explore__price">Buy 1, get 1 free · {{ ex_cents | money }}</div>
+            <div class="bpdp-explore__price">Buy 1, get 1 free · {{ ex_cents | money }} <s>{{ ex_cents | times: 2 | money }}</s></div>
             {%- else -%}
             <div class="bpdp-explore__price">{{ ex_sale | money }} <s>{{ ex_cents | money }}</s></div>
             {%- endif -%}
