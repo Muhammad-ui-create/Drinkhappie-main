@@ -127,7 +127,7 @@
       <div class="bpdp__includes">{{ includes_html }}</div>
 
       {%- form 'product', product, class: 'bpdp__form' -%}
-        <input type="hidden" name="quantity" value="1">
+        <input type="hidden" name="quantity" value="{% if bogo %}2{% else %}1{% endif %}">
         <div class="bpdp__label"><span>Strength</span><span class="bpdp__hint">{% if product.variants.size > 1 %}Same price either way{% else %}{{ product.variants.first.title }} per can{% endif %}</span></div>
         <div class="bpdp__strength">
           {%- for v in product.variants -%}
@@ -159,7 +159,7 @@
         {%- if per != blank -%}<div class="bpdp__per">{{ per }}</div>{%- endif -%}
 
         <button type="submit" name="add" class="bpdp__atc"{% unless product.available %} disabled{% endunless %}>
-          {%- if product.available -%}Add Bundle to Cart <span class="bpdp__atc-price">{{ sale | money }}</span>{%- else -%}Sold Out{%- endif -%}
+          {%- if product.available -%}{%- if bogo -%}Add 2 Packs · 2nd FREE <span class="bpdp__atc-price">{{ pr | money }}</span>{%- else -%}Add Bundle to Cart <span class="bpdp__atc-price">{{ sale | money }}</span>{%- endif -%}{%- else -%}Sold Out{%- endif -%}
         </button>
         <div class="bpdp__atc-note">21+ only · Ships to 40+ states · 30-day happiness guarantee</div>
       {%- endform -%}
