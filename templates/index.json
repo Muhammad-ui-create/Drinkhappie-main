@@ -63,7 +63,7 @@
         "card_1_benefit_hK97Wq": {
           "type": "card_1_benefit",
           "settings": {
-            "benefit_text": "Zero alcohol, zero hangover, only 30 calories"
+            "benefit_text": "Zero alcohol, zero hangover, only 40 calories"
           }
         },
         "card_1_benefit_NQE9HJ": {
@@ -417,7 +417,7 @@
           "settings": {
             "icon": "leaf",
             "title": "100% Agave Nectar (No Cane Sugar)",
-            "description": "Sweetened with organic agave instead of cane sugar. Just 30 calories per can and no sugar crash."
+            "description": "Sweetened with organic agave instead of cane sugar. Just 40 calories per can and no sugar crash."
           }
         },
         "ingredient_xcgQhU": {
