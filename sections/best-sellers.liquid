@@ -183,12 +183,16 @@
                 assign hb_now_cents = hb_b_now[i] | times: 100 | round
                 assign hb_sale_cents = hb_now_cents | times: 0.7 | round
                 assign hb_save_cents = hb_now_cents | minus: hb_sale_cents
+                assign hb_bogo = false
+                if handle == 'citrus-grove-pack'
+                  assign hb_bogo = true
+                endif
               -%}
               <div class="best-sellers__carousel-slide">
                 <div class="best-sellers__card best-sellers__card--bundle">
                   <a href="/products/{{ handle }}" class="best-sellers__card-link">
                     <div class="best-sellers__card-image">
-                      <span class="best-sellers__badge best-sellers__badge--spooky">30% OFF</span>
+                      <span class="best-sellers__badge best-sellers__badge--spooky">{% if hb_bogo %}BOGO FREE{% else %}30% OFF{% endif %}</span>
                       <img
                         src="{{ hb_img }}"
                         alt="{{ hb_b_name[i] | escape }} bundle"
@@ -200,10 +204,17 @@
                     </div>
                     <div class="best-sellers__card-content">
                       <h3 class="best-sellers__product-title">{{ hb_b_name[i] }}</h3>
+                      {%- if hb_bogo -%}
+                      <p class="best-sellers__product-tagline">{{ hb_b_cans[i] }} cans &middot; 5mg</p>
+                      <div class="best-sellers__price-row">
+                        <span class="best-sellers__price-label">Buy 1, get 1 free, applied automatically</span>
+                        <span class="best-sellers__price">{{ hb_now_cents | money }}</span>
+                      {%- else -%}
                       <p class="best-sellers__product-tagline">{{ hb_b_cans[i] }} cans &middot; save {{ hb_save_cents | money }}</p>
                       <div class="best-sellers__price-row">
                         <span class="best-sellers__price-label">30% off, applied automatically</span>
                         <span class="best-sellers__price">{{ hb_sale_cents | money }} <s class="best-sellers__price-was">{{ hb_now_cents | money }}</s></span>
+                      {%- endif -%}
                       </div>
                     </div>
                   </a>
