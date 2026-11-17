@@ -53,6 +53,12 @@
   # Spooky Season: 30% automatic discount on every bundle, taken off in the cart.
   # Show the price the cart actually charges, with the listed price struck through.
   assign sale = pr | times: 0.7 | round
+  # Citrus Grove Pack 5mg: Buy One Get One Free (automatic, thru Dec 11) instead of 30% off.
+  assign bogo = false
+  if product.handle == 'citrus-grove-pack'
+    assign bogo = true
+    assign sale = pr
+  endif
   assign spooky_save = pr | minus: sale
   if per != blank
     assign per_cans = per | split: ' cans' | first | plus: 0
@@ -96,7 +102,7 @@
     <div class="bpdp__gallery">
       <div class="bpdp__gmain" style="background:{{ grad }};">
         <div class="bpdp__gbadge">{{ badge }}</div>
-        <div class="bpdp__gsave">30% OFF · Save {{ spooky_save | money }}</div>
+        <div class="bpdp__gsave">{% if bogo %}BUY 1, GET 1 FREE · 5mg{% else %}30% OFF · Save {{ spooky_save | money }}{% endif %}</div>
         <img id="bpdpMain" src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.title | escape }}">
       </div>
       {%- if product.images.size > 1 -%}
@@ -122,7 +128,7 @@
 
       {%- form 'product', product, class: 'bpdp__form' -%}
         <input type="hidden" name="quantity" value="1">
-        <div class="bpdp__label"><span>Strength</span><span class="bpdp__hint">Same price either way</span></div>
+        <div class="bpdp__label"><span>Strength</span><span class="bpdp__hint">{% if product.variants.size > 1 %}Same price either way{% else %}{{ product.variants.first.title }} per can{% endif %}</span></div>
         <div class="bpdp__strength">
           {%- for v in product.variants -%}
             <input class="bpdp__str-radio" type="radio" name="id" id="bpdp-v-{{ v.id }}" value="{{ v.id }}" {% if v == product.selected_or_first_available_variant %}checked{% endif %}{% unless v.available %} disabled{% endunless %}>
@@ -136,11 +142,19 @@
 
         <div class="bpdp__price">
           <span class="bpdp__now">{{ sale | money }}</span>
+          {%- if bogo -%}
+          <span class="bpdp__savetag">2nd pack FREE</span>
+          {%- else -%}
           <span class="bpdp__was">{{ pr | money }}</span>
           <span class="bpdp__savetag">You save {{ spooky_save | money }}</span>
+          {%- endif -%}
         </div>
+        {%- if bogo -%}
+        <div class="bpdp__per">Buy one, get one free: add 2 packs and the 2nd is free in your cart · 48 cans for {{ pr | money }} · no code needed · ends Dec 11</div>
+        {%- else -%}
         <div class="bpdp__per">30% off applied automatically in your cart · no code needed</div>
         {%- render 'promo-countdown' -%}
+        {%- endif -%}
         {%- if per != blank -%}<div class="bpdp__per">{{ per }}</div>{%- endif -%}
 
         <button type="submit" name="add" class="bpdp__atc"{% unless product.available %} disabled{% endunless %}>
@@ -184,7 +198,7 @@
   <h2>The details.</h2>
   <details class="bpdp-acc" open>
     <summary>📦 What's in this bundle?<span class="bpdp-acc__ic">+</span></summary>
-    <div class="bpdp-acc__body">{{ includes_html }}<p class="bpdp-acc__note">Choose 5mg or 10mg per can at checkout — same price either way. Buying the pair together is 5% cheaper than buying each flavor separately.</p></div>
+    <div class="bpdp-acc__body">{{ includes_html }}<p class="bpdp-acc__note">{% if product.variants.size > 1 %}Choose 5mg or 10mg per can at checkout — same price either way. {% else %}{{ product.variants.first.title }} per can. {% endif %}Buying the pair together is 5% cheaper than buying each flavor separately.</p></div>
   </details>
   <details class="bpdp-acc">
     <summary>⚡ How it works<span class="bpdp-acc__ic">+</span></summary>
@@ -221,7 +235,11 @@
             <div class="bpdp-explore__name">{{ ex_names[i] }}</div>
             {%- assign ex_cents = ex_now[i] | remove: '$' | times: 100 | round -%}
             {%- assign ex_sale = ex_cents | times: 0.7 | round -%}
+            {%- if eh == 'citrus-grove-pack' -%}
+            <div class="bpdp-explore__price">Buy 1, get 1 free · {{ ex_cents | money }}</div>
+            {%- else -%}
             <div class="bpdp-explore__price">{{ ex_sale | money }} <s>{{ ex_cents | money }}</s></div>
+            {%- endif -%}
           </div>
         </a>
       {%- endif -%}
