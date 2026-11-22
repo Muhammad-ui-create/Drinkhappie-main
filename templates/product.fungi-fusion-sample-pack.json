@@ -178,7 +178,7 @@
           "type": "image_content",
           "settings": {
             "content_heading": "🍯 No Cane Sugar – Naturally Sweetened",
-            "content": "<p>Sweetened with organic agave. Just 40 calories and no refined sugar. All flavor, zero crash.</p>"
+            "content": "<p>Sweetened with organic agave. 40 calories and 9g sugar per can. All flavor, zero crash.</p>"
           }
         },
         "image_content_mb3MWj": {
@@ -387,14 +387,14 @@
           "type": "faq_item",
           "settings": {
             "question": "Is it safe to drink every day?",
-            "answer": "Fungi Fusion is made with clean, vegan, non-GMO ingredients and is safe for daily enjoyment. As with any supplement, listen to your body and consult your doctor if you have health concerns."
+            "answer": "Fungi Fusion is made with clean, vegan, non-GMO ingredients and is safe for daily enjoyment. If you have specific medical concerns, check with your healthcare provider."
           }
         },
         "faq_item_qXnBhQ": {
           "type": "faq_item",
           "settings": {
-            "question": "Can I mix Fungi Fusion with other drinks or supplements?",
-            "answer": "Absolutely. Fungi Fusion pairs well with water, juice, or smoothies. If mixing with other supplements, check with your healthcare provider if you have questions."
+            "question": "Can I mix Fungi Fusion with other drinks?",
+            "answer": "Absolutely. Fungi Fusion pairs well with water, juice, or smoothies."
           }
         },
         "faq_item_Q88kxj": {
