@@ -120,7 +120,7 @@
           "type": "long_description",
           "disabled": true,
           "settings": {
-            "long_description": "{{ product.description }}<p><strong>Mango Mimosa</strong> is a vibrant, feel-good drink packed with juicy mango flavor and real wellness benefits. Each can blends 900mg Lion’s Mane, 700mg Cordyceps, and 400mg Reishi—powerful mushrooms known to support focus, energy, and calm, all without caffeine or sugar spikes.You’ll feel clear-headed and uplifted about 15–30 minutes after your first sip. The clean energy lasts for hours, with no crash or grogginess the next day.<br/>Lightly sweetened with organic agave and bursting with tropical taste, Mango Mimosa is also infused with Aquamin® ocean minerals for extra hydration and recovery.Vegan, non-GMO, and free from fillers or artificial junk—just pure, plant-powered clarity in every can.<br/><br/></p>"
+            "long_description": "{{ product.description }}"
           }
         },
         "accordion": {
@@ -129,9 +129,9 @@
             "accordion_title_1": "🌿 What's Inside?",
             "accordion_content_1": "{{ product.metafields.custom.whats_inside | metafield_tag }}",
             "accordion_title_2": "⚡ How It Works",
-            "accordion_content_2": "<p>Dual-extracted mushrooms and ocean minerals help your body absorb the benefits quickly—so you get more out of every sip.<br/><br/><strong>230mg Magnesium, 90mg Calcium</strong> per can.<br/><br/>These pure ocean minerals hydrate and support muscle recovery, helping you feel your best before, after, or anytime your body needs a reset.<br/><br/></p>",
+            "accordion_content_2": "<p>Every can is made with Lion’s Mane, Cordyceps and Red Reishi from the fruiting body.<br/><br/>Every can also includes Aquamin® marine minerals, a magnesium and calcium source derived from the North Atlantic.</p>",
             "accordion_title_3": "✅ Lab Tested & Quality Assured",
-            "accordion_content_3": "<p><strong>Third-Party Lab Tested<br/></strong><br/>Every batch of Fungi Fusion is tested for purity, potency, and safety. Certificates of Analysis (COAs) are available for full transparency—just scan the QR code on your can.<br/><br/><strong>Clean, Compliant Ingredients<br/></strong><br/>Made with high-quality mushrooms and minerals, always vegan, non-GMO, and free from fillers or artificial junk.<br/><br/><strong>Ships to 40+ States<br/></strong><br/>We ship directly to your door in most states. If we can’t ship to you, we’ll let you know at checkout<br/><br/><strong>21+ Only<br/></strong><br/>Fungi Fusion is for adults who want to feel their best, naturally. Age verification required at checkout.<br/><br/></p>"
+            "accordion_content_3": "<p><strong>Third-Party Lab Tested<br/></strong><br/>Every batch of Fungi Fusion is tested for purity, potency, and safety. Certificates of Analysis (COAs) are available for full transparency—just scan the QR code on your can.<br/><br/><strong>Clean, Compliant Ingredients<br/></strong><br/>Made with high-quality mushrooms and minerals, always vegan, non-GMO, and free from fillers or artificial junk.<br/><br/></p>"
           }
         },
         "coa_button": {
@@ -170,8 +170,8 @@
         "image_content_MiXxQC": {
           "type": "image_content",
           "settings": {
-            "content_heading": "⚡ Dual-Extracted Mushrooms",
-            "content": "<p>Packed with Lion’s Mane, Cordyceps, and Reishi for real focus, energy, and calm—no caffeine or crash.<br/><br/></p>"
+            "content_heading": "🍄 Three Mushrooms",
+            "content": "<p>Packed with Lion’s Mane, Cordyceps, and Reishi—no caffeine.<br/><br/></p>"
           }
         },
         "image_content_tD7U86": {
@@ -184,15 +184,15 @@
         "image_content_mb3MWj": {
           "type": "image_content",
           "settings": {
-            "content_heading": "🌊 Aquamin S. Ocean Minerals",
-            "content": "<p>Magnesium and calcium from pure ocean algae. Supports hydration, focus, and recovery—way more than just sparkling water.</p>"
+            "content_heading": "🌊 Aquamin® Marine Minerals",
+            "content": "<p>Magnesium and calcium from Aquamin®, sourced from the North Atlantic — a little something extra alongside the mushroom blend.</p>"
           }
         },
         "image_content_xrWKpe": {
           "type": "image_content",
           "settings": {
             "content_heading": "🌱 Farm to Can",
-            "content": "<p>Organic North American mushrooms, fully traceable from farm to can. Clean, plant-powered ingredients you can trust.</p>"
+            "content": "<p>Mushrooms fully traceable from farm to can. Clean, plant-powered ingredients you can trust.</p>"
           }
         }
       },
@@ -376,13 +376,6 @@
     "faq_accordion_EBYNyN": {
       "type": "faq-accordion",
       "blocks": {
-        "faq_item_bfjiRA": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Will I feel anything from Fungi Fusion?",
-            "answer": "Yes! Most people notice a gentle boost in focus, energy, and mood about 15–30 minutes after drinking. Effects are smooth and subtle—no jitters or crashes."
-          }
-        },
         "faq_item_wXKV7b": {
           "type": "faq_item",
           "settings": {
@@ -397,13 +390,6 @@
             "answer": "Absolutely. Fungi Fusion pairs well with water, juice, or smoothies."
           }
         },
-        "faq_item_Q88kxj": {
-          "type": "faq_item",
-          "settings": {
-            "question": "Will this help with focus or energy?",
-            "answer": "Yes! Lion’s Mane and Cordyceps mushrooms are known for supporting mental clarity and natural energy, without caffeine or sugar spikes."
-          }
-        },
         "faq_item_MEGHBe": {
           "type": "faq_item",
           "settings": {
@@ -415,14 +401,14 @@
           "type": "faq_item",
           "settings": {
             "question": "Why mushrooms, and what do they actually do?",
-            "answer": "Lion’s Mane supports focus and brain health, Cordyceps boosts natural energy, and Reishi helps with calm and recovery. All are dual-extracted for real, noticeable benefits."
+            "answer": "Lion’s Mane, Cordyceps, and Red Reishi — all from the fruiting body. They’re what the drink is made with, not why you drink it: that part is the flavour."
           }
         },
         "faq_item_J3AzqW": {
           "type": "faq_item",
           "settings": {
-            "question": "What’s Aquamin and why do sea minerals matter?",
-            "answer": "Aquamin® is a natural source of magnesium and calcium from ocean algae. These minerals support hydration, muscle recovery, and overall wellness."
+            "question": "What is Aquamin?",
+            "answer": "Aquamin® is a marine-derived source of magnesium and calcium, harvested from the North Atlantic. It's included alongside the mushroom blend in every can."
           }
         },
         "faq_item_hX8CNk": {
@@ -448,10 +434,8 @@
         }
       },
       "block_order": [
-        "faq_item_bfjiRA",
         "faq_item_wXKV7b",
         "faq_item_qXnBhQ",
-        "faq_item_Q88kxj",
         "faq_item_MEGHBe",
         "faq_item_AE6EiT",
         "faq_item_J3AzqW",
