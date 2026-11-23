@@ -43,8 +43,9 @@
       assign per = '48 cans · $4.75 per can'
   endcase
 
-  assign cap = product.compare_at_price
-  assign pr = product.price
+  assign sel_v = product.selected_or_first_available_variant
+  assign cap = sel_v.compare_at_price
+  assign pr = sel_v.price
   assign save = 0
   if cap > pr
     assign save = cap | minus: pr
@@ -128,10 +129,10 @@
 
       {%- form 'product', product, class: 'bpdp__form' -%}
         <input type="hidden" name="quantity" value="{% if bogo %}2{% else %}1{% endif %}">
-        <div class="bpdp__label"><span>Strength</span><span class="bpdp__hint">{% if product.variants.size > 1 %}Same price either way{% else %}{{ product.variants.first.title }} per can{% endif %}</span></div>
+        <div class="bpdp__label"><span>Strength</span><span class="bpdp__hint">{% if product.variants.size > 1 %}5mg is the lower price{% else %}{{ product.variants.first.title }} per can{% endif %}</span></div>
         <div class="bpdp__strength">
           {%- for v in product.variants -%}
-            <input class="bpdp__str-radio" type="radio" name="id" id="bpdp-v-{{ v.id }}" value="{{ v.id }}" {% if v == product.selected_or_first_available_variant %}checked{% endif %}{% unless v.available %} disabled{% endunless %}>
+            <input class="bpdp__str-radio" type="radio" name="id" id="bpdp-v-{{ v.id }}" value="{{ v.id }}" data-price="{{ v.price }}" data-sale="{{ v.price | times: 0.7 | round }}" {% if v == product.selected_or_first_available_variant %}checked{% endif %}{% unless v.available %} disabled{% endunless %}>
             <label class="bpdp__str-card {% if forloop.first %}bpdp__str-card--light{% else %}bpdp__str-card--dark{% endif %}" for="bpdp-v-{{ v.id }}">
               {%- if forloop.first -%}<span class="bpdp__pop">Most Popular</span>{%- endif -%}
               <span class="bpdp__mg">{{ v.title }}</span>
@@ -156,7 +157,7 @@
         <div class="bpdp__per">30% off applied automatically in your cart · no code needed</div>
         {%- render 'promo-countdown' -%}
         {%- endif -%}
-        {%- if per != blank -%}<div class="bpdp__per">{{ per }}</div>{%- endif -%}
+        {%- if per != blank -%}<div class="bpdp__per bpdp__per--can" data-cans="{{ per_cans }}">{{ per }}</div>{%- endif -%}
 
         <button type="submit" name="add" class="bpdp__atc"{% unless product.available %} disabled{% endunless %}>
           {%- if product.available -%}{%- if bogo -%}Add 2 Packs · 2nd FREE <span class="bpdp__atc-price">{{ pr | money }}</span>{%- else -%}Add Bundle to Cart <span class="bpdp__atc-price">{{ sale | money }}</span>{%- endif -%}{%- else -%}Sold Out{%- endif -%}
@@ -199,7 +200,7 @@
   <h2>The details.</h2>
   <details class="bpdp-acc" open>
     <summary>📦 What's in this bundle?<span class="bpdp-acc__ic">+</span></summary>
-    <div class="bpdp-acc__body">{{ includes_html }}<p class="bpdp-acc__note">{% if product.variants.size > 1 %}Choose 5mg or 10mg per can at checkout — same price either way. {% else %}{{ product.variants.first.title }} per can. {% endif %}Buying the pair together is 5% cheaper than buying each flavor separately.</p></div>
+    <div class="bpdp-acc__body">{{ includes_html }}<p class="bpdp-acc__note">{% if product.variants.size > 1 %}Choose 5mg or 10mg per can — the 5mg bundle is priced lower. {% else %}{{ product.variants.first.title }} per can. {% endif %}Buying the pair together is 5% cheaper than buying each flavor separately.</p></div>
   </details>
   <details class="bpdp-acc">
     <summary>⚡ How it works<span class="bpdp-acc__ic">+</span></summary>
@@ -216,9 +217,9 @@
 {%- liquid
   assign ex_handles = 'berry-vineyard-duo,cherry-citrus-kickoff,cherry-lime-chiller,citrus-grove-pack,orchard-twist,sweet-sour-party-stack,cherry-lime-party-stack' | split: ','
   assign ex_names = 'Berry Vineyard Duo,Cherry Citrus Kickoff,Cherry Lime Chiller,Citrus Grove Pack,Orchard Twist,Sweet & Sour Party Stack,Cherry Lime Party Stack' | split: ','
-  assign ex_tags = '24 cans · save $34.19,16 cans · save $18.80,20 cans · save $26.50,24 cans · save $34.19,36 cans · save $51.29,48 cans · save $68.39,48 cans · save $68.39' | split: ','
-  assign ex_now = '$113.98,$62.68,$88.33,$113.98,$170.98,$227.98,$227.98' | split: ','
-  assign ex_was = '$119.98,$65.98,$92.98,$119.98,$179.98,$239.98,$239.98' | split: ','
+  assign ex_tags = '24 cans · save $31.34,16 cans · save $18.80,20 cans · save $25.07,24 cans · save $31.34,36 cans · save $47.02,48 cans · save $62.69,48 cans · save $62.69' | split: ','
+  assign ex_now = '$104.48,$62.68,$83.58,$104.48,$156.73,$208.98,$208.98' | split: ','
+  assign ex_was = '$109.98,$65.98,$87.98,$109.98,$164.98,$219.98,$219.98' | split: ','
 -%}
 <section class="bpdp-explore">
   <h2>More bundles to stock up on.</h2>
@@ -239,7 +240,7 @@
             {%- if eh == 'citrus-grove-pack' -%}
             <div class="bpdp-explore__price">Buy 1, get 1 free · {{ ex_cents | money }} <s>{{ ex_cents | times: 2 | money }}</s></div>
             {%- else -%}
-            <div class="bpdp-explore__price">{{ ex_sale | money }} <s>{{ ex_cents | money }}</s></div>
+            <div class="bpdp-explore__price">From {{ ex_sale | money }} <s>{{ ex_cents | money }}</s></div>
             {%- endif -%}
           </div>
         </a>
@@ -363,6 +364,19 @@
       thumbs.forEach(function(x){x.classList.remove('is-active');});
       t.classList.add('is-active');
       if(main){main.src=t.getAttribute('data-img');}
+    });});
+
+    /* Strength switch: 5mg and 10mg bundles have different prices, update the price block */
+    var fmt=function(c){return '$'+(c/100).toFixed(2);};
+    document.querySelectorAll('.bpdp__str-radio').forEach(function(r){r.addEventListener('change',function(){
+      var pr=parseInt(r.getAttribute('data-price'),10),sale=parseInt(r.getAttribute('data-sale'),10);
+      if(isNaN(pr)||isNaN(sale)||document.querySelector('.bpdp__price .bpdp__savetag')===null)return;
+      var q=function(sel){return document.querySelector(sel);};
+      if(q('.bpdp__price .bpdp__now'))q('.bpdp__price .bpdp__now').textContent=fmt(sale);
+      if(q('.bpdp__price .bpdp__was'))q('.bpdp__price .bpdp__was').textContent=fmt(pr);
+      q('.bpdp__price .bpdp__savetag').textContent='You save '+fmt(pr-sale);
+      if(q('.bpdp__atc-price'))q('.bpdp__atc-price').textContent=fmt(sale);
+      var pc=q('.bpdp__per--can'); if(pc){var n=parseInt(pc.getAttribute('data-cans'),10); if(n>0)pc.textContent=n+' cans · '+fmt(Math.round(sale/n))+' per can';}
     });});
 
     /* AJAX add-to-cart that opens the theme's cart drawer (matches main-product) */
